@@ -136,20 +136,20 @@ function verwerkUsers(users) {
         }
     )
 
-    document.getElementById("minLengte").setAttribute('min', minLengte);
-    document.getElementById("minLengte").setAttribute('max', maxLengte);
-    document.getElementById("maxLengte").setAttribute('min', minLengte);
-    document.getElementById("maxLengte").setAttribute('max', maxLengte);
+document.getElementById("minLengte").setAttribute('min', minLengte);
+document.getElementById("minLengte").setAttribute('max', maxLengte);
+document.getElementById("maxLengte").setAttribute('min', minLengte);
+document.getElementById("maxLengte").setAttribute('max', maxLengte);
 
-    document.getElementById("minGewicht").setAttribute('min', minGewicht);
-    document.getElementById("minGewicht").setAttribute('max', maxGewicht);
-    document.getElementById("maxGewicht").setAttribute('min', minGewicht);
-    document.getElementById("maxGewicht").setAttribute('max', maxGewicht);
+document.getElementById("minGewicht").setAttribute('min', minGewicht);
+document.getElementById("minGewicht").setAttribute('max', maxGewicht);
+document.getElementById("maxGewicht").setAttribute('min', minGewicht);
+document.getElementById("maxGewicht").setAttribute('max', maxGewicht);
 
-    document.getElementById("minLeeftijd").setAttribute('min', minLeeftijd);
-    document.getElementById("minLeeftijd").setAttribute('max', maxLeeftijd);
-    document.getElementById("maxLeeftijd").setAttribute('min', minLeeftijd);
-    document.getElementById("maxLeeftijd").setAttribute('max', maxLeeftijd);
+document.getElementById("minLeeftijd").setAttribute('min', minLeeftijd);
+document.getElementById("minLeeftijd").setAttribute('max', maxLeeftijd);
+document.getElementById("maxLeeftijd").setAttribute('min', minLeeftijd);
+document.getElementById("maxLeeftijd").setAttribute('max', maxLeeftijd);
 };
 
 
@@ -179,6 +179,57 @@ function validateInput() {
         return false;
     } else {
         /* document.getElementById("inputFout").style.display = "none";  */
-        return true;
+
+        if (Number(document.getElementById("minLeeftijd").value) > Number(document.getElementById("maxLeeftijd").value)) {
+            document.getElementById("minLeeftijd").focus();
+            return false;
+        } else {
+            return true;
+        };
+
+
     };
 };
+
+// DEEL YANNIS 
+
+//function om juiste waarde op te halen
+
+document.getElementById('zoeken').addEventListener('click', function (e) {
+
+    let geslacht = document.getElementById('sexe').value;
+    let oogkleur = document.getElementById('oogkleur').value;
+    let haarkleur = document.getElementById('haarkleur').value;
+    let beroep = document.getElementById('beroep').value;
+
+    console.log(geslacht, oogkleur, haarkleur, beroep);
+
+    let rangeMinAge = document.getElementById('minLeeftijd').value;
+    let rangeMaxAge = document.getElementById('maxLeeftijd').value;
+
+    console.log(rangeMinAge, rangeMaxAge);                              //test
+
+    /*let rangeMinGeboortedatum = document.getElementById('input11_1').value;
+    let rangeMaxGeboortedatum = document.getElementById('input11_2').value;*/
+
+    let rangeMinGewicht = document.getElementById('minGewicht').value;
+    let rangeMaxGewicht = document.getElementById('maxGewicht').value;
+    let rangeMinGrootte = document.getElementById('minLengte').value;
+    let rangeMaxGrootte = document.getElementById('maxLengte').value;
+
+    let url = "https://scrumserver.tenobe.org/scrum/api" + '/profiel/search.php/'
+    url += '?sexe=' + geslacht + '&oogkleur=' + oogkleur + '&haarkleur=' + haarkleur + '&beroep=' + beroep;
+    /*url += '&geboortedatumOperator=range&rangeMinGeboortedatum=' + rangeMinGeboortedatum + '&rangeMaxGeboortedatum=' + rangeMaxGeboortedatum;*/
+    url += '&gewichtOperator=range&rangeMinGewicht=' + rangeMinGewicht + '&rangeMaxGewicht=' + rangeMaxGewicht;
+    url += '&grootteOperator=range&rangeMinGrootte=' + rangeMinGrootte + '&rangeMaxGrootte=' + rangeMaxGrootte;
+
+
+    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
+    fetch(url)
+        .then(function (resp) { return resp.json(); })
+        .then(function (data) { console.log(data); })
+        .catch(function (error) { console.log(error); });
+}
+)
+
+// EINDE DEEL YANNIS
