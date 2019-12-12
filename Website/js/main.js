@@ -85,3 +85,42 @@ function verwerkUsers(users) {
         }
     )
 };
+
+//function om juiste waarde op te halen
+
+document.getElementById('zoeken').addEventListener('click', function (e) {
+
+    let geslacht  =  document.getElementById('sexe').value;
+    let oogkleur = document.getElementById('oogkleur').value;
+    let haarkleur = document.getElementById('haarkleur').value;
+    let beroep = document.getElementById('beroep').value;
+
+    console.log(geslacht, oogkleur, haarkleur, beroep);
+
+    let rangeMinAge = document.getElementById('minLeeftijd').value;
+    let rangeMaxAge = document.getElementById('maxLeeftijd').value;
+
+    console.log(rangeMinAge, rangeMaxAge);                              //test
+
+    /*let rangeMinGeboortedatum = document.getElementById('input11_1').value;
+    let rangeMaxGeboortedatum = document.getElementById('input11_2').value;*/
+    
+    let rangeMinGewicht = document.getElementById('minGewicht').value;
+    let rangeMaxGewicht = document.getElementById('maxGewicht').value;
+    let rangeMinGrootte = document.getElementById('minLengte').value;
+    let rangeMaxGrootte = document.getElementById('maxLengte').value;
+
+    let url = "https://scrumserver.tenobe.org/scrum/api" + '/profiel/search.php/'
+    url += '?sexe='+ geslacht + '&oogkleur=' + oogkleur + '&haarkleur=' + haarkleur + '&beroep=' + beroep;
+    /*url += '&geboortedatumOperator=range&rangeMinGeboortedatum=' + rangeMinGeboortedatum + '&rangeMaxGeboortedatum=' + rangeMaxGeboortedatum;*/
+    url += '&gewichtOperator=range&rangeMinGewicht=' + rangeMinGewicht + '&rangeMaxGewicht=' + rangeMaxGewicht;
+    url += '&grootteOperator=range&rangeMinGrootte=' + rangeMinGrootte + '&rangeMaxGrootte=' + rangeMaxGrootte;
+    
+
+    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
+    fetch(url)
+        .then(function (resp) { return resp.json(); })
+        .then(function (data) { console.log(data); })
+        .catch(function (error) { console.log(error); });
+}
+)
