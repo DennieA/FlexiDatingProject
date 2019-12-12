@@ -44,11 +44,11 @@ function submit() {
     let geboortedatum = document.getElementById("geboortedatum").value;
     let email = document.getElementById("email").value;
 
-    let foto = "/images/" + document.getElementById("foto");
+    let foto = "/images/" + document.getElementById("foto").files[0].name;
 
     let beroep = document.getElementById("beroep").value;
 
-    for (const f of document.getElementsByName("geslacht").value)
+    for (const f of document.getElementsByName("geslacht"))
        { 
            if(f.checked)
            sexe = f.value;
@@ -72,6 +72,7 @@ function submit() {
         grootte === "" || gewicht === "" || wachtwoord === "") {
         window.alert(" Gelieve alle velden in te vullen! ");
        
+        
     } else {
         let data = ({
             familienaam: familienaam,
