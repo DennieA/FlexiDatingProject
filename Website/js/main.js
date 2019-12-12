@@ -179,6 +179,14 @@ function validateInput() {
         return false;
     } else {
         /* document.getElementById("inputFout").style.display = "none";  */
-        return true;
+
+        if (Number(document.getElementById("minLeeftijd").value) > Number(document.getElementById("maxLeeftijd").value)) {
+            document.getElementById("minLeeftijd").focus();
+            return false;
+        } else {
+            return true;
+        };
+
+
     };
 };
