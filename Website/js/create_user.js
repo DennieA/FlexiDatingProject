@@ -39,16 +39,16 @@ function initialisation() {
 function submit() {
     let sexe = "";
 
-    let familienaam = document.getElementById("familienaam");
-    let voornaam = document.getElementById("voornaam");
-    let geboortedatum = document.getElementById("geboortedatum");
-    let email = document.getElementById("email");
+    let familienaam = document.getElementById("familienaam").value;
+    let voornaam = document.getElementById("voornaam").value;
+    let geboortedatum = document.getElementById("geboortedatum").value;
+    let email = document.getElementById("email").value;
 
     let foto = "/images/" + document.getElementById("foto");
 
-    let beroep = document.getElementById("beroep");
+    let beroep = document.getElementById("beroep").value;
 
-    for (const f of document.getElementsByName("geslacht"))
+    for (const f of document.getElementsByName("geslacht").value)
        { 
            if(f.checked)
            sexe = f.value;
@@ -58,9 +58,9 @@ function submit() {
 
     let haarkleur = document.getElementById("haarkleur");
     let oogkleur = document.getElementById("oogkleur");
-    let grootte = document.getElementById("grootte");
-    let gewicht = document.getElementById("gewicht");
-    let wachtwoord = document.getElementById("wachtwoord");
+    let grootte = document.getElementById("grootte").value;
+    let gewicht = document.getElementById("gewicht").value;
+    let wachtwoord = document.getElementById("wachtwoord").value;
     let lovecoins = 0;
 
     let selectedHaarkleur = haarkleur.options[haarkleur.selectedIndex].innerHTML;
