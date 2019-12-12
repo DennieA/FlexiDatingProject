@@ -13,24 +13,30 @@ let oogkleuren = [
     "blauw", "groen", "bruin", "hazelnoot", "grijs", "groen-grijs", "grijsgroen", "amber",
 ];
 
-const haarkleurId = document.getElementById("");
-const OogkleurId = document.getElementById("");
+const haarkleurId = document.getElementById("haarkleur");
+const OogkleurId = document.getElementById("oogkleur");
 
 //function fill dropdowns
 function initialisation() {
 
     for (let teller = 0; teller < haarkleuren.length; teller++) {
         let nieuweHaarkleur = document.createElement("option");
-        nieuweHaarkleur.text = haarkleuren[teller].naam;
+        nieuweHaarkleur.text = haarkleuren[teller];
         haarkleurId.add(nieuweHaarkleur);
     };
 
     for (let teller = 0; teller < oogkleuren.length; teller++) {
         let nieuweOogkleur = document.createElement("option");
-        nieuweOogkleur.text = oogkleuren[teller].naam;
+        nieuweOogkleur.text = oogkleuren[teller];
         haarkleurId.add(nieuweOogkleur);
     };
 };
 
 
+
+
+
+
 initialisation();
+
+document.getElementById("submit").onclick = submit;
