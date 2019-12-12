@@ -136,8 +136,6 @@ function verwerkUsers(users) {
         }
     )
 
-};
-
 document.getElementById("minLengte").setAttribute('min', minLengte);
 document.getElementById("minLengte").setAttribute('max', maxLengte);
 document.getElementById("maxLengte").setAttribute('min', minLengte);
