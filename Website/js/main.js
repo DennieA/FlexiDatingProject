@@ -151,3 +151,34 @@ function verwerkUsers(users) {
     document.getElementById("maxLeeftijd").setAttribute('min', minLeeftijd);
     document.getElementById("maxLeeftijd").setAttribute('max', maxLeeftijd);
 };
+
+
+
+/*Event handler button "Zoeken". */
+document.getElementById("zoeken").onclick = function () {
+    if (validateInput()) {
+        /* Toon ideale partners. */
+        window.alert("hier komen de partners");
+    };
+};
+
+/* Valideer input van de user. */
+function validateInput() {
+    /* Retrieve correct and incorrect inputs. */
+    const correcteElementen = document.querySelectorAll("input:valid,select:valid");
+    const foutieveElementen = document.querySelectorAll("input:invalid,select:invalid");
+
+    /* Show the faulty inputs as red. */
+    foutieveElementen.forEach(element => element.classList.add("fout"));
+    correcteElementen.forEach(element => element.classList.remove("fout"));
+
+    /* Zet de focus op het eerte foutieve element. Toon foutboodschap. */
+    if (foutieveElementen.length !== 0) {
+        /* document.getElementById("inputFout").style.display = "inline";  */
+        foutieveElementen[0].focus();
+        return false;
+    } else {
+        /* document.getElementById("inputFout").style.display = "none";  */
+        return true;
+    };
+};
