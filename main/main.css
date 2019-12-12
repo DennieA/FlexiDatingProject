@@ -1,0 +1,34 @@
+h1 {
+    text-align: center;
+    color: #ffffff85;
+    font-size: 500%;
+
+}
+
+#container {
+    width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+#head {
+    height: 230px;
+    padding: 1em;
+    background-image: url(test.jpg);
+    background-repeat: no-repeat;
+}
+
+#mid {
+    padding: 0 1em;
+    margin-bottom: 25px;
+}
+
+#foot {
+    bottom: 0;
+    width: 1000px;
+    background: #93bee5;
+    text-align: center;
+    color: #ffffff;
+    padding: 1em 0;
+    margin: 0 auto;
+}
