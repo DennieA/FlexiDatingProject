@@ -136,20 +136,20 @@ function verwerkUsers(users) {
         }
     )
 
-document.getElementById("minLengte").setAttribute('min', minLengte);
-document.getElementById("minLengte").setAttribute('max', maxLengte);
-document.getElementById("maxLengte").setAttribute('min', minLengte);
-document.getElementById("maxLengte").setAttribute('max', maxLengte);
+    document.getElementById("minLengte").setAttribute('min', minLengte);
+    document.getElementById("minLengte").setAttribute('max', maxLengte);
+    document.getElementById("maxLengte").setAttribute('min', minLengte);
+    document.getElementById("maxLengte").setAttribute('max', maxLengte);
 
-document.getElementById("minGewicht").setAttribute('min', minGewicht);
-document.getElementById("minGewicht").setAttribute('max', maxGewicht);
-document.getElementById("maxGewicht").setAttribute('min', minGewicht);
-document.getElementById("maxGewicht").setAttribute('max', maxGewicht);
+    document.getElementById("minGewicht").setAttribute('min', minGewicht);
+    document.getElementById("minGewicht").setAttribute('max', maxGewicht);
+    document.getElementById("maxGewicht").setAttribute('min', minGewicht);
+    document.getElementById("maxGewicht").setAttribute('max', maxGewicht);
 
-document.getElementById("minLeeftijd").setAttribute('min', minLeeftijd);
-document.getElementById("minLeeftijd").setAttribute('max', maxLeeftijd);
-document.getElementById("maxLeeftijd").setAttribute('min', minLeeftijd);
-document.getElementById("maxLeeftijd").setAttribute('max', maxLeeftijd);
+    document.getElementById("minLeeftijd").setAttribute('min', minLeeftijd);
+    document.getElementById("minLeeftijd").setAttribute('max', maxLeeftijd);
+    document.getElementById("maxLeeftijd").setAttribute('min', minLeeftijd);
+    document.getElementById("maxLeeftijd").setAttribute('max', maxLeeftijd);
 };
 
 
@@ -158,7 +158,7 @@ document.getElementById("maxLeeftijd").setAttribute('max', maxLeeftijd);
 document.getElementById("zoeken").onclick = function () {
     if (validateInput()) {
         /* Toon ideale partners. */
-        window.alert("hier komen de partners");
+        zoekPartners();
     };
 };
 
@@ -182,8 +182,12 @@ function validateInput() {
 
         if (Number(document.getElementById("minLeeftijd").value) > Number(document.getElementById("maxLeeftijd").value)) {
             document.getElementById("minLeeftijd").focus();
+            document.getElementById("minLeeftijd").classList.add("fout");
+            document.getElementById("maxLeeftijd").classList.add("fout");
             return false;
         } else {
+            document.getElementById("minLeeftijd").classList.remove("fout");
+            document.getElementById("maxLeeftijd").classList.remove("fout");
             return true;
         };
 
@@ -195,8 +199,8 @@ function validateInput() {
 
 //function om juiste waarde op te halen
 
-document.getElementById('zoeken').addEventListener('click', function (e) {
-
+/* document.getElementById('zoeken').addEventListener('click', function (e) { */
+function zoekPartners() {
     let geslacht = document.getElementById('sexe').value;
     let oogkleur = document.getElementById('oogkleur').value;
     let haarkleur = document.getElementById('haarkleur').value;
@@ -207,7 +211,7 @@ document.getElementById('zoeken').addEventListener('click', function (e) {
     let rangeMinAge = document.getElementById('minLeeftijd').value;
     let rangeMaxAge = document.getElementById('maxLeeftijd').value;
 
-    console.log(rangeMinAge, rangeMaxAge);                              //test
+    console.log(rangeMinAge, rangeMaxAge); //test
 
     /*let rangeMinGeboortedatum = document.getElementById('input11_1').value;
     let rangeMaxGeboortedatum = document.getElementById('input11_2').value;*/
@@ -226,10 +230,15 @@ document.getElementById('zoeken').addEventListener('click', function (e) {
 
     //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
     fetch(url)
-        .then(function (resp) { return resp.json(); })
-        .then(function (data) { console.log(data); })
-        .catch(function (error) { console.log(error); });
-}
-)
+        .then(function (resp) {
+            return resp.json();
+        })
+        .then(function (data) {
+            console.log(data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
 
 // EINDE DEEL YANNIS
