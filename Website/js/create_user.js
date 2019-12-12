@@ -28,7 +28,7 @@ function initialisation() {
     for (let teller = 0; teller < oogkleuren.length; teller++) {
         let nieuweOogkleur = document.createElement("option");
         nieuweOogkleur.text = oogkleuren[teller];
-        haarkleurId.add(nieuweOogkleur);
+        OogkleurId.add(nieuweOogkleur);
     };
 };
 
