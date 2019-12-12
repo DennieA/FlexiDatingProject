@@ -16,8 +16,8 @@ document.getElementById("button").onclick = function() {
 
 function login() {
     let data = {
-        nickname: nickname,
-        wachtwoord: wachtwoord
+        nickname: nickname.value,
+        wachtwoord: wachtwoord.value
     }
     let request = new Request(url, {
         method: 'POST',
@@ -28,12 +28,14 @@ function login() {
     });
 
     fetch(request)
-        .then(function (resp) { return resp.json();})
+        .then(function (response) { return response.json();})
         .then(function (data) {
-            if (data.message == 'Authorized')
-                console.log("Correcte gegevens");
+            if (data.message == 'Authorized') {
+                sessionStorage.setItem("gebruiker", nickname.value);
+                window.location.href = "../main.html";
+            }
             else {
-                console.log("Verkeerde gegevens");
+                alert("Verkeerde gegevens!")
             }
         })
         .catch (function (error) { console.log(error); });
