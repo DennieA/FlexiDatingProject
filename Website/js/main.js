@@ -304,7 +304,9 @@ function GebruikersGegevens(data) {
     const tableRowHead = tableResults.insertRow();             //dit zou table header moeten zijn
     const sterrenbeeldCell = tableRowHead.insertCell();
     sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
-    const fotoCell = tableRowHead.insertCell();
+    const nicknameCell = tableRowHead.insertCell();
+    nicknameCell.outerHTML = "<th>Nickname</th>";
+    /*const fotoCell = tableRowHead.insertCell();
     fotoCell.outerHTML = "<th>Foto</th>";
     const idCell = tableRowHead.insertCell();
     idCell.outerHTML = "<th>ID</th>";
@@ -315,7 +317,7 @@ function GebruikersGegevens(data) {
     const geboorteCell = tableRowHead.insertCell();
     geboorteCell.outerHTML = "<th>Geboortedatum</th>";
     const emailCell= tableRowHead.insertCell();
-    emailCell.outerHTML = "<th>E-mail</th>";
+    emailCell.outerHTML = "<th>E-mail</th>";*/
     const beroepCell = tableRowHead.insertCell();
     beroepCell.outerHTML= "<th>Beroep</th>";
     const sexeCell = tableRowHead.insertCell();
@@ -325,28 +327,30 @@ function GebruikersGegevens(data) {
     const oogkleurCell = tableRowHead.insertCell();
     oogkleurCell.outerHTML = "<th>Oogkleur</th>";
     const grootteCell = tableRowHead.insertCell();
-    grootteCell.outerHTML = "<th>Lengte</th>";
+    grootteCell.outerHTML = "<th>Lengte (kg)</th>";
     const gewichtCell = tableRowHead.insertCell();
-    gewichtCell.outerHTML = "<th>Gewicht</th>";
+    gewichtCell.outerHTML = "<th>Gewicht (cm)</th>";
 
     //body
 
     for (const el of data) {
 
-
         const tableRowBody = tableResults.insertRow();
 
         const sterrenbeeldCell = tableRowBody.insertCell();
-        sterrenbeeldCell.innerHTML = "sterrenbeeld";
+        sterrenbeeldCell.innerHTML = getZodiacSign(el.geboortedatum);
 
-        const fotoCell = tableRowBody.insertCell();
+        const nicknameCell = tableRowBody.insertCell();
+        nicknameCell.innerText = el.nickname;
+
+        /*const fotoCell = tableRowBody.insertCell();           //`<img src="${fotoPlusEffect}">`
         fotoCell.innerHTML = el.foto;
 
         const idCell = tableRowBody.insertCell();
         idCell.innerText = el.id;
 
         const voornaamCell = tableRowBody.insertCell();
-        voornaamCell.innerText = el.voornaam;                                //`<img src="${fotoPlusEffect}">`
+        voornaamCell.innerText = el.voornaam;                              
 
         const familienaamCell = tableRowBody.insertCell();
         familienaamCell.innerText = el.familienaam;
@@ -355,7 +359,7 @@ function GebruikersGegevens(data) {
         geboorteCell.innerText = el.geboortedatum;
 
         const emailCell = tableRowBody.insertCell();
-        emailCell.innerText = el.email;
+        emailCell.innerText = el.email;*/
 
         const beroepCell = tableRowBody.insertCell();
         beroepCell.innerText = el.beroep;
@@ -377,10 +381,49 @@ function GebruikersGegevens(data) {
 
     }
 
-
     function clearBox(elementId)                        //OK
     {
         document.getElementById(elementId).innerHTML = "";
     }
 }
 // EINDE DEEL YANNIS
+
+
+
+
+function getZodiacSign(date) {
+
+    const day = date.slice(8,10);
+    const month = date.slice(5,7);
+
+    console.log("day", day)
+    console.log("month", month)
+
+    // date uitsplitsen in day en month
+  
+    if((month == 1 && day <= 20) || (month == 12 && day >=22)) {
+      return "Steenbok";
+    } else if ((month == 1 && day >= 21) || (month == 2 && day <= 19)) {
+      return "Waterman";
+    } else if((month == 2 && day >= 20) || (month == 3 && day <= 20)) {
+      return "Vis";
+    } else if((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
+      return "Ram";
+    } else if((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
+      return "Stier";
+    } else if((month == 5 && day >= 21) || (month == 6 && day <= 21)) {
+      return "Tweeling";
+    } else if((month == 6 && day >= 22) || (month == 7 && day <= 23)) {
+      return "Kreeft";
+    } else if((month == 7 && day >= 24) || (month == 8 && day <= 23)) {
+      return "Leeuw";
+    } else if((month == 8 && day >= 24) || (month == 9 && day <= 22)) {
+      return "Maagd";
+    } else if((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
+      return "Weegschaal";
+    } else if((month == 10 && day >= 23) || (month == 11 && day <= 22)) {
+      return "Schorpioen";
+    } else if((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
+      return "Boogschutter";
+    }
+  }
