@@ -1,17 +1,45 @@
 "use strict";
 
-let user = sessionStorage.getItem("gebruiker");
+////////Login nakijken
+let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
+fetch(loginUrl)
+    .then(function (response){return response.json();})
+    .then(loginCheck)
+    .catch(function (error){console.log(error);});
+
+function loginCheck (data){
+    for (let el of data) {
+        if (sessionStorage.getItem("userId") === el.id) {
+            let wachtwoord = el.wachtwoord;
+            let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
+            if (sessionStorage.getItem("wachtwoord") !== encryptedWachtwoord) {
+                window.location.href = "../Website/index.html";
+            }
+        }
+    }
+}
+
+if (!sessionStorage.getItem("userId") || !sessionStorage.getItem("wachtwoord")){
+    window.location.href = "../Website/index.html";
+}
+/////////
+
+////////Logout
+function logout() {
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("wachtwoord");
+    window.location.href = "../Website/index.html";
+}
+/////////
+
+let user = sessionStorage.getItem("userId");
 
 let hoofdDiv = document.getElementById("mid");
-
-let nickname = document.createElement("h2");
-nickname.innerText = "Hello "+ user;
-nickname.id = "nickname";
-hoofdDiv.appendChild(nickname);
  
 let voornaam = "";
 let familienaam = "";
 let geboortedatum = "";
+let nickname = "";
 let email = "";
 let foto = "";
 let beroep = "";
@@ -28,10 +56,11 @@ fetch(rooturl+"/profiel/read.php").then(function (resp){return resp.json()}).the
 
 function GebruikersGegevens (data){
     for (let el of data)
-    if (el.nickname === user)
+    if (el.id === user)
     {
         voornaam = el.voornaam;
         familienaam = el.familienaam;
+        nickname = el.nickname;
         geboortedatum = el.geboortedatum;
         email = el.email;
         foto = el.foto;
@@ -43,6 +72,11 @@ function GebruikersGegevens (data){
         gewicht = el.gewicht;
         lovecoins = el.lovecoins;
     }
+let nicknameVeld = document.createElement("h2");
+nicknameVeld.innerText = "Hello "+ nickname;
+nicknameVeld.id = "nickname";
+hoofdDiv.appendChild(nicknameVeld);
+
 let voornaamVeld = document.createElement("h3");
 voornaamVeld.innerText = voornaam;
 voornaamVeld.id = "voornaam";
