@@ -276,6 +276,7 @@ function zoekPartners() {
     let urlGewichtSubstring = "";
     let urlGrootteSubstring = "";
 
+    /* Supply search API met interface parameters voor leeftijd */
     if (document.getElementById("minLeeftijd").value !== "") {
         rangeMaxGeboortedatum = createDateLeeftijd(0, 0, -Number(document.getElementById("minLeeftijd").value));
         rangeMaxGeboortedatumYYYYMMDD = `${rangeMaxGeboortedatum.getFullYear()}-${(rangeMaxGeboortedatum.getMonth()+1)}-${rangeMaxGeboortedatum.getDate()}`;
@@ -298,8 +299,7 @@ function zoekPartners() {
         urlGeboortedatumSubstring = '&geboortedatumOperator=gt&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
     };
 
-    console.log(urlGeboortedatumSubstring);
-
+    /* Supply search API met interface parameters voor gewicht */
     let rangeMinGewicht = document.getElementById('minGewicht').value;
     let rangeMaxGewicht = document.getElementById('maxGewicht').value;
 
@@ -315,33 +315,27 @@ function zoekPartners() {
         urlGewichtSubstring = '&gewichtOperator=steq&gewicht=' + rangeMaxGewicht;
     };
 
-    console.log(urlGewichtSubstring);
-
-
-
+    /* Supply search API met interface parameters voor grootte */
     let rangeMinGrootte = document.getElementById('minLengte').value;
     let rangeMaxGrootte = document.getElementById('maxLengte').value;
 
     if ((document.getElementById("minLengte").value !== "") && (document.getElementById("maxLengte").value !== "")) {
-        urlGrootteSubstring = '&grootteOperator =range&rangeMinGrootte=' + rangeMinGrootte + '&rangeMaxGrootte =' + rangeMaxGrootte;
+        urlGrootteSubstring = '&grootteOperator=range&rangeMinGrootte=' + rangeMinGrootte + '&rangeMaxGrootte=' + rangeMaxGrootte;
     };
 
     if ((document.getElementById("minLengte").value !== "") && (document.getElementById("maxLengte").value === "")) {
-        urlGrootteSubstring = '&grootteOperator =gteq&grootte=' + rangeMinGrootte;
+        urlGrootteSubstring = '&grootteOperator=gteq&grootte=' + rangeMinGrootte;
     };
 
     if ((document.getElementById("minLengte").value === "") && (document.getElementById("maxLengte").value !== "")) {
-        urlGrootteSubstring = '&grootteOperator =steq&grootte=' + rangeMaxGrootte;
+        urlGrootteSubstring = '&grootteOperator=steq&grootte=' + rangeMaxGrootte;
     };
-
-    console.log(urlGrootteSubstring);
-
 
     let url = "https://scrumserver.tenobe.org/scrum/api" + '/profiel/search.php/'
     url += '?sexe=' + geslacht + '&oogkleur=' + oogkleur + '&haarkleur=' + haarkleur + '&beroep=' + beroep;
     url += urlGeboortedatumSubstring;
-    url += '&gewichtOperator=range&rangeMinGewicht=' + rangeMinGewicht + '&rangeMaxGewicht=' + rangeMaxGewicht;
-    url += '&grootteOperator=range&rangeMinGrootte=' + rangeMinGrootte + '&rangeMaxGrootte=' + rangeMaxGrootte;
+    url += urlGewichtSubstring;
+    url += urlGrootteSubstring;
 
     //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
     fetch(url)
