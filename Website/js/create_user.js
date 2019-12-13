@@ -38,14 +38,14 @@ function initialisation() {
 //function submit 
 function submit() {
     let sexe = "";
-
     let familienaam = document.getElementById("familienaam").value;
     let voornaam = document.getElementById("voornaam").value;
+    
+    let nickname = document.getElementById("nickname").value;
+
     let geboortedatum = document.getElementById("geboortedatum").value;
     let email = document.getElementById("email").value;
-
     let foto = "/images/" + document.getElementById("foto").files[0].name;
-
     let beroep = document.getElementById("beroep").value;
 
     for (const f of document.getElementsByName("geslacht"))
@@ -61,19 +61,21 @@ function submit() {
     let grootte = document.getElementById("grootte").value;
     let gewicht = document.getElementById("gewicht").value;
     let wachtwoord = document.getElementById("wachtwoord").value;
+    let check = document.getElementById("check").value;
     let lovecoins = 0;
 
     let selectedHaarkleur = haarkleur.options[haarkleur.selectedIndex].innerHTML;
     let selectedoogkleur = oogkleur.options[oogkleur.selectedIndex].innerHTML;
 
    
-    if (familienaam === "" || voornaam === "" || geboortedatum === "" ||
+    if (familienaam === "" || voornaam === "" || nickname === "" || geboortedatum === "" ||
         email === "" || foto === "" || beroep === "" || sexe === "" ||
         grootte === "" || gewicht === "" || wachtwoord === "") {
         window.alert(" Gelieve alle velden in te vullen! ");
-       
-        
     } else {
+        if (wachtwoord !== check)
+        window.alert("Wachtwoord en Check wachtwoord moeten gelijk zijn");
+        else {
         let data = ({
             familienaam: familienaam,
             voornaam: voornaam,
@@ -90,6 +92,7 @@ function submit() {
             wachtwoord: wachtwoord,
             lovecoins: lovecoins
         });
+
     
         let url = rooturl + '/profiel/create.php';
         var request = new Request(url, {
@@ -103,12 +106,14 @@ function submit() {
             .then(function (resp) { return resp.json(); })
             .then(function (data) { console.log(data); })
             .catch(function (error) { console.log(error); });
+
+
     }
-
-
-
+    }
+    
 
 };
+
 
 
 initialisation();
