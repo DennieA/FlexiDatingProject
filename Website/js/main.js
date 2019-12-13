@@ -244,19 +244,33 @@ function zoekPartners() {
     let rangeMaxGeboortedatum = "";
     let rangeMaxGeboortedatumYYYYMMDD = "";
     let rangeMinGeboortedatumYYYYMMDD = "";
+    let urlGeboortedatumSubstring = "";
 
     if (document.getElementById("minLeeftijd").value !== "") {
         rangeMaxGeboortedatum = createDateLeeftijd(0, 0, -Number(document.getElementById("minLeeftijd").value));
         rangeMaxGeboortedatumYYYYMMDD = `${rangeMaxGeboortedatum.getFullYear()}-${(rangeMaxGeboortedatum.getMonth()+1)}-${rangeMaxGeboortedatum.getDate()}`;
     };
-    
+
     if (document.getElementById("maxLeeftijd").value !== "") {
         rangeMinGeboortedatum = createDateLeeftijd(1, 0, -(Number(document.getElementById("maxLeeftijd").value) + 1));
         rangeMinGeboortedatumYYYYMMDD = `${rangeMinGeboortedatum.getFullYear()}-${(rangeMinGeboortedatum.getMonth()+1)}-${rangeMinGeboortedatum.getDate()}`;
     };
 
+    if ((document.getElementById("minLeeftijd").value !== "") && (document.getElementById("maxLeeftijd").value !== "")) {
+        urlGeboortedatumSubstring = '&geboortedatumOperator=range&rangeMinGeboortedatum=' + rangeMinGeboortedatumYYYYMMDD + '&rangeMaxGeboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
+    };
+
+    if ((document.getElementById("minLeeftijd").value !== "") && (document.getElementById("maxLeeftijd").value === "")) {
+        urlGeboortedatumSubstring = '&geboortedatumOperator=st&geboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
+    };
+
+    if ((document.getElementById("minLeeftijd").value === "") && (document.getElementById("maxLeeftijd").value !== "")) {
+        urlGeboortedatumSubstring = '&geboortedatumOperator=gt&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
+    };
+
     /* console.log("Min GeboorteDatum (max leeftijd)", rangeMinGeboortedatum);  */
     /* console.log("Max GeboorteDatum (min leeftijd)", rangeMaxGeboortedatum);  */
+    console.log(urlGeboortedatumSubstring);
 
     /*let rangeMinGeboortedatum = document.getElementById('input11_1').value;
     let rangeMaxGeboortedatum = document.getElementById('input11_2').value;*/
@@ -268,7 +282,7 @@ function zoekPartners() {
 
     let url = "https://scrumserver.tenobe.org/scrum/api" + '/profiel/search.php/'
     url += '?sexe=' + geslacht + '&oogkleur=' + oogkleur + '&haarkleur=' + haarkleur + '&beroep=' + beroep;
-    url += '&geboortedatumOperator=range&rangeMinGeboortedatum=' + rangeMinGeboortedatumYYYYMMDD + '&rangeMaxGeboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
+    url += urlGeboortedatumSubstring;
     url += '&gewichtOperator=range&rangeMinGewicht=' + rangeMinGewicht + '&rangeMaxGewicht=' + rangeMaxGewicht;
     url += '&grootteOperator=range&rangeMinGrootte=' + rangeMinGrootte + '&rangeMaxGrootte=' + rangeMaxGrootte;
 
@@ -279,8 +293,8 @@ function zoekPartners() {
         })
         .then(function (data) {
             console.log(data);
-            GebruikersGegevens (data)
-                
+            GebruikersGegevens(data)
+
         })
         .catch(function (error) {
             console.log(error);
@@ -291,7 +305,7 @@ function GebruikersGegevens(data) {
 
     console.log("data", data);
 
-    clearBox("matches");            //functie die de bestaande innerHTML van een element met ID wist
+    clearBox("matches"); //functie die de bestaande innerHTML van een element met ID wist
 
     //table aanmaken
     const tableResults = document.createElement("table");
@@ -303,7 +317,7 @@ function GebruikersGegevens(data) {
     //table opvullen
     //hoofding
 
-    const tableRowHead = tableResults.insertRow();             //dit zou table header moeten zijn
+    const tableRowHead = tableResults.insertRow(); //dit zou table header moeten zijn
     const sterrenbeeldCell = tableRowHead.insertCell();
     sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
     const nicknameCell = tableRowHead.insertCell();
@@ -321,7 +335,7 @@ function GebruikersGegevens(data) {
     const emailCell= tableRowHead.insertCell();
     emailCell.outerHTML = "<th>E-mail</th>";*/
     const beroepCell = tableRowHead.insertCell();
-    beroepCell.outerHTML= "<th>Beroep</th>";
+    beroepCell.outerHTML = "<th>Beroep</th>";
     const sexeCell = tableRowHead.insertCell();
     sexeCell.outerHTML = "<th>Sexe</th>";
     const haarkleurCell = tableRowHead.insertCell();
@@ -383,8 +397,7 @@ function GebruikersGegevens(data) {
 
     }
 
-    function clearBox(elementId)                        //OK
-    {
+    function clearBox(elementId){
         document.getElementById(elementId).innerHTML = "";
     }
 }
