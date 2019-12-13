@@ -329,9 +329,9 @@ function GebruikersGegevens(data) {
     const oogkleurCell = tableRowHead.insertCell();
     oogkleurCell.outerHTML = "<th>Oogkleur</th>";
     const grootteCell = tableRowHead.insertCell();
-    grootteCell.outerHTML = "<th>Lengte (kg)</th>";
+    grootteCell.outerHTML = "<th>Lengte (cm)</th>";
     const gewichtCell = tableRowHead.insertCell();
-    gewichtCell.outerHTML = "<th>Gewicht (cm)</th>";
+    gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
 
     //body
 
