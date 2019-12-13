@@ -32,7 +32,13 @@
                         <!--<input type="text" id="email"><br>-->
                     </label><br>
                     <label>Foto:<br>
-                        <input type="file" id="foto"><br>
+                        <input type="file" id="foto" onchange="encode();"><br>
+                        <div id="dummy" class="verborgen">
+                        </div>
+                        <div>
+                        <textarea style="width:100%;height:500px;" id="txt" class="verborgen">
+                        </textarea>
+                        </div>
                     </label><br>
                     <label>Beroep:<br>
                         <input type="text" id="beroep"><br>
