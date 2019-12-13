@@ -104,9 +104,11 @@ function submit() {
         });
         fetch(request)
             .then(function (resp) { return resp.json(); })
-            .then(function (data) { console.log(data); })
+            .then(function (data) { console.log(data); window.alert("Gebruiker aangemaakt!"); window.location.href = "index.html"; })
             .catch(function (error) { console.log(error); });
 
+         
+            
 
     }
     }

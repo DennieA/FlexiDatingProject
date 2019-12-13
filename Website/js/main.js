@@ -164,6 +164,7 @@ document.getElementById("zoeken").onclick = function () {
 
 /* Valideer input van de user. */
 function validateInput() {
+    let allesOK = true;
     /* Retrieve correct and incorrect inputs. */
     const correcteElementen = document.querySelectorAll("input:valid,select:valid");
     const foutieveElementen = document.querySelectorAll("input:invalid,select:invalid");
@@ -176,22 +177,43 @@ function validateInput() {
     if (foutieveElementen.length !== 0) {
         /* document.getElementById("inputFout").style.display = "inline";  */
         foutieveElementen[0].focus();
-        return false;
+        allesOK = false;
     } else {
         /* document.getElementById("inputFout").style.display = "none";  */
-
-        if (Number(document.getElementById("minLeeftijd").value) > Number(document.getElementById("maxLeeftijd").value)) {
+        if ((document.getElementById("minLeeftijd").value !== "" && document.getElementById("maxLeeftijd").value !== "") &&
+            (Number(document.getElementById("minLeeftijd").value) > Number(document.getElementById("maxLeeftijd").value))) {
             document.getElementById("minLeeftijd").focus();
             document.getElementById("minLeeftijd").classList.add("fout");
             document.getElementById("maxLeeftijd").classList.add("fout");
-            return false;
+            allesOK = false;
         } else {
             document.getElementById("minLeeftijd").classList.remove("fout");
             document.getElementById("maxLeeftijd").classList.remove("fout");
-            return true;
         };
 
+        if ((document.getElementById("minGewicht").value !== "" && document.getElementById("maxGewicht").value !== "") &&
+            (Number(document.getElementById("minGewicht").value) > Number(document.getElementById("maxGewicht").value))) {
+            document.getElementById("minGewicht").focus();
+            document.getElementById("minGewicht").classList.add("fout");
+            document.getElementById("maxGewicht").classList.add("fout");
+            allesOK = false;
+        } else {
+            document.getElementById("minGewicht").classList.remove("fout");
+            document.getElementById("maxGewicht").classList.remove("fout");
+        };
 
+        if ((document.getElementById("minLengte").value !== "" && document.getElementById("maxLengte").value !== "") &&
+            (Number(document.getElementById("minLengte").value) > Number(document.getElementById("maxLengte").value))) {
+            document.getElementById("minLengte").focus();
+            document.getElementById("minLengte").classList.add("fout");
+            document.getElementById("maxLengte").classList.add("fout");
+            allesOK = false;
+        } else {
+            document.getElementById("minLengte").classList.remove("fout");
+            document.getElementById("maxLengte").classList.remove("fout");
+        };
+
+        return allesOK;
     };
 };
 
