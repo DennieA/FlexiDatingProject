@@ -25,11 +25,11 @@
 /////////
 
 ////////Logout
-// function logout() {
-//     sessionStorage.removeItem("userId");
-//     sessionStorage.removeItem("wachtwoord");
-//     window.location.href = "../Website/index.html";
-// }
+function logout() {
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("wachtwoord");
+    window.location.href = "../Website/index.html";
+}
 /////////
 
 let user = sessionStorage.getItem("userId");
