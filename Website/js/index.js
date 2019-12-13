@@ -1,28 +1,24 @@
 "use strict"
 
-///////login nakijken
-const loginUrl = "https://scrumserver.tenobe.org/scrum/api/profiel/authenticate.php"
-let data = {
-    nickname: sessionStorage.getItem("nickname"),
-    wachtwoord: sessionStorage.getItem("wachtwoord")
-}
-let request = new Request(loginUrl, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: new Headers({
-        'Content-Type': 'application/json'
-    })
-});
+////////Login nakijken
+let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
+fetch(loginUrl)
+    .then(function (response){return response.json();})
+    .then(loginCheck)
+    .catch(function (error){console.log(error);});
 
-fetch(request)
-    .then(function (response) { return response.json();})
-    .then(function (data) {
-        if (data.message == 'Authorized') {
-            window.location.href = "../main.html"
+function loginCheck (data){
+    for (let el of data) {
+        if (sessionStorage.getItem("userId") === el.id) {
+            let wachtwoord = el.wachtwoord;
+            let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
+            if (sessionStorage.getItem("wachtwoord") === encryptedWachtwoord) {
+                window.location.href = "../Website/main.html";
+            }
         }
-    })
-    .catch (function (error) { console.log(error); });
-//////////
+    }
+}
+/////////
 
 const url = "https://scrumserver.tenobe.org/scrum/api/profiel/authenticate.php"
 let nickname = document.getElementById("nickname");
@@ -55,9 +51,9 @@ function login() {
         .then(function (response) { return response.json();})
         .then(function (data) {
             if (data.message == 'Authorized') {
-                sessionStorage.setItem("nickname", nickname.value);
-                sessionStorage.setItem("wachtwoord", wachtwoord.value);
-                window.location.href = "../main.html";
+                sessionStorage.setItem("userId", data.id);
+                sessionStorage.setItem("wachtwoord", CryptoJS.SHA256(wachtwoord.value).toString());
+                window.location.href = "../Website/main.html";
             }
             else {
                 alert("Verkeerde gegevens!")

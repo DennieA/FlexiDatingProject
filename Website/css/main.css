@@ -64,3 +64,54 @@ h1 {
 .fout {
 	background-color: red;
 }
+/*table test*/
+table#tableResults {
+    border: 2px solid #93bee5;
+    background-color: #c9e0f7;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+  }
+  table#tableResults td, table#tableResults th {
+    border: 1px solid rgb(255, 255, 255);
+    padding: 3px 2px;
+  }
+  table#tableResults tbody td {
+    font-size: 13px;
+  }
+  table#tableResults tr:nth-child(even) {
+    background: #dbeaf7;
+  }
+  table#tableResults thead {
+    background: #afd2f3;
+  }
+  table#tableResults th {
+    background: #afd2f3;
+    font-size: 19px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+  }
+  table#tableResults thead th:first-child {
+    border-left: none;
+  }
+  
+  table#tableResults tfoot {
+    font-size: 13px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #afd2f3;
+  }
+  table#tableResults tfoot td {
+    font-size: 13px;
+  }
+  table#tableResults tfoot .links {
+    text-align: right;
+  }
+  table#tableResults tfoot .links a{
+    display: inline-block;
+    background: #FFFFFF;
+    color: #afd2f3;
+    padding: 2px 8px;
+    border-radius: 5px;
+  }

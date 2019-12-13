@@ -91,7 +91,6 @@ function verwerkUsers(users) {
         return Math.abs(age_dt.getUTCFullYear() - 1970);
     }
 
-
     /* Vul de comboBox met de oogkleur items/options. */
     oogkleuren.forEach(
         oogkleur => {
@@ -164,6 +163,7 @@ document.getElementById("zoeken").onclick = function () {
 
 /* Valideer input van de user. */
 function validateInput() {
+    let allesOK = true;
     /* Retrieve correct and incorrect inputs. */
     const correcteElementen = document.querySelectorAll("input:valid,select:valid");
     const foutieveElementen = document.querySelectorAll("input:invalid,select:invalid");
@@ -176,24 +176,54 @@ function validateInput() {
     if (foutieveElementen.length !== 0) {
         /* document.getElementById("inputFout").style.display = "inline";  */
         foutieveElementen[0].focus();
-        return false;
+        allesOK = false;
     } else {
         /* document.getElementById("inputFout").style.display = "none";  */
-
-        if (Number(document.getElementById("minLeeftijd").value) > Number(document.getElementById("maxLeeftijd").value)) {
+        if ((document.getElementById("minLeeftijd").value !== "" && document.getElementById("maxLeeftijd").value !== "") &&
+            (Number(document.getElementById("minLeeftijd").value) > Number(document.getElementById("maxLeeftijd").value))) {
             document.getElementById("minLeeftijd").focus();
             document.getElementById("minLeeftijd").classList.add("fout");
             document.getElementById("maxLeeftijd").classList.add("fout");
-            return false;
+            allesOK = false;
         } else {
             document.getElementById("minLeeftijd").classList.remove("fout");
             document.getElementById("maxLeeftijd").classList.remove("fout");
-            return true;
         };
 
+        if ((document.getElementById("minGewicht").value !== "" && document.getElementById("maxGewicht").value !== "") &&
+            (Number(document.getElementById("minGewicht").value) > Number(document.getElementById("maxGewicht").value))) {
+            document.getElementById("minGewicht").focus();
+            document.getElementById("minGewicht").classList.add("fout");
+            document.getElementById("maxGewicht").classList.add("fout");
+            allesOK = false;
+        } else {
+            document.getElementById("minGewicht").classList.remove("fout");
+            document.getElementById("maxGewicht").classList.remove("fout");
+        };
 
+        if ((document.getElementById("minLengte").value !== "" && document.getElementById("maxLengte").value !== "") &&
+            (Number(document.getElementById("minLengte").value) > Number(document.getElementById("maxLengte").value))) {
+            document.getElementById("minLengte").focus();
+            document.getElementById("minLengte").classList.add("fout");
+            document.getElementById("maxLengte").classList.add("fout");
+            allesOK = false;
+        } else {
+            document.getElementById("minLengte").classList.remove("fout");
+            document.getElementById("maxLengte").classList.remove("fout");
+        };
+
+        return allesOK;
     };
 };
+
+/* Bereken datum in functie van leeftijd */
+function createDateLeeftijd(days, months, years) {
+    var date = new Date();
+    date.setDate(date.getDate() + days);
+    date.setMonth(date.getMonth() + months);
+    date.setFullYear(date.getFullYear() + years);
+    return date;
+}
 
 // DEEL YANNIS 
 
@@ -210,8 +240,20 @@ function zoekPartners() {
 
     let rangeMinAge = document.getElementById('minLeeftijd').value;
     let rangeMaxAge = document.getElementById('maxLeeftijd').value;
+    let rangeMinGeboortedatum = "";
+    let rangeMaxGeboortedatum = "";
 
-    console.log(rangeMinAge, rangeMaxAge); //test
+    if (document.getElementById("minLeeftijd").value !== "") {
+        rangeMaxGeboortedatum = createDateLeeftijd(0, 0, -Number(document.getElementById("minLeeftijd").value));
+    };
+    
+    if (document.getElementById("maxLeeftijd").value !== "") {
+        rangeMinGeboortedatum = createDateLeeftijd(1, 0, -(Number(document.getElementById("maxLeeftijd").value) + 1));
+    };
+
+    console.log(rangeMinAge, rangeMaxAge); /* test */
+    console.log("Min GeboorteDatum (max leeftijd)", rangeMinGeboortedatum); /* test */
+    console.log("Max GeboorteDatum (min leeftijd)", rangeMaxGeboortedatum); /* test */
 
     /*let rangeMinGeboortedatum = document.getElementById('input11_1').value;
     let rangeMaxGeboortedatum = document.getElementById('input11_2').value;*/
@@ -235,10 +277,110 @@ function zoekPartners() {
         })
         .then(function (data) {
             console.log(data);
+            GebruikersGegevens (data)
+                
         })
         .catch(function (error) {
             console.log(error);
         });
 };
 
+function GebruikersGegevens(data) {
+
+    console.log("data", data);
+
+    clearBox("matches");            //functie die de bestaande innerHTML van een element met ID wist
+
+    //table aanmaken
+    const tableResults = document.createElement("table");
+    tableResults.id = "tableResults";
+    tableResults.style.width = "100%";
+    const container = document.getElementById("matches");
+    container.appendChild(tableResults);
+
+    //table opvullen
+    //hoofding
+
+    const tableRowHead = tableResults.insertRow();             //dit zou table header moeten zijn
+    const sterrenbeeldCell = tableRowHead.insertCell();
+    sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
+    const fotoCell = tableRowHead.insertCell();
+    fotoCell.outerHTML = "<th>Foto</th>";
+    const idCell = tableRowHead.insertCell();
+    idCell.outerHTML = "<th>ID</th>";
+    const voornaamCell = tableRowHead.insertCell();
+    voornaamCell.outerHTML = "<th>Voornaam</th>";
+    const familienaamCell = tableRowHead.insertCell();
+    familienaamCell.outerHTML = "<th>Familienaam</th>";
+    const geboorteCell = tableRowHead.insertCell();
+    geboorteCell.outerHTML = "<th>Geboortedatum</th>";
+    const emailCell= tableRowHead.insertCell();
+    emailCell.outerHTML = "<th>E-mail</th>";
+    const beroepCell = tableRowHead.insertCell();
+    beroepCell.outerHTML= "<th>Beroep</th>";
+    const sexeCell = tableRowHead.insertCell();
+    sexeCell.outerHTML = "<th>Sexe</th>";
+    const haarkleurCell = tableRowHead.insertCell();
+    haarkleurCell.outerHTML = "<th>Haarkleur</th>";
+    const oogkleurCell = tableRowHead.insertCell();
+    oogkleurCell.outerHTML = "<th>Oogkleur</th>";
+    const grootteCell = tableRowHead.insertCell();
+    grootteCell.outerHTML = "<th>Lengte</th>";
+    const gewichtCell = tableRowHead.insertCell();
+    gewichtCell.outerHTML = "<th>Gewicht</th>";
+
+    //body
+
+    for (const el of data) {
+
+
+        const tableRowBody = tableResults.insertRow();
+
+        const sterrenbeeldCell = tableRowBody.insertCell();
+        sterrenbeeldCell.innerHTML = "sterrenbeeld";
+
+        const fotoCell = tableRowBody.insertCell();
+        fotoCell.innerHTML = el.foto;
+
+        const idCell = tableRowBody.insertCell();
+        idCell.innerText = el.id;
+
+        const voornaamCell = tableRowBody.insertCell();
+        voornaamCell.innerText = el.voornaam;                                //`<img src="${fotoPlusEffect}">`
+
+        const familienaamCell = tableRowBody.insertCell();
+        familienaamCell.innerText = el.familienaam;
+
+        const geboorteCell = tableRowBody.insertCell();
+        geboorteCell.innerText = el.geboortedatum;
+
+        const emailCell = tableRowBody.insertCell();
+        emailCell.innerText = el.email;
+
+        const beroepCell = tableRowBody.insertCell();
+        beroepCell.innerText = el.beroep;
+
+        const sexeCell = tableRowBody.insertCell();
+        sexeCell.innerText = el.sexe;
+
+        const haarkleurCell = tableRowBody.insertCell();
+        haarkleurCell.innerText = el.haarkleur;
+
+        const oogkleurCell = tableRowBody.insertCell();
+        oogkleurCell.innerText = el.oogkleur;
+
+        const grootteCell = tableRowBody.insertCell();
+        grootteCell.innerText = el.grootte;
+
+        const gewichtCell = tableRowBody.insertCell();
+        gewichtCell.innerText = el.gewicht;
+
+    }
+
+
+    function clearBox(elementId)                        //OK
+    {
+        document.getElementById(elementId).innerHTML = "";
+    }
+}
 // EINDE DEEL YANNIS
