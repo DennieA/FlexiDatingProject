@@ -268,13 +268,13 @@ function zoekPartners() {
     let haarkleur = document.getElementById('haarkleur').value;
     let beroep = document.getElementById('beroep').value;
 
-    console.log(geslacht, oogkleur, haarkleur, beroep);
-
     let rangeMinGeboortedatum = "";
     let rangeMaxGeboortedatum = "";
     let rangeMaxGeboortedatumYYYYMMDD = "";
     let rangeMinGeboortedatumYYYYMMDD = "";
     let urlGeboortedatumSubstring = "";
+    let urlGewichtSubstring = "";
+    let urlGrootteSubstring = "";
 
     if (document.getElementById("minLeeftijd").value !== "") {
         rangeMaxGeboortedatum = createDateLeeftijd(0, 0, -Number(document.getElementById("minLeeftijd").value));
@@ -298,17 +298,44 @@ function zoekPartners() {
         urlGeboortedatumSubstring = '&geboortedatumOperator=gt&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
     };
 
-    /* console.log("Min GeboorteDatum (max leeftijd)", rangeMinGeboortedatum);  */
-    /* console.log("Max GeboorteDatum (min leeftijd)", rangeMaxGeboortedatum);  */
     console.log(urlGeboortedatumSubstring);
-
-    /*let rangeMinGeboortedatum = document.getElementById('input11_1').value;
-    let rangeMaxGeboortedatum = document.getElementById('input11_2').value;*/
 
     let rangeMinGewicht = document.getElementById('minGewicht').value;
     let rangeMaxGewicht = document.getElementById('maxGewicht').value;
+
+    if ((document.getElementById("minGewicht").value !== "") && (document.getElementById("maxGewicht").value !== "")) {
+        urlGewichtSubstring = '&gewichtOperator=range&rangeMinGewicht=' + rangeMinGewicht + '&rangeMaxGewicht=' + rangeMaxGewicht;
+    };
+
+    if ((document.getElementById("minGewicht").value !== "") && (document.getElementById("maxGewicht").value === "")) {
+        urlGewichtSubstring = '&gewichtOperator=gteq&gewicht=' + rangeMinGewicht;
+    };
+
+    if ((document.getElementById("minGewicht").value === "") && (document.getElementById("maxGewicht").value !== "")) {
+        urlGewichtSubstring = '&gewichtOperator=steq&gewicht=' + rangeMaxGewicht;
+    };
+
+    console.log(urlGewichtSubstring);
+
+
+
     let rangeMinGrootte = document.getElementById('minLengte').value;
     let rangeMaxGrootte = document.getElementById('maxLengte').value;
+
+    if ((document.getElementById("minLengte").value !== "") && (document.getElementById("maxLengte").value !== "")) {
+        urlGrootteSubstring = '&grootteOperator =range&rangeMinGrootte=' + rangeMinGrootte + '&rangeMaxGrootte =' + rangeMaxGrootte;
+    };
+
+    if ((document.getElementById("minLengte").value !== "") && (document.getElementById("maxLengte").value === "")) {
+        urlGrootteSubstring = '&grootteOperator =gteq&grootte=' + rangeMinGrootte;
+    };
+
+    if ((document.getElementById("minLengte").value === "") && (document.getElementById("maxLengte").value !== "")) {
+        urlGrootteSubstring = '&grootteOperator =steq&grootte=' + rangeMaxGrootte;
+    };
+
+    console.log(urlGrootteSubstring);
+
 
     let url = "https://scrumserver.tenobe.org/scrum/api" + '/profiel/search.php/'
     url += '?sexe=' + geslacht + '&oogkleur=' + oogkleur + '&haarkleur=' + haarkleur + '&beroep=' + beroep;
