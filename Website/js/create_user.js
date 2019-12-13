@@ -1,4 +1,4 @@
-"use strict"
+
 
 //global variables 
 let haarkleuren = [
@@ -17,9 +17,9 @@ const haarkleurId = document.getElementById("haarkleur");
 const OogkleurId = document.getElementById("oogkleur");
 let rooturl = "https://scrumserver.tenobe.org/scrum/api";
 
+
 //function fill dropdowns
 function initialisation() {
-
     for (let teller = 0; teller < haarkleuren.length; teller++) {
         let nieuweHaarkleur = document.createElement("option");
         nieuweHaarkleur.text = haarkleuren[teller];
@@ -45,7 +45,7 @@ function submit() {
 
     let geboortedatum = document.getElementById("geboortedatum").value;
     let email = document.getElementById("email").value;
-    let foto = "/images/" + document.getElementById("foto").files[0].name;
+    let foto = document.getElementById("foto").files[0].name;
     let beroep = document.getElementById("beroep").value;
 
     for (const f of document.getElementsByName("geslacht"))
@@ -108,11 +108,60 @@ function submit() {
             .catch(function (error) { console.log(error); });
 
 
-    }
-    }
-    
 
+
+
+
+    }
+    }
 };
+
+    function encode() {
+        var selectedfile = document.getElementById("foto").files;
+            if (selectedfile.length > 0) {
+              var imageFile = selectedfile[0];
+              var fileReader = new FileReader();
+             fileReader.onload = function(fileLoadedEvent) {
+                var srcData = fileLoadedEvent.target.result;
+                var newImage = document.createElement('img');
+                newImage.src = srcData;
+                document.getElementById("dummy").innerHTML = newImage.outerHTML;
+                document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
+              }
+              fileReader.readAsDataURL(imageFile);
+            }
+        }
+    
+    
+        let naam = document.getElementById("foto").files[0].name;
+        let afbeelding = document.getElementById("txt").value;
+    
+        let url = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
+    
+        let data = {
+            naam: naam,
+            afbeelding: afbeelding
+        }
+    
+        var request = new Request(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+    
+        fetch(request)
+            .then(function (resp) {                     return resp.json(); })
+            .then(function (data) {
+                console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
+                console.log('     • Foto inladen in IMG');
+                //document.getElementById('uploadResult').src = data.fileURL;
+                console.log('     ==> OK');
+                console.log('==> Klaar');
+            })
+            .catch(function (error) { console.log(error); });
+    
 
 
 

@@ -60,3 +60,7 @@ h1 {
     height: 6em;
 
 }
+.verborgen
+{
+    display: none;
+}
