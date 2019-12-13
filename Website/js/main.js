@@ -242,18 +242,21 @@ function zoekPartners() {
     let rangeMaxAge = document.getElementById('maxLeeftijd').value;
     let rangeMinGeboortedatum = "";
     let rangeMaxGeboortedatum = "";
+    let rangeMaxGeboortedatumYYYYMMDD = "";
+    let rangeMinGeboortedatumYYYYMMDD = "";
 
     if (document.getElementById("minLeeftijd").value !== "") {
         rangeMaxGeboortedatum = createDateLeeftijd(0, 0, -Number(document.getElementById("minLeeftijd").value));
+        rangeMaxGeboortedatumYYYYMMDD = `${rangeMaxGeboortedatum.getFullYear()}-${(rangeMaxGeboortedatum.getMonth()+1)}-${rangeMaxGeboortedatum.getDate()}`;
     };
     
     if (document.getElementById("maxLeeftijd").value !== "") {
         rangeMinGeboortedatum = createDateLeeftijd(1, 0, -(Number(document.getElementById("maxLeeftijd").value) + 1));
+        rangeMinGeboortedatumYYYYMMDD = `${rangeMinGeboortedatum.getFullYear()}-${(rangeMinGeboortedatum.getMonth()+1)}-${rangeMinGeboortedatum.getDate()}`;
     };
 
-    console.log(rangeMinAge, rangeMaxAge); /* test */
-    console.log("Min GeboorteDatum (max leeftijd)", rangeMinGeboortedatum); /* test */
-    console.log("Max GeboorteDatum (min leeftijd)", rangeMaxGeboortedatum); /* test */
+    /* console.log("Min GeboorteDatum (max leeftijd)", rangeMinGeboortedatum);  */
+    /* console.log("Max GeboorteDatum (min leeftijd)", rangeMaxGeboortedatum);  */
 
     /*let rangeMinGeboortedatum = document.getElementById('input11_1').value;
     let rangeMaxGeboortedatum = document.getElementById('input11_2').value;*/
@@ -265,10 +268,9 @@ function zoekPartners() {
 
     let url = "https://scrumserver.tenobe.org/scrum/api" + '/profiel/search.php/'
     url += '?sexe=' + geslacht + '&oogkleur=' + oogkleur + '&haarkleur=' + haarkleur + '&beroep=' + beroep;
-    /*url += '&geboortedatumOperator=range&rangeMinGeboortedatum=' + rangeMinGeboortedatum + '&rangeMaxGeboortedatum=' + rangeMaxGeboortedatum;*/
+    url += '&geboortedatumOperator=range&rangeMinGeboortedatum=' + rangeMinGeboortedatumYYYYMMDD + '&rangeMaxGeboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
     url += '&gewichtOperator=range&rangeMinGewicht=' + rangeMinGewicht + '&rangeMaxGewicht=' + rangeMaxGewicht;
     url += '&grootteOperator=range&rangeMinGrootte=' + rangeMinGrootte + '&rangeMaxGrootte=' + rangeMaxGrootte;
-
 
     //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
     fetch(url)
