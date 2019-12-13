@@ -282,6 +282,8 @@ function GebruikersGegevens(data) {
     //hoofding
 
     const tableRowHead = tableResults.insertRow();             //dit zou table header moeten zijn
+    const sterrenbeeldCell = tableRowHead.insertCell();
+    sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
     const fotoCell = tableRowHead.insertCell();
     fotoCell.outerHTML = "<th>Foto</th>";
     const idCell = tableRowHead.insertCell();
@@ -314,11 +316,14 @@ function GebruikersGegevens(data) {
 
         const tableRowBody = tableResults.insertRow();
 
+        const sterrenbeeldCell = tableRowBody.insertCell();
+        sterrenbeeldCell.innerHTML = "sterrenbeeld";
+
         const fotoCell = tableRowBody.insertCell();
         fotoCell.innerHTML = el.foto;
 
         const idCell = tableRowBody.insertCell();
-        idCell.innerHTML = el.id;
+        idCell.innerText = el.id;
 
         const voornaamCell = tableRowBody.insertCell();
         voornaamCell.innerText = el.voornaam;                                //`<img src="${fotoPlusEffect}">`
