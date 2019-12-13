@@ -91,7 +91,6 @@ function verwerkUsers(users) {
         return Math.abs(age_dt.getUTCFullYear() - 1970);
     }
 
-
     /* Vul de comboBox met de oogkleur items/options. */
     oogkleuren.forEach(
         oogkleur => {
@@ -217,6 +216,15 @@ function validateInput() {
     };
 };
 
+/* Bereken datum in functie van leeftijd */
+function createDateLeeftijd(days, months, years) {
+    var date = new Date();
+    date.setDate(date.getDate() + days);
+    date.setMonth(date.getMonth() + months);
+    date.setFullYear(date.getFullYear() + years);
+    return date;
+}
+
 // DEEL YANNIS 
 
 //function om juiste waarde op te halen
@@ -232,8 +240,20 @@ function zoekPartners() {
 
     let rangeMinAge = document.getElementById('minLeeftijd').value;
     let rangeMaxAge = document.getElementById('maxLeeftijd').value;
+    let rangeMinGeboortedatum = "";
+    let rangeMaxGeboortedatum = "";
 
-    console.log(rangeMinAge, rangeMaxAge); //test
+    if (document.getElementById("minLeeftijd").value !== "") {
+        rangeMaxGeboortedatum = createDateLeeftijd(0, 0, -Number(document.getElementById("minLeeftijd").value));
+    };
+    
+    if (document.getElementById("maxLeeftijd").value !== "") {
+        rangeMinGeboortedatum = createDateLeeftijd(1, 0, -(Number(document.getElementById("maxLeeftijd").value) + 1));
+    };
+
+    console.log(rangeMinAge, rangeMaxAge); /* test */
+    console.log("Min GeboorteDatum (max leeftijd)", rangeMinGeboortedatum); /* test */
+    console.log("Max GeboorteDatum (min leeftijd)", rangeMaxGeboortedatum); /* test */
 
     /*let rangeMinGeboortedatum = document.getElementById('input11_1').value;
     let rangeMaxGeboortedatum = document.getElementById('input11_2').value;*/
