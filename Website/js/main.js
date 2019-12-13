@@ -235,10 +235,105 @@ function zoekPartners() {
         })
         .then(function (data) {
             console.log(data);
+            GebruikersGegevens (data)
+                
         })
         .catch(function (error) {
             console.log(error);
         });
 };
 
+function GebruikersGegevens(data) {
+
+    console.log("data", data);
+
+    clearBox("matches");            //functie die de bestaande innerHTML van een element met ID wist
+
+    //table aanmaken
+    const tableResults = document.createElement("table");
+    tableResults.id = "tableResults";
+    tableResults.style.width = "100%";
+    const container = document.getElementById("matches");
+    container.appendChild(tableResults);
+
+    //table opvullen
+    //hoofding
+
+    const tableRowHead = tableResults.insertRow();             //dit zou table header moeten zijn
+    const fotoCell = tableRowHead.insertCell();
+    fotoCell.outerHTML = "<th>Foto</th>";
+    const idCell = tableRowHead.insertCell();
+    idCell.outerHTML = "<th>ID</th>";
+    const voornaamCell = tableRowHead.insertCell();
+    voornaamCell.outerHTML = "<th>Voornaam</th>";
+    const familienaamCell = tableRowHead.insertCell();
+    familienaamCell.outerHTML = "<th>Familienaam</th>";
+    const geboorteCell = tableRowHead.insertCell();
+    geboorteCell.outerHTML = "<th>Geboortedatum</th>";
+    const emailCell= tableRowHead.insertCell();
+    emailCell.outerHTML = "<th>E-mail</th>";
+    const beroepCell = tableRowHead.insertCell();
+    beroepCell.outerHTML= "<th>Beroep</th>";
+    const sexeCell = tableRowHead.insertCell();
+    sexeCell.outerHTML = "<th>Sexe</th>";
+    const haarkleurCell = tableRowHead.insertCell();
+    haarkleurCell.outerHTML = "<th>Haarkleur</th>";
+    const oogkleurCell = tableRowHead.insertCell();
+    oogkleurCell.outerHTML = "<th>Oogkleur</th>";
+    const grootteCell = tableRowHead.insertCell();
+    grootteCell.outerHTML = "<th>Lengte</th>";
+    const gewichtCell = tableRowHead.insertCell();
+    gewichtCell.outerHTML = "<th>Gewicht</th>";
+
+    //body
+
+    for (const el of data) {
+
+
+        const tableRowBody = tableResults.insertRow();
+
+        const fotoCell = tableRowBody.insertCell();
+        fotoCell.innerHTML = el.foto;
+
+        const idCell = tableRowBody.insertCell();
+        idCell.innerHTML = el.id;
+
+        const voornaamCell = tableRowBody.insertCell();
+        voornaamCell.innerText = el.voornaam;                                //`<img src="${fotoPlusEffect}">`
+
+        const familienaamCell = tableRowBody.insertCell();
+        familienaamCell.innerText = el.familienaam;
+
+        const geboorteCell = tableRowBody.insertCell();
+        geboorteCell.innerText = el.geboortedatum;
+
+        const emailCell = tableRowBody.insertCell();
+        emailCell.innerText = el.email;
+
+        const beroepCell = tableRowBody.insertCell();
+        beroepCell.innerText = el.beroep;
+
+        const sexeCell = tableRowBody.insertCell();
+        sexeCell.innerText = el.sexe;
+
+        const haarkleurCell = tableRowBody.insertCell();
+        haarkleurCell.innerText = el.haarkleur;
+
+        const oogkleurCell = tableRowBody.insertCell();
+        oogkleurCell.innerText = el.oogkleur;
+
+        const grootteCell = tableRowBody.insertCell();
+        grootteCell.innerText = el.grootte;
+
+        const gewichtCell = tableRowBody.insertCell();
+        gewichtCell.innerText = el.gewicht;
+
+    }
+
+
+    function clearBox(elementId)                        //OK
+    {
+        document.getElementById(elementId).innerHTML = "";
+    }
+}
 // EINDE DEEL YANNIS
