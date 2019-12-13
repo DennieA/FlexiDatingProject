@@ -238,8 +238,6 @@ function zoekPartners() {
 
     console.log(geslacht, oogkleur, haarkleur, beroep);
 
-    let rangeMinAge = document.getElementById('minLeeftijd').value;
-    let rangeMaxAge = document.getElementById('maxLeeftijd').value;
     let rangeMinGeboortedatum = "";
     let rangeMaxGeboortedatum = "";
     let rangeMaxGeboortedatumYYYYMMDD = "";
@@ -297,13 +295,12 @@ function zoekPartners() {
 
         })
         .catch(function (error) {
+            clearBox("matches");
             console.log(error);
         });
 };
 
 function GebruikersGegevens(data) {
-
-    console.log("data", data);
 
     clearBox("matches"); //functie die de bestaande innerHTML van een element met ID wist
 
@@ -410,9 +407,6 @@ function getZodiacSign(date) {
 
     const day = date.slice(8,10);
     const month = date.slice(5,7);
-
-    console.log("day", day)
-    console.log("month", month)
 
     // date uitsplitsen in day en month
   
