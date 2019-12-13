@@ -1,5 +1,29 @@
 "use strict"
 
+///////login nakijken
+const loginUrl = "https://scrumserver.tenobe.org/scrum/api/profiel/authenticate.php"
+let data = {
+    nickname: sessionStorage.getItem("nickname"),
+    wachtwoord: sessionStorage.getItem("wachtwoord")
+}
+let request = new Request(loginUrl, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: new Headers({
+        'Content-Type': 'application/json'
+    })
+});
+
+fetch(request)
+    .then(function (response) { return response.json();})
+    .then(function (data) {
+        if (data.message == 'Authorized') {
+            window.location.href = "../main.html"
+        }
+    })
+    .catch (function (error) { console.log(error); });
+//////////
+
 const url = "https://scrumserver.tenobe.org/scrum/api/profiel/authenticate.php"
 let nickname = document.getElementById("nickname");
 let wachtwoord = document.getElementById("wachtwoord");
@@ -31,7 +55,8 @@ function login() {
         .then(function (response) { return response.json();})
         .then(function (data) {
             if (data.message == 'Authorized') {
-                sessionStorage.setItem("gebruiker", nickname.value);
+                sessionStorage.setItem("nickname", nickname.value);
+                sessionStorage.setItem("wachtwoord", wachtwoord.value);
                 window.location.href = "../main.html";
             }
             else {
