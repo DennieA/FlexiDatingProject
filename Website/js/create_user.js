@@ -43,12 +43,14 @@ function initialisation() {
     for (let teller = 0; teller < haarkleuren.length; teller++) {
         let nieuweHaarkleur = document.createElement("option");
         nieuweHaarkleur.text = haarkleuren[teller];
+        nieuweHaarkleur.value = teller;
         haarkleurId.add(nieuweHaarkleur);
     };
 
     for (let teller = 0; teller < oogkleuren.length; teller++) {
         let nieuweOogkleur = document.createElement("option");
         nieuweOogkleur.text = oogkleuren[teller];
+        nieuweOogkleur.value = teller; 
         OogkleurId.add(nieuweOogkleur);
     };
 };
@@ -95,7 +97,9 @@ function submit() {
     let haarkleur = document.getElementById("haarkleur");
     let oogkleur = document.getElementById("oogkleur");
     let selectedHaarkleur = haarkleur.options[haarkleur.selectedIndex].innerText;
+    let selectedhaarkleurvalue = haarkleur.options[haarkleur.selectedIndex].value; 
     let selectedoogkleur = oogkleur.options[oogkleur.selectedIndex].innerText;
+    let selectedoogkleurvalue = oogkleur.options[oogkleur.selectedIndex].value;
     let grootte = document.getElementById("grootte").value;
     let gewicht = document.getElementById("gewicht").value;
     let wachtwoord = document.getElementById("wachtwoord").value;
@@ -104,7 +108,7 @@ function submit() {
 
     if (familienaam === "" || voornaam === "" || nickname === "" || geboortedatum === "" ||
         email === "" || fotonaam === "" || beroep === "" || sexe === "" ||
-        grootte === "" || gewicht === "" || wachtwoord === "") {
+        grootte === "" || gewicht === "" || wachtwoord === "" || selectedhaarkleurvalue === "" || selectedoogkleurvalue ==="") {
         window.alert(" Gelieve alle velden in te vullen! ");
     } else {
         if (leeftijd < 18) {
