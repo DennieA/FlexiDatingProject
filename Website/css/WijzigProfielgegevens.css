@@ -1,0 +1,66 @@
+h1 {
+    text-align: center;
+    color:  #ffffff85;
+    font-size: 500%;
+
+}
+
+#container {
+    width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+#head {
+    height: 230px;
+    padding: 1em;
+    background-image: url("../images/test.jpg");
+    background-repeat: no-repeat;
+}
+
+#mid {
+    padding: 0 1em;
+    margin-bottom: 25px;
+}
+
+#foot {
+    bottom: 0;
+    width: 1000px;
+    background: #93bee5;
+    text-align: center;
+    color: #ffffff;
+    padding: 1em 0;
+    margin: 0 auto;
+}
+
+
+#topMenu {
+    list-style-type: none;
+    overflow: auto;
+    font-size: 100%;
+    text-align: right;
+}
+#topMenu li {
+    display: inline-block;
+    padding: 1em;
+}
+
+#topMenu li a {
+    display: inline;
+    text-decoration: none;
+    color: black;
+}
+
+#topMenu li a:hover {
+    color: white;
+}
+#submit
+{
+    background-color: #93bee5;
+    height: 6em;
+
+}
+.verborgen
+{
+    display: none;
+}

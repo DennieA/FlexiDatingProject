@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<body>
+    <head>
+        <meta charset="utf-8">
+        <script src="js/WijzigProfielgegevens.js" type="text/javascript" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js" defer></script>
+        <link rel="stylesheet" href="css/WijzigProfielgegevens.css">
+        <title>Wijzig Profiel</title>
+    </head>
+    <body>
+        <div id="container">
+            <div id="head">
+                <h1>Wijzig uw profiel</h1>
+                <ul id="topMenu">
+                    <li><a href="main.html">Zoeken</a></li>
+                    <li><a href="mijnProfiel.html">Mijn profiel</a></li>
+                    <li><a onclick='logout()'>Afmelden</a></li>
+                </ul>
+            </div>
+
+            <div id="mid">
+                <h2 id="hoofd">Uw huidige profielgegevens: </h2>
+                <form id="profiel">
+                    <label>Voornaam:<br>
+                        <input type="text" id="voornaam"><br>
+                    </label><br>
+                    <label>Familienaam:<br>
+                            <input type="text" id="familienaam"><br>
+                    </label><br>
+                    <label>Nickname:<br>
+                        <input type="text" id="nickname"><br>
+                    </label><br>
+                    <label>Geboortedatum:<br>
+                        <input type="date" id="geboortedatum"><br>
+                    </label><br>
+                    <label>Email:<br>
+                        <input type="email" id="email"><br>
+                        <!--<input type="text" id="email"><br>-->
+                    </label><br>
+                    <img id="uploadedFoto"><br>
+                    <label>Niuwe foto:<br>
+                        <input type="file" id="foto" name = "1" ><br>
+                        <div id="dummy" class="verborgen">
+                        </div>
+                        <div>
+                        <textarea style="width:100%;height:500px;" id="txt" class="verborgen">
+                        </textarea>
+                        </div>
+                        
+                    </label><br>
+                    <label>Beroep:<br>
+                        <input type="text" id="beroep"><br>
+                    </label><br>
+                    <div>
+                    <form id="sekse">Geslacht:<br>
+                       
+                        <input type="radio" name = "geslacht" id="man" value="m">Man
+                        <input type="radio" name = "geslacht" id="vrouw" value="v">Vrouw
+                        <input type="radio" name = "geslacht" id="x" value="x">Ander
+                   
+                        <br>
+                    </form>
+                </div>
+                
+                    <br>
+                    <label id="haar">Haarkleur:<br>
+                        <select id="haarkleur">
+                            <option value="">--kies een haarkleur--</option>
+                        </select><br>
+                    </label><br>
+                    <label id="oog">Oogkleur:<br>
+                        <select id="oogkleur">
+                            <option value="">--kies een oogkleur--</option>
+                        </select><br>
+                    </label><br>
+                    <label>Grootte:<br>
+                        <input type="text" id="grootte"><br>
+                    </label><br>
+                    <label>Gewicht:<br>
+                        <input type="text" id="gewicht"><br>
+                    </label><br>
+                    <label>Lovecoins<br>
+                        <input type="text" id="lovecoins"><br>
+                    </label>
+                    <label id="button"><br>
+                        <input type="submit" id="submit" value="Wijzig profiel"><br>
+                    </label><br>
+                </form>
+            </div>
+        
+        <div id="foot">Deze datingsite is eigendom van VDAB | 2019</div>
+    </div>
+    </body>
+</body>
