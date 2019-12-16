@@ -99,7 +99,7 @@ hoofdTh.id = "hoofdRij";
 hoofdTh.colSpan = 3;
 hoofdRij.appendChild(hoofdTh);
 
-for (let teller = 3; teller<=12; teller++)
+for (let teller = 3; teller<=13; teller++)
 {
 let rij = document.createElement("tr");
 tabel.appendChild(rij);
