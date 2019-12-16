@@ -1,3 +1,5 @@
+"use strict"
+
 ////////Login nakijken
 // let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
 // fetch(loginUrl)
@@ -34,7 +36,7 @@ let oogkleuren = [
 const haarkleurId = document.getElementById("haarkleur");
 const OogkleurId = document.getElementById("oogkleur");
 let rooturl = "https://scrumserver.tenobe.org/scrum/api";
-let naam = "";
+
 
 //function fill dropdowns
 function initialisation() {
@@ -50,12 +52,15 @@ function initialisation() {
         OogkleurId.add(nieuweOogkleur);
     };
 };
-
-
+//global variables
+let naam = "";
+let afbeelding = "";
+let selectedfile = "";
 
 //function submit 
 function submit() {
     let sexe = "";
+    let fotonaam = "";
     let familienaam = document.getElementById("familienaam").value;
     let voornaam = document.getElementById("voornaam").value;
 
@@ -63,7 +68,11 @@ function submit() {
 
     let geboortedatum = document.getElementById("geboortedatum").value;
     let email = document.getElementById("email").value;
-    let foto = document.getElementById("foto").files[0].name;
+    if (document.getElementById("foto").files.length > 0)
+    {
+        selectedfile = document.getElementById("foto").files;
+        fotonaam = selectedfile[0].name;
+    } 
     let beroep = document.getElementById("beroep").value;
 
     for (const f of document.getElementsByName("geslacht")) {
@@ -71,22 +80,18 @@ function submit() {
             sexe = f.value;
     }
 
-
-
     let haarkleur = document.getElementById("haarkleur");
     let oogkleur = document.getElementById("oogkleur");
+    let selectedHaarkleur = haarkleur.options[haarkleur.selectedIndex].innerText;
+    let selectedoogkleur = oogkleur.options[oogkleur.selectedIndex].innerText;
     let grootte = document.getElementById("grootte").value;
     let gewicht = document.getElementById("gewicht").value;
     let wachtwoord = document.getElementById("wachtwoord").value;
     let check = document.getElementById("check").value;
     let lovecoins = 0;
 
-    let selectedHaarkleur = haarkleur.options[haarkleur.selectedIndex].innerHTML;
-    let selectedoogkleur = oogkleur.options[oogkleur.selectedIndex].innerHTML;
-
-
     if (familienaam === "" || voornaam === "" || nickname === "" || geboortedatum === "" ||
-        email === "" || foto === "" || beroep === "" || sexe === "" ||
+        email === "" || fotonaam === "" || beroep === "" || sexe === "" ||
         grootte === "" || gewicht === "" || wachtwoord === "") {
         window.alert(" Gelieve alle velden in te vullen! ");
     } else {
@@ -99,7 +104,7 @@ function submit() {
                 geboortedatum: geboortedatum,
                 email: email,
                 nickname: nickname,
-                foto: foto,
+                foto: fotonaam,
                 beroep: beroep,
                 sexe: sexe,
                 haarkleur: selectedHaarkleur,
@@ -110,6 +115,7 @@ function submit() {
                 lovecoins: lovecoins
             });
 
+            console.log(data);
 
             let url = rooturl + '/profiel/create.php';
             var request = new Request(url, {
@@ -120,56 +126,71 @@ function submit() {
                 })
             });
             fetch(request)
-                .then(function (resp) { return resp.json(); })
-                .then(function (data) { console.log(data); window.alert("Gebruiker aangemaakt!"); window.location.href = "index.html"; })
-                .catch(function (error) { console.log(error); });
+                .then(function (resp) { 
+                    if (resp.ok)
+                    {
+                        //upload een foto enkel als aanmaken van profiel is gelukt
+                        uploadFoto();
+                        //console.log("foto upload");
+                    resp.json()
+                        .then(function (data) { console.log(data);
+                        window.alert("Gebruiker aangemaakt!");
+                        //na profiel creeren, de gebruiker moet aanmelden
+                        window.location.href = "index.html";
+                    })
+                        
+                 } else
+                 {
+                    resp.json().then(function (data){console.log("error profiel aanmaken")}).catch(function (error) { console.log(error); });
+                 }
+        });
+}
+}
+}
 
 
+initialisation();
 
-
-
-
-
-
-        }
-    }
-};
-
-function encode() {
-    var selectedfile = document.getElementById("foto").files;
-    if (selectedfile.length > 0) {
-        var imageFile = selectedfile[0];
-        var fileReader = new FileReader();
+//genereert base64 code van de gekozen foto
+document.getElementById("foto").onchange = function base64Foto ()
+        {
+        let imageFile = this.files[0];
+        let fileReader = new FileReader();
         fileReader.onload = function (fileLoadedEvent) {
-            var srcData = fileLoadedEvent.target.result;
-            var newImage = document.createElement('img');
+            let srcData = fileLoadedEvent.target.result;
+            let newImage = document.createElement('img');
             newImage.src = srcData;
             document.getElementById("dummy").innerHTML = newImage.outerHTML;
             document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
-        }
+            afbeelding = document.getElementById("txt").value;
+            //console.log("afbeelding in function filereader.onload", afbeelding);
+                                                        }
         fileReader.readAsDataURL(imageFile);
-    }
-    if (document.getElementById("foto").files[0] !== undefined) {
-        console.log(document.getElementById("foto").files[0])
-        naam = document.getElementById("foto").files[0].name;
-    
-    
-        let afbeelding = document.getElementById("txt").value;
-    
+        naam = this.files[0].name;
+        //console.log("img name: ",naam);
+        }
+
+document.getElementById("submit").onclick = submit;
+
+//upload foto
+function uploadFoto()
+{
+   
         let url = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
     
-        let data = {
+        let dataFoto = {
             naam: naam,
             afbeelding: afbeelding
         }
-    
-        var request = new Request(url, {
+        //console.log("dataFoto: ", dataFoto);
+        let request = new Request(url, {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(dataFoto),
             headers: new Headers({
                 'Content-Type': 'application/json'
             })
         });
+ 
     
         fetch(request)
             .then(function (resp) { return resp.json(); })
@@ -180,15 +201,6 @@ function encode() {
                 console.log('     ==> OK');
                 console.log('==> Klaar');
             })
-            .catch(function (error) { console.log(error); });
-    
-    }
+            .catch(function (error) { console.log(error); })
+   
 }
-
-
-
-
-initialisation();
-
-document.getElementById("submit").onclick = submit;
-

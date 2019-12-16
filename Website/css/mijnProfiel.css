@@ -60,3 +60,33 @@ h1 {
     height: 6em;
 
 }
+#nickname
+{
+    text-align: center;
+    color: coral;
+}
+#tabel
+{
+    border-color: coral;
+    width: 70%;
+    margin: auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+#tabel th
+{
+    background-color: coral;
+    color: white;
+}
+#tabel td
+{
+    background-color: lightsalmon;
+    color: lightgoldenrodyellow;
+    text-align: center;
+    font-size: large;
+    font-style: italic;
+}
+#tabel #hoofdRij
+{
+    background-color: moccasin;
+    color: coral;
+}

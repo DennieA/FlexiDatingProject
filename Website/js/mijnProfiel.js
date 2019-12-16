@@ -28,75 +28,113 @@
 function logout() {
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("wachtwoord");
-    window.location.href = "../Website/index.html";
+    window.location.href = "index.html";
 }
 /////////
 
-let user = sessionStorage.getItem("userId");
-
 let hoofdDiv = document.getElementById("mid");
- 
-let voornaam = "";
-let familienaam = "";
-let geboortedatum = "";
-let nickname = "";
-let email = "";
-let foto = "";
-let beroep = "";
-let sexe = "";
-let haarkleur = "";
-let oogkleur = "";
-let grootte = "";
-let gewicht = "";
-let lovecoins = ""; 
+document.onload = function ()
+{
+    hoofdDiv.innerHTML = "";
+}
+let user = sessionStorage.getItem("userId");
+console.log(user);
 
-/* zoek een gebruiker by nickname*/
+ 
+
+/* zoek een gebruiker op id*/
 let rooturl = "https://scrumserver.tenobe.org/scrum/api";
 fetch(rooturl+"/profiel/read.php").then(function (resp){return resp.json()}).then(GebruikersGegevens);
 
 function GebruikersGegevens (data){
+    let gegevens = [];
+    let titels = [];
     for (let el of data)
     if (el.id === user)
     {
-        voornaam = el.voornaam;
-        familienaam = el.familienaam;
-        nickname = el.nickname;
-        geboortedatum = el.geboortedatum;
-        email = el.email;
-        foto = el.foto;
-        beroep = el.beroep;
-        sexe = el.sexe;
-        haarkleur = el.haarkleur;
-        oogkleur = el.oogkleur;
-        grootte = el.grootte;
-        gewicht = el.gewicht;
-        lovecoins = el.lovecoins;
+        gegevens.push(el.id);
+        titels.push("Id");
+        gegevens.push(el.nickname);
+        titels.push("Nickname")
+        gegevens.push(el.foto);
+        titels.push("Foto");
+        gegevens.push(el.voornaam);
+        titels.push("Voornaam");
+        gegevens.push(el.familienaam);
+        titels.push("Familienaam");
+        gegevens.push(el.geboortedatum);
+        titels.push("Geboortedatum");
+        gegevens.push(el.email);
+        titels.push("Email");
+        gegevens.push(el.beroep);
+        titels.push("Beroep");
+        gegevens.push(el.sexe);
+        titels.push("Sexe");
+        gegevens.push(el.haarkleur);
+        titels.push("Haarkleur");
+        gegevens.push(el.oogkleur);
+        titels.push("Oogkleur");
+        gegevens.push(el.grootte);
+        titels.push("Grootte");
+        gegevens.push(el.gewicht);
+        titels.push("Gewicht");
+        gegevens.push(el.lovecoins);
+        titels.push("Lovecoins");
     }
 let nicknameVeld = document.createElement("h2");
-nicknameVeld.innerText = "Hello "+ nickname;
+nicknameVeld.innerText = "Hello "+ gegevens[1];
 nicknameVeld.id = "nickname";
 hoofdDiv.appendChild(nicknameVeld);
 
-let voornaamVeld = document.createElement("h3");
-voornaamVeld.innerText = voornaam;
-voornaamVeld.id = "voornaam";
-hoofdDiv.appendChild(voornaamVeld);
+let tabel = document.createElement("table");
+tabel.id = "tabel";
+hoofdDiv.appendChild(tabel);
 
+let hoofdRij = document.createElement("tr");
+hoofdRij.id = "hoofdRij";
+tabel.appendChild(hoofdRij);
+let hoofdTh = document.createElement("th");
+hoofdTh.innerText = "Profielgegevens";
+hoofdTh.id = "hoofdRij";
+hoofdTh.colSpan = 3;
+hoofdRij.appendChild(hoofdTh);
 
-let familienaamVeld = document.createElement("h3");
-familienaamVeld.innerText = familienaam;
-familienaamVeld.id = "voornaam";
-hoofdDiv.appendChild(familienaamVeld);
-
-
-
-//hoofdDiv.appendChild(document.createElement("br"));
-
-let geboorteD = document.createElement("h3");
-geboorteD.innerText = geboortedatum;
-geboorteD.id = "geboortedatum";
-hoofdDiv.appendChild(geboorteD);
+for (let teller = 3; teller<=12; teller++)
+{
+let rij = document.createElement("tr");
+tabel.appendChild(rij);
+let titel = document.createElement("th");
+titel.innerText = titels[teller]+": ";
+rij.appendChild(titel);
+let veld = document.createElement("td");
+veld.innerText = gegevens[teller];
+rij.appendChild(veld);
+}
 }
 
+function uitschrijven()
+{
+    if (window.confirm("Uitschrijven bevestigen"))
+    {
+    let url=rooturl+'/profiel/delete.php';
+    
+    let data = {
+        id: user
+    }
 
+    var request = new Request(url, {
+        method: 'DELETE',
+        body: JSON.stringify(data),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+    
+    fetch(request)
+        .then( function (resp)  { return resp.json(); })
+        .then( function (data)  { console.log(data); window.location.href = "index.html";
+    })
+        .catch(function (error) { console.log(error); });
+}
+}
 
