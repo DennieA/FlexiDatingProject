@@ -565,7 +565,7 @@ function heading(){
     tableResults.appendChild(tableHead); /* mk */
     tableResults.appendChild(tableBody); /* mk */
 
- /*   const table = document.querySelector("#tableResults"); //get the table to be sorted
+  /*  const table = document.querySelector("#tableResults"); //get the table to be sorted
 
     table.querySelectorAll("th") // get all the table header elements
         .forEach((element, columnNo) => { // add a click handler for each 
@@ -664,7 +664,6 @@ function getZodiacSign(date) {
         return "Boogschutter";
     }
 }
-  }
 
   // EINDE DEEL YANNIS
 
@@ -680,8 +679,5 @@ function getZodiacSign(date) {
 // favorieten
 
   let user = sessionStorage.getItem("userId");
-console.log(user);
-
-
 
 // einde favorieten
