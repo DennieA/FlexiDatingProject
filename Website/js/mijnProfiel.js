@@ -81,10 +81,19 @@ function GebruikersGegevens (data){
         gegevens.push(el.lovecoins);
         titels.push("Lovecoins");
     }
+
+let foto = document.createElement("img");
+foto.id = "uploadedFoto";
+foto.setAttribute('src', 'https://scrumserver.tenobe.org/scrum/img/' + gegevens[2]);
+console.log("naam van de foto: ", foto.src);
+foto.setAttribute('alt', 'foto van ' + gegevens[3] + ' ' + gegevens[4]);
+hoofdDiv.appendChild(foto);
+
 let nicknameVeld = document.createElement("h2");
 nicknameVeld.innerText = "Hello "+ gegevens[1];
 nicknameVeld.id = "nickname";
 hoofdDiv.appendChild(nicknameVeld);
+
 
 let tabel = document.createElement("table");
 tabel.id = "tabel";

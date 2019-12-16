@@ -109,7 +109,7 @@ function submit() {
         window.alert(" Gelieve alle velden in te vullen! ");
             
             let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
-            var request = new Request(urlUpdate, {
+            let request = new Request(urlUpdate, {
                 method: 'PUT',
                 body: JSON.stringify(profiel),
                 headers: new Headers({

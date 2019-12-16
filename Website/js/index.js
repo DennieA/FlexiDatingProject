@@ -53,7 +53,7 @@ function login() {
             if (data.message == 'Authorized') {
                 sessionStorage.setItem("userId", data.id);
                 sessionStorage.setItem("wachtwoord", CryptoJS.SHA256(wachtwoord.value).toString());
-                window.location.href = "../Website/main.html";
+                window.location.href = "main.html";
             }
             else {
                 alert("Verkeerde gegevens!")
