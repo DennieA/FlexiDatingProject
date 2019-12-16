@@ -355,7 +355,7 @@ function zoekPartners() {
 
 function GebruikersGegevens(data) {
 
-    clearBox("matches"); //functie die de bestaande innerHTML van een element met ID wist
+    clearBox("matches");
 
     //table aanmaken
     const tableResults = document.createElement("table");
@@ -367,7 +367,7 @@ function GebruikersGegevens(data) {
     //table opvullen
     //hoofding
 
-    const tableRowHead = tableResults.insertRow(); //dit zou table header moeten zijn
+    const tableRowHead = tableResults.insertRow(); 
     const sterrenbeeldCell = tableRowHead.insertCell();
     sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
     const nicknameCell = tableRowHead.insertCell();
@@ -404,12 +404,12 @@ function GebruikersGegevens(data) {
         const tableRowBody = tableResults.insertRow();
 
         const sterrenbeeldCell = tableRowBody.insertCell();
-        sterrenbeeldCell.innerHTML = getZodiacSign(el.geboortedatum);
+        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`; 
 
         const nicknameCell = tableRowBody.insertCell();
         nicknameCell.innerText = el.nickname;
 
-        /*const fotoCell = tableRowBody.insertCell();           //`<img src="${fotoPlusEffect}">`
+        /*const fotoCell = tableRowBody.insertCell();
         fotoCell.innerHTML = el.foto;
 
         const idCell = tableRowBody.insertCell();
@@ -447,12 +447,12 @@ function GebruikersGegevens(data) {
 
     }
 
-    function clearBox(elementId){
-        document.getElementById(elementId).innerHTML = "";
-    }
+    
 }
 // EINDE DEEL YANNIS
-
+function clearBox(elementId){
+    document.getElementById(elementId).innerHTML = "";
+}
 
 
 
