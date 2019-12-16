@@ -116,11 +116,11 @@ function verwerkUsers(users) {
         });
 
     /* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
-    function capitalizeFirstCharacter(stringToConvert){
+    function capitalizeFirstCharacter(stringToConvert) {
         return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1).toLowerCase();
     };
 
-    
+
     /* Functie die de leeftijd berekent */
     function calculate_leeftijd(geboorteDatum) {
         let diff_ms = Date.now() - geboorteDatum.getTime();
@@ -372,6 +372,7 @@ function GebruikersGegevens(data) {
 
     //table aanmaken
     const tableResults = document.createElement("table");
+    const tableHead = tableResults.createTHead(); /* mk */
     tableResults.id = "tableResults";
     tableResults.style.width = "100%";
     const container = document.getElementById("matches");
@@ -379,8 +380,7 @@ function GebruikersGegevens(data) {
 
     //table opvullen
     //hoofding
-
-    const tableRowHead = tableResults.insertRow(); 
+    const tableRowHead = tableHead.insertRow(); /* mk */
     const sterrenbeeldCell = tableRowHead.insertCell();
     sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
     const nicknameCell = tableRowHead.insertCell();
@@ -411,13 +411,14 @@ function GebruikersGegevens(data) {
     gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
 
     //body
+    const tableBody = document.createElement("tbody"); /* mk */
 
     for (const el of data) {
+        const tableRowBody = tableBody.insertRow(); /* mk */
 
-        const tableRowBody = tableResults.insertRow();
-
+        /* const tableRowBody = tableResults.insertRow(); */
         const sterrenbeeldCell = tableRowBody.insertCell();
-        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`; 
+        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
         nicknameCell.innerText = el.nickname;
@@ -457,13 +458,74 @@ function GebruikersGegevens(data) {
 
         const gewichtCell = tableRowBody.insertCell();
         gewichtCell.innerText = el.gewicht;
-
     }
+    tableResults.appendChild(tableHead); /* mk */
+    tableResults.appendChild(tableBody); /* mk */
 
-    
+
+ /*   const table = document.querySelector("#tableResults"); //get the table to be sorted
+
+    table.querySelectorAll("th") // get all the table header elements
+        .forEach((element, columnNo) => { // add a click handler for each 
+            element.addEventListener("click", event => {
+                sortTable(table, columnNo); //call a function which sorts the table by a given column number
+            })
+        })  */
 }
+
+
+/* function sortTable(table, sortColumn) {
+    // get the data from the table cells
+    const tableBody = table.querySelector('tbody')
+    const tableData = table2data(tableBody);
+    // sort the extracted data
+    tableData.sort((a, b) => {
+        if (a[sortColumn] > b[sortColumn]) {
+            return 1;
+        }
+        return -1;
+    })
+    // put the sorted data back into the table
+    data2table(tableBody, tableData);
+}
+
+function table2data(tableBody) {
+    const tableData = []; // create the array that'll hold the data rows
+    tableBody.querySelectorAll('tr')
+        .forEach(row => { // for each table row...
+            const rowData = []; // make an array for that row
+            row.querySelectorAll('td') // for each cell in that row
+                .forEach(cell => {
+                    if (cell.innerText !== "") {
+                        rowData.push(cell.innerText); // add it to the row data
+                    } else {
+                        rowData.push(cell.innerHTML); // add it to the row data
+                    };
+                })
+            tableData.push(rowData); // add the full row to the table data 
+        });
+    return tableData;
+}
+
+function data2table(tableBody, tableData) {
+    tableBody.querySelectorAll('tr') // for each table row...
+        .forEach((row, i) => {
+            const rowData = tableData[i]; // get the array for the row data
+            row.querySelectorAll('td') // for each table cell ...
+                .forEach((cell, j) => {
+                    if (j === 0) {
+                        cell.innerHTML = rowData[j]; // put the appropriate array element into the cell
+                    } else {
+                        cell.innerText = rowData[j]; // put the appropriate array element into the cell
+                    };
+                })
+            tableData.push(rowData);
+        });  
+}  */
+
+
 // EINDE DEEL YANNIS
-function clearBox(elementId){
+function clearBox(elementId) {
     document.getElementById(elementId).innerHTML = "";
 }
 
@@ -471,34 +533,34 @@ function clearBox(elementId){
 
 function getZodiacSign(date) {
 
-    const day = date.slice(8,10);
-    const month = date.slice(5,7);
+    const day = date.slice(8, 10);
+    const month = date.slice(5, 7);
 
     // date uitsplitsen in day en month
-  
-    if((month == 1 && day <= 20) || (month == 12 && day >=22)) {
-      return "Steenbok";
+
+    if ((month == 1 && day <= 20) || (month == 12 && day >= 22)) {
+        return "Steenbok";
     } else if ((month == 1 && day >= 21) || (month == 2 && day <= 19)) {
-      return "Waterman";
-    } else if((month == 2 && day >= 20) || (month == 3 && day <= 20)) {
-      return "Vis";
-    } else if((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
-      return "Ram";
-    } else if((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
-      return "Stier";
-    } else if((month == 5 && day >= 21) || (month == 6 && day <= 21)) {
-      return "Tweeling";
-    } else if((month == 6 && day >= 22) || (month == 7 && day <= 23)) {
-      return "Kreeft";
-    } else if((month == 7 && day >= 24) || (month == 8 && day <= 23)) {
-      return "Leeuw";
-    } else if((month == 8 && day >= 24) || (month == 9 && day <= 22)) {
-      return "Maagd";
-    } else if((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
-      return "Weegschaal";
-    } else if((month == 10 && day >= 23) || (month == 11 && day <= 22)) {
-      return "Schorpioen";
-    } else if((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
-      return "Boogschutter";
+        return "Waterman";
+    } else if ((month == 2 && day >= 20) || (month == 3 && day <= 20)) {
+        return "Vis";
+    } else if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
+        return "Ram";
+    } else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
+        return "Stier";
+    } else if ((month == 5 && day >= 21) || (month == 6 && day <= 21)) {
+        return "Tweeling";
+    } else if ((month == 6 && day >= 22) || (month == 7 && day <= 23)) {
+        return "Kreeft";
+    } else if ((month == 7 && day >= 24) || (month == 8 && day <= 23)) {
+        return "Leeuw";
+    } else if ((month == 8 && day >= 24) || (month == 9 && day <= 22)) {
+        return "Maagd";
+    } else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
+        return "Weegschaal";
+    } else if ((month == 10 && day >= 23) || (month == 11 && day <= 22)) {
+        return "Schorpioen";
+    } else if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
+        return "Boogschutter";
     }
-  }
+}
