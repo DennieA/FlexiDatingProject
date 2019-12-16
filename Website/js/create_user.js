@@ -36,7 +36,7 @@ let oogkleuren = [
 const haarkleurId = document.getElementById("haarkleur");
 const OogkleurId = document.getElementById("oogkleur");
 let rooturl = "https://scrumserver.tenobe.org/scrum/api";
-
+let fotonaamResponse = "";
 
 //function fill dropdowns
 function initialisation() {
@@ -118,6 +118,8 @@ function submit() {
             if (wachtwoord !== check)
                 window.alert("Wachtwoord en Check wachtwoord moeten gelijk zijn");
             else {
+                fotonaamResponse = uploadFoto();
+                 fotonaam = fotonaamResponse;
                 let data = ({
                     familienaam: familienaam,
                     voornaam: voornaam,
