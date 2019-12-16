@@ -72,9 +72,9 @@ function verwerkUsers(users) {
             }
 
             /* Zoek alle beroepen */
-            const zoekBeroepen = beroepen.filter(beroep => beroep === user.beroep);
+            const zoekBeroepen = beroepen.filter(beroep => beroep === capitalizeFirstCharacter(user.beroep));
             if (zoekBeroepen.length === 0) {
-                beroepen.push(user.beroep);
+                beroepen.push(capitalizeFirstCharacter(user.beroep));
             }
 
             /* Zoek alle sexes */
