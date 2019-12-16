@@ -24,7 +24,7 @@
 let haarkleuren = [
     "blond", "asblond", "goudblond", "donkerblond", "zwart",
     "blauwzwart", "bruin", "asbruin", "kastanjebruin",
-    "koelbruin", "asbruin", "chocoladebruin", "natuurlijk bruin", "goudbruin",
+    "koelbruin", "chocoladebruin", "natuurlijk bruin", "goudbruin",
     "amber", "koper", "auberginerood", "roodbruin", "bordeaux rood", "grijs"
 ];
 
@@ -67,12 +67,24 @@ function submit() {
     let nickname = document.getElementById("nickname").value;
 
     let geboortedatum = document.getElementById("geboortedatum").value;
+
+    let leeftijd = calculate_leeftijd(new Date(geboortedatum));
+
+    function calculate_leeftijd(geboorteDatum) {
+        let diff_ms = Date.now() - geboorteDatum.getTime();
+        let age_dt = new Date(diff_ms);
+
+        return Math.abs(age_dt.getUTCFullYear() - 1970);
+    }
+
+    console.log(leeftijd);
+
+
     let email = document.getElementById("email").value;
-    if (document.getElementById("foto").files.length > 0)
-    {
+    if (document.getElementById("foto").files.length > 0) {
         selectedfile = document.getElementById("foto").files;
         fotonaam = selectedfile[0].name;
-    } 
+    }
     let beroep = document.getElementById("beroep").value;
 
     for (const f of document.getElementsByName("geslacht")) {
@@ -95,112 +107,114 @@ function submit() {
         grootte === "" || gewicht === "" || wachtwoord === "") {
         window.alert(" Gelieve alle velden in te vullen! ");
     } else {
-        if (wachtwoord !== check)
-            window.alert("Wachtwoord en Check wachtwoord moeten gelijk zijn");
-        else {
-            let data = ({
-                familienaam: familienaam,
-                voornaam: voornaam,
-                geboortedatum: geboortedatum,
-                email: email,
-                nickname: nickname,
-                foto: fotonaam,
-                beroep: beroep,
-                sexe: sexe,
-                haarkleur: selectedHaarkleur,
-                oogkleur: selectedoogkleur,
-                grootte: grootte,
-                gewicht: gewicht,
-                wachtwoord: wachtwoord,
-                lovecoins: lovecoins
-            });
+        if (leeftijd < 18) {
+            window.alert("Je moet minstens 18 jaar zijn om aan dating te doen! ");
+            window.location.href = "https://www.ketnet.be/";
+        } else {
+            if (wachtwoord !== check)
+                window.alert("Wachtwoord en Check wachtwoord moeten gelijk zijn");
+            else {
+                let data = ({
+                    familienaam: familienaam,
+                    voornaam: voornaam,
+                    geboortedatum: geboortedatum,
+                    email: email,
+                    nickname: nickname,
+                    foto: fotonaam,
+                    beroep: beroep,
+                    sexe: sexe,
+                    haarkleur: selectedHaarkleur,
+                    oogkleur: selectedoogkleur,
+                    grootte: grootte,
+                    gewicht: gewicht,
+                    wachtwoord: wachtwoord,
+                    lovecoins: lovecoins
+                });
 
-            console.log(data);
+                console.log(data);
 
-            let url = rooturl + '/profiel/create.php';
-            var request = new Request(url, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                })
-            });
-            fetch(request)
-                .then(function (resp) { 
-                    if (resp.ok)
-                    {
-                        //upload een foto enkel als aanmaken van profiel is gelukt
-                        uploadFoto();
-                        //console.log("foto upload");
-                    resp.json()
-                        .then(function (data) { console.log(data);
-                        window.alert("Gebruiker aangemaakt!");
-                        //na profiel creeren, de gebruiker moet aanmelden
-                        window.location.href = "index.html";
+                let url = rooturl + '/profiel/create.php';
+                var request = new Request(url, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
                     })
-                        
-                 } else
-                 {
-                    resp.json().then(function (data){console.log("error profiel aanmaken")}).catch(function (error) { console.log(error); });
-                 }
-        });
-}
-}
+                });
+                fetch(request)
+                    .then(function (resp) {
+                        if (resp.ok) {
+                            //upload een foto enkel als aanmaken van profiel is gelukt
+                            uploadFoto();
+                            //console.log("foto upload");
+                            resp.json()
+                                .then(function (data) {
+                                    console.log(data);
+                                    window.alert("Gebruiker aangemaakt!");
+                                    //na profiel creeren, de gebruiker moet aanmelden
+                                    window.location.href = "index.html";
+                                })
+
+                        } else {
+                            resp.json().then(function (data) { console.log("error profiel aanmaken") }).catch(function (error) { console.log(error); });
+                        }
+                    });
+            }
+        }
+    }
 }
 
 
 initialisation();
 
 //genereert base64 code van de gekozen foto
-document.getElementById("foto").onchange = function base64Foto ()
-        {
-        let imageFile = this.files[0];
-        let fileReader = new FileReader();
-        fileReader.onload = function (fileLoadedEvent) {
-            let srcData = fileLoadedEvent.target.result;
-            let newImage = document.createElement('img');
-            newImage.src = srcData;
-            document.getElementById("dummy").innerHTML = newImage.outerHTML;
-            document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
-            afbeelding = document.getElementById("txt").value;
-            //console.log("afbeelding in function filereader.onload", afbeelding);
-                                                        }
-        fileReader.readAsDataURL(imageFile);
-        naam = this.files[0].name;
-        //console.log("img name: ",naam);
-        }
+document.getElementById("foto").onchange = function base64Foto() {
+    let imageFile = this.files[0];
+    let fileReader = new FileReader();
+    fileReader.onload = function (fileLoadedEvent) {
+        let srcData = fileLoadedEvent.target.result;
+        let newImage = document.createElement('img');
+        newImage.src = srcData;
+        document.getElementById("dummy").innerHTML = newImage.outerHTML;
+        document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
+        afbeelding = document.getElementById("txt").value;
+        //console.log("afbeelding in function filereader.onload", afbeelding);
+    }
+    fileReader.readAsDataURL(imageFile);
+    naam = this.files[0].name;
+    //console.log("img name: ",naam);
+}
 
 document.getElementById("submit").onclick = submit;
 
 //upload foto
-function uploadFoto()
-{
-   
-        let url = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
-    
-        let dataFoto = {
-            naam: naam,
-            afbeelding: afbeelding
-        }
-        //console.log("dataFoto: ", dataFoto);
-        let request = new Request(url, {
-            method: 'POST',
-            body: JSON.stringify(dataFoto),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
- 
-    
-        fetch(request)
-            .then(function (resp) { return resp.json(); })
-            .then(function (data) {
-                console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
-                console.log('     • Foto inladen in IMG');
-                //document.getElementById('uploadResult').src = data.fileURL;
-                console.log('     ==> OK');
-                console.log('==> Klaar');
-            })
-            .catch(function (error) { console.log(error); })
-   
+function uploadFoto() {
+
+    let url = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
+
+    let dataFoto = {
+        naam: naam,
+        afbeelding: afbeelding
+    }
+    //console.log("dataFoto: ", dataFoto);
+    let request = new Request(url, {
+        method: 'POST',
+        body: JSON.stringify(dataFoto),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+
+
+    fetch(request)
+        .then(function (resp) { return resp.json(); })
+        .then(function (data) {
+            console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
+            console.log('     • Foto inladen in IMG');
+            //document.getElementById('uploadResult').src = data.fileURL;
+            console.log('     ==> OK');
+            console.log('==> Klaar');
+        })
+        .catch(function (error) { console.log(error); })
+
 }
