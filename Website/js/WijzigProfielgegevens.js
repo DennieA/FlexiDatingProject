@@ -73,8 +73,6 @@ function GebruikersGegevens (el){
         document.getElementById("oogkleur").value = el.oogkleur;
         document.getElementById("grootte").value = el.grootte;
         document.getElementById("gewicht").value = el.gewicht;
-
-        document.getElementById("lovecoins").value = el.lovecoins;
         
 }
 
