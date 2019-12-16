@@ -55,7 +55,7 @@ function GebruikersGegevens (el){
     
         console.log(el);
         profiel = el;
-        document.getElementById("hoofd").innerText = 'Gegevans van ' + el.voornaam + ' ' + el.familienaam;
+        document.getElementById("hoofd").innerText = 'Gegevens van ' + el.voornaam + ' ' + el.familienaam;
         document.getElementById("familienaam").value = el.familienaam;
         document.getElementById("voornaam").value = el.voornaam;
         document.getElementById("nickname").value = el.nickname;
