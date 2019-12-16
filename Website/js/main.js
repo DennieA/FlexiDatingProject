@@ -66,9 +66,9 @@ function verwerkUsers(users) {
             }
 
             /* Zoek alle haarkleuren */
-            const zoekHaarkleuren = haarkleuren.filter(haarkleur => haarkleur === user.haarkleur);
+            const zoekHaarkleuren = haarkleuren.filter(haarkleur => haarkleur === capitalizeFirstCharacter(user.haarkleur));
             if (zoekHaarkleuren.length === 0) {
-                haarkleuren.push(user.haarkleur);
+                haarkleuren.push(capitalizeFirstCharacter(user.haarkleur));
             }
 
             /* Zoek alle beroepen */
