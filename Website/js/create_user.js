@@ -1,6 +1,6 @@
 "use strict"
 
-////////Login nakijken
+// //////Login nakijken
 // let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
 // fetch(loginUrl)
 //     .then(function (response){return response.json();})
@@ -18,7 +18,7 @@
 //         }
 //     }
 // }
-/////////
+// ///////
 
 //global variables 
 let haarkleuren = [
@@ -88,7 +88,7 @@ function submit() {
     let gewicht = document.getElementById("gewicht").value;
     let wachtwoord = document.getElementById("wachtwoord").value;
     let check = document.getElementById("check").value;
-    let lovecoins = 0;
+    let lovecoins = 3;
 
     if (familienaam === "" || voornaam === "" || nickname === "" || geboortedatum === "" ||
         email === "" || fotonaam === "" || beroep === "" || sexe === "" ||
