@@ -13,14 +13,14 @@
 //             let wachtwoord = el.wachtwoord;
 //             let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
 //             if (sessionStorage.getItem("wachtwoord") !== encryptedWachtwoord) {
-//                 window.location.href = "index.html";
+//                 window.location.href = "../Website/index.html";
 //             }
 //         }
 //     }
 // }
 
 // if (!sessionStorage.getItem("userId") || !sessionStorage.getItem("wachtwoord")){
-//     window.location.href = "index.html";
+//     window.location.href = "../Website/index.html";
 // }
 /////////
 
@@ -31,6 +31,17 @@ function logout() {
     window.location.href = "index.html";
 }
 /////////
+
+
+let checkunlocked = false; 
+let checkfavorite = false; 
+
+if (checkunlocked = true){
+    //show verborgen velden, hide unlock button; 
+};
+
+
+
 
 let hoofdDiv = document.getElementById("mid");
 document.onload = function ()
@@ -119,31 +130,41 @@ let veld = document.createElement("td");
 veld.innerText = gegevens[teller];
 rij.appendChild(veld);
 }
+
+let koopKnop = document.createElement("p");
+koopKnop.innerHTML = "<input type=\"number\" id=\"aantalLovecoins\" min=\"1\"></input><button id=\"koopKnop\" value=\"Koop Lovecoins\" onclick=\"koopLovecoins()\">Koop Lovecoins</button>"
+hoofdDiv.appendChild(koopKnop);
+
 }
 
-function uitschrijven()
-{
-    if (window.confirm("Uitschrijven bevestigen"))
+function koopLovecoins () {
+    let url = 'https://scrumserver.tenobe.org/scrum/api/profiel/lovecoinTransfer.php';
+    let aantalLovecoins = document.getElementById("aantalLovecoins").value
+    if (aantalLovecoins === "") 
     {
-    let url=rooturl+'/profiel/delete.php';
-    
-    let data = {
-        id: user
+        window.alert(" Gelieve dit veld in te vullen! ");
     }
+    else 
+    {
+        let data = {
+            "profielID": sessionStorage.getItem("userId"),
+            "bedrag": aantalLovecoins.toString()
+        }
 
-    var request = new Request(url, {
-        method: 'DELETE',
-        body: JSON.stringify(data),
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        })
-    });
-    
-    fetch(request)
-        .then( function (resp)  { return resp.json(); })
-        .then( function (data)  { console.log(data); window.location.href = "index.html";
-    })
-        .catch(function (error) { console.log(error); });
-}
-}
+        var request = new Request(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        });
 
+        fetch(request)
+        .then(function (response){return response.json();})
+        .then(function (data){console.log(data);})
+        .catch(function (error){console.log(error);});
+
+        window.alert("Lovecoins zijn toegevoegd!");
+        window.location.href = "mijnProfiel.html";
+    }
+}

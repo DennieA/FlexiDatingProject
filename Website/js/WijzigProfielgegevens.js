@@ -4,7 +4,7 @@
 function logout() {
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("wachtwoord");
-    window.location.href = "../Website/index.html";
+    window.location.href = "index.html";
 }
 
 let haarkleuren = [
@@ -61,7 +61,7 @@ function GebruikersGegevens (el){
         document.getElementById("nickname").value = el.nickname;
         document.getElementById("geboortedatum").value = el.geboortedatum;
         document.getElementById("email").value = el.email;
-        document.getElementById("uploadedFoto").setAttribute('src', 'https://scrumserver.tenobe.org/scrum/image' + el.foto);
+        document.getElementById("uploadedFoto").setAttribute('src', 'https://scrumserver.tenobe.org/scrum/img' + el.foto);
         document.getElementById('uploadedFoto').setAttribute('alt', 'foto van ' + el.voornaam + ' ' + el.familienaam);
         document.getElementById("beroep").value = el.beroep;
         document.getElementById("haarkleur").value = el.haarkleur;
@@ -109,7 +109,7 @@ function submit() {
         window.alert(" Gelieve alle velden in te vullen! ");
             
             let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
-            var request = new Request(urlUpdate, {
+            let request = new Request(urlUpdate, {
                 method: 'PUT',
                 body: JSON.stringify(profiel),
                 headers: new Headers({

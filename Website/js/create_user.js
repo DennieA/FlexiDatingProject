@@ -13,7 +13,7 @@
 //             let wachtwoord = el.wachtwoord;
 //             let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
 //             if (sessionStorage.getItem("wachtwoord") === encryptedWachtwoord) {
-//                 window.location.href = "../Website/main.html";
+//                 window.location.href = "main.html";
 //             }
 //         }
 //     }
@@ -58,6 +58,9 @@ function initialisation() {
 let naam = "";
 let afbeelding = "";
 let selectedfile = "";
+let finalFotoNaam;
+let finalFotoUrl;
+let nickname;
 
 //function submit 
 function submit() {
@@ -66,7 +69,7 @@ function submit() {
     let familienaam = document.getElementById("familienaam").value;
     let voornaam = document.getElementById("voornaam").value;
 
-    let nickname = document.getElementById("nickname").value;
+    nickname = document.getElementById("nickname").value;
 
     let geboortedatum = document.getElementById("geboortedatum").value;
 
@@ -138,7 +141,7 @@ function submit() {
                 console.log(data);
 
                 let url = rooturl + '/profiel/create.php';
-                var request = new Request(url, {
+                let request = new Request(url, {
                     method: 'POST',
                     body: JSON.stringify(data),
                     headers: new Headers({
@@ -150,6 +153,7 @@ function submit() {
                         if (resp.ok) {
                             //upload een foto enkel als aanmaken van profiel is gelukt
                             uploadFoto();
+                            updateFotoName();
                             //console.log("foto upload");
                             resp.json()
                                 .then(function (data) {
@@ -215,10 +219,47 @@ function uploadFoto() {
         .then(function (data) {
             console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
             console.log('     • Foto inladen in IMG');
+            finalFotoNaam = data.fileName;
+            finalFotoUrl = data.fileURL
             //document.getElementById('uploadResult').src = data.fileURL;
             console.log('     ==> OK');
             console.log('==> Klaar');
         })
         .catch(function (error) { console.log(error); })
 
+}
+//update foto name
+function updateFotoName()
+{
+    let profielMetFoto;
+    let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
+    fetch(rooturl+"/profiel/read.php").then(function (resp){return resp.json()}).then(function (data){
+    for (let profiel of data)
+    {
+        if (profiel.nickname === nickname)
+        {
+        profielMetFoto = profiel;
+        profielMetFoto.foto = finalFotoNaam;
+        console.log("foto naam van de updatefotoname functie: ", finalFotoNaam);
+        console.log("gezochte profiel: ", profielMetFoto);
+    
+
+        let requestfoto = new Request(urlUpdate, {
+            method: 'PUT',
+            body: JSON.stringify(profielMetFoto),
+            headers: new Headers({
+            'Content-Type': 'application/json'
+            })
+            });
+                
+        fetch(requestfoto)
+            .then(function (resp) { return resp.json(); })
+            .then(function (data) { console.log("profiel met juste fotonaam: ",data);
+                    console.log("naam van foto gewijzigd naar ", finalFotoNaam);
+                    //window.alert("Profiel gewijzigd"); 
+                    //window.location.href = "mijnProfiel.html";
+                            })
+            .catch(function (error) { console.log(error); });
+                //console.log("foto upload");
+    }}}); 
 }

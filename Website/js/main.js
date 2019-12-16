@@ -206,6 +206,13 @@ document.getElementById("zoeken").onclick = function () {
     };
 };
 
+document.getElementById("lucky").onclick = function () {
+    if (validateInput()) {
+        /* Toon één ideale partner. */
+        lucky();
+    };
+};
+
 /* Valideer input van de user. */
 function validateInput() {
     let allesOK = true;
@@ -276,6 +283,92 @@ function createDateLeeftijd(days, months, years) {
 
 /* document.getElementById('zoeken').addEventListener('click', function (e) { */
 function zoekPartners() {
+    let url = alleResultaten();
+
+    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
+    fetch(url)
+        .then(function (resp) {
+            return resp.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            GebruikersGegevens(data)
+
+        })
+        .catch(function (error) {
+            clearBox("matches");
+            console.log(error);
+        });
+};
+
+function lucky() {
+    let url = alleResultaten();
+
+    fetch(url)
+        .then(function (resp) {
+            return resp.json();
+        })
+        .then(function (data) {
+            clearBox("matches");
+            console.log("via lucky", data);
+            let luckyResult = data[Math.floor(Math.random() * data.length)];
+            console.log("random", luckyResult);
+
+            //code ingeplakt zonder functions omdat deze niet werken
+
+            const tableResults = document.createElement("table");
+            tableResults.id = "tableResults";
+            tableResults.style.width = "100%";
+            const container = document.getElementById("matches");
+            container.appendChild(tableResults);
+
+            const tableRowHead = tableResults.insertRow();
+            let sterrenbeeldCell = tableRowHead.insertCell();
+            sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
+            let nicknameCell = tableRowHead.insertCell();
+            nicknameCell.outerHTML = "<th>Nickname</th>";
+            let beroepCell = tableRowHead.insertCell();
+            beroepCell.outerHTML = "<th>Beroep</th>";
+            let sexeCell = tableRowHead.insertCell();
+            sexeCell.outerHTML = "<th>Sexe</th>";
+            let haarkleurCell = tableRowHead.insertCell();
+            haarkleurCell.outerHTML = "<th>Haarkleur</th>";
+            let oogkleurCell = tableRowHead.insertCell();
+            oogkleurCell.outerHTML = "<th>Oogkleur</th>";
+            let grootteCell = tableRowHead.insertCell();
+            grootteCell.outerHTML = "<th>Lengte (cm)</th>";
+            let gewichtCell = tableRowHead.insertCell();
+            gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
+
+            const tableRowBody = tableResults.insertRow();
+            sterrenbeeldCell = tableRowBody.insertCell();
+            sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(luckyResult.geboortedatum)}.png" title = ${getZodiacSign(luckyResult.geboortedatum)}>`;
+
+            nicknameCell = tableRowBody.insertCell();
+            nicknameCell.innerText = luckyResult.nickname;
+            beroepCell = tableRowBody.insertCell();
+            beroepCell.innerText = luckyResult.beroep;
+            sexeCell = tableRowBody.insertCell();
+            sexeCell.innerText = luckyResult.sexe;
+            haarkleurCell = tableRowBody.insertCell();
+            haarkleurCell.innerText = luckyResult.haarkleur;
+            oogkleurCell = tableRowBody.insertCell();
+            oogkleurCell.innerText = luckyResult.oogkleur;
+            grootteCell = tableRowBody.insertCell();
+            grootteCell.innerText = luckyResult.grootte;
+            gewichtCell = tableRowBody.insertCell();
+            gewichtCell.innerText = luckyResult.gewicht;
+
+        })
+        .catch(function (error) {
+            clearBox("matches");
+            console.log(error);
+        });
+};
+
+
+
+function alleResultaten(){
     let geslacht = document.getElementById('sexe').value;
     let oogkleur = document.getElementById('oogkleur').value;
     let haarkleur = document.getElementById('haarkleur').value;
@@ -349,34 +442,42 @@ function zoekPartners() {
     url += urlGeboortedatumSubstring;
     url += urlGewichtSubstring;
     url += urlGrootteSubstring;
-
-    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
-    fetch(url)
-        .then(function (resp) {
-            return resp.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            GebruikersGegevens(data)
-
-        })
-        .catch(function (error) {
-            clearBox("matches");
-            console.log(error);
-        });
-};
+    return url;
+}
 
 function GebruikersGegevens(data) {
 
     clearBox("matches");
 
     //table aanmaken
+    
+
+    //table opvullen
+    //hoofding
+
+    heading()
+
+    
+    //body
+
+    for (const el of data) {
+
+        tableLine(el);
+
+        
+
+    
+}
+
+function heading(){
+
     const tableResults = document.createElement("table");
     const tableHead = tableResults.createTHead(); /* mk */
     tableResults.id = "tableResults";
     tableResults.style.width = "100%";
     const container = document.getElementById("matches");
     container.appendChild(tableResults);
+
 
     //table opvullen
     //hoofding
@@ -409,6 +510,7 @@ function GebruikersGegevens(data) {
     grootteCell.outerHTML = "<th>Lengte (cm)</th>";
     const gewichtCell = tableRowHead.insertCell();
     gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
+    }
 
     //body
     const tableBody = document.createElement("tbody"); /* mk */
@@ -416,7 +518,7 @@ function GebruikersGegevens(data) {
     for (const el of data) {
         const tableRowBody = tableBody.insertRow(); /* mk */
 
-        /* const tableRowBody = tableResults.insertRow(); */
+    function tableLine(el){
         const sterrenbeeldCell = tableRowBody.insertCell();
         sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
 
@@ -458,10 +560,10 @@ function GebruikersGegevens(data) {
 
         const gewichtCell = tableRowBody.insertCell();
         gewichtCell.innerText = el.gewicht;
+        }
     }
     tableResults.appendChild(tableHead); /* mk */
     tableResults.appendChild(tableBody); /* mk */
-
 
  /*   const table = document.querySelector("#tableResults"); //get the table to be sorted
 
@@ -525,11 +627,9 @@ function data2table(tableBody, tableData) {
 
 
 // EINDE DEEL YANNIS
-function clearBox(elementId) {
+function clearBox(elementId){
     document.getElementById(elementId).innerHTML = "";
 }
-
-
 
 function getZodiacSign(date) {
 
@@ -564,3 +664,24 @@ function getZodiacSign(date) {
         return "Boogschutter";
     }
 }
+  }
+
+  // EINDE DEEL YANNIS
+
+
+
+
+// I feel lucky
+
+
+
+// einde i feel lucky
+
+// favorieten
+
+  let user = sessionStorage.getItem("userId");
+console.log(user);
+
+
+
+// einde favorieten
