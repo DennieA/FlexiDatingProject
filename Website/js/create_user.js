@@ -13,7 +13,7 @@
 //             let wachtwoord = el.wachtwoord;
 //             let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
 //             if (sessionStorage.getItem("wachtwoord") === encryptedWachtwoord) {
-//                 window.location.href = "../Website/main.html";
+//                 window.location.href = "main.html";
 //             }
 //         }
 //     }

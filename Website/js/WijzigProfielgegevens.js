@@ -4,7 +4,7 @@
 function logout() {
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("wachtwoord");
-    window.location.href = "../Website/index.html";
+    window.location.href = "index.html";
 }
 
 let haarkleuren = [
@@ -55,13 +55,13 @@ function GebruikersGegevens (el){
     
         console.log(el);
         profiel = el;
-        document.getElementById("hoofd").innerText = 'Gegevens van ' + el.voornaam + ' ' + el.familienaam;
+        document.getElementById("hoofd").innerText = 'Gegevans van ' + el.voornaam + ' ' + el.familienaam;
         document.getElementById("familienaam").value = el.familienaam;
         document.getElementById("voornaam").value = el.voornaam;
         document.getElementById("nickname").value = el.nickname;
         document.getElementById("geboortedatum").value = el.geboortedatum;
         document.getElementById("email").value = el.email;
-        document.getElementById("uploadedFoto").setAttribute('src', 'https://scrumserver.tenobe.org/scrum/image' + el.foto);
+        document.getElementById("uploadedFoto").setAttribute('src', 'https://scrumserver.tenobe.org/scrum/img' + el.foto);
         document.getElementById('uploadedFoto').setAttribute('alt', 'foto van ' + el.voornaam + ' ' + el.familienaam);
         document.getElementById("beroep").value = el.beroep;
         document.getElementById("haarkleur").value = el.haarkleur;
@@ -73,6 +73,8 @@ function GebruikersGegevens (el){
         document.getElementById("oogkleur").value = el.oogkleur;
         document.getElementById("grootte").value = el.grootte;
         document.getElementById("gewicht").value = el.gewicht;
+
+        document.getElementById("lovecoins").value = el.lovecoins;
         
 }
 
@@ -102,7 +104,8 @@ function submit() {
     profiel.oogkleur = oogkleur.options[oogkleur.selectedIndex].innerHTML;
     profiel.grootte = document.getElementById("grootte").value;
     profiel.gewicht = document.getElementById("gewicht").value;
-    if (profiel.familienaam === "" || profiel.voornaam === "" || profiel.nickname === "" || profiel.geboortedatum === "" || profiel.email === "" || profiel.foto === "" || profiel.beroep === "" ||profiel.sexe === "" || profiel.grootte === "" || profiel.gewicht === "" ) 
+    profiel.lovecoins = document.getElementById("lovecoins").value;
+    if (profiel.familienaam === "" || profiel.voornaam === "" || profiel.nickname === "" || profiel.geboortedatum === "" || profiel.email === "" || profiel.foto === "" || profiel.beroep === "" || profiel.lovecoins === "" ||profiel.sexe === "" || profiel.grootte === "" || profiel.gewicht === "" ) 
         window.alert(" Gelieve alle velden in te vullen! ");
             
             let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
