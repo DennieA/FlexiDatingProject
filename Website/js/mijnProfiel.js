@@ -119,6 +119,43 @@ let veld = document.createElement("td");
 veld.innerText = gegevens[teller];
 rij.appendChild(veld);
 }
+
+let koopKnop = document.createElement("p");
+koopKnop.innerHTML = "<input type=\"number\" id=\"aantalLovecoins\" min=\"1\"></input><button id=\"koopKnop\" value=\"Koop Lovecoins\" onclick=\"koopLovecoins()\">Koop Lovecoins</button>"
+hoofdDiv.appendChild(koopKnop);
+
+}
+
+function koopLovecoins () {
+    let url = 'https://scrumserver.tenobe.org/scrum/api/profiel/lovecoinTransfer.php';
+    let aantalLovecoins = document.getElementById("aantalLovecoins").value
+    if (aantalLovecoins === "") 
+    {
+        window.alert(" Gelieve dit veld in te vullen! ");
+    }
+    else 
+    {
+        let data = {
+            "profielID": sessionStorage.getItem("userId"),
+            "bedrag": aantalLovecoins.toString()
+        }
+
+        var request = new Request(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+
+        fetch(request)
+        .then(function (response){return response.json();})
+        .then(function (data){console.log(data);})
+        .catch(function (error){console.log(error);});
+
+        window.alert("Lovecoins zijn toegevoegd!");
+        window.location.href = "mijnProfiel.html";
+    }
 }
 
 function uitschrijven()
