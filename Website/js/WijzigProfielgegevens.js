@@ -55,7 +55,7 @@ function GebruikersGegevens (el){
     
         console.log(el);
         profiel = el;
-        document.getElementById("hoofd").innerText = 'Gegevans van ' + el.voornaam + ' ' + el.familienaam;
+        document.getElementById("hoofd").innerText = 'Gegevens van ' + el.voornaam + ' ' + el.familienaam;
         document.getElementById("familienaam").value = el.familienaam;
         document.getElementById("voornaam").value = el.voornaam;
         document.getElementById("nickname").value = el.nickname;
@@ -73,8 +73,6 @@ function GebruikersGegevens (el){
         document.getElementById("oogkleur").value = el.oogkleur;
         document.getElementById("grootte").value = el.grootte;
         document.getElementById("gewicht").value = el.gewicht;
-
-        document.getElementById("lovecoins").value = el.lovecoins;
         
 }
 
@@ -104,8 +102,7 @@ function submit() {
     profiel.oogkleur = oogkleur.options[oogkleur.selectedIndex].innerHTML;
     profiel.grootte = document.getElementById("grootte").value;
     profiel.gewicht = document.getElementById("gewicht").value;
-    profiel.lovecoins = document.getElementById("lovecoins").value;
-    if (profiel.familienaam === "" || profiel.voornaam === "" || profiel.nickname === "" || profiel.geboortedatum === "" || profiel.email === "" || profiel.foto === "" || profiel.beroep === "" || profiel.lovecoins === "" ||profiel.sexe === "" || profiel.grootte === "" || profiel.gewicht === "" ) 
+    if (profiel.familienaam === "" || profiel.voornaam === "" || profiel.nickname === "" || profiel.geboortedatum === "" || profiel.email === "" || profiel.foto === "" || profiel.beroep === "" ||profiel.sexe === "" || profiel.grootte === "" || profiel.gewicht === "" ) 
         window.alert(" Gelieve alle velden in te vullen! ");
             
             let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';

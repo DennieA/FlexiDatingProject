@@ -60,21 +60,21 @@ function verwerkUsers(users) {
     users.forEach(
         user => {
             /* Zoek alle oogkleuren */
-            const zoekOogkleuren = oogkleuren.filter(oogkleur => oogkleur === user.oogkleur);
+            const zoekOogkleuren = oogkleuren.filter(oogkleur => oogkleur === capitalizeFirstCharacter(user.oogkleur));
             if (zoekOogkleuren.length === 0) {
-                oogkleuren.push(user.oogkleur);
+                oogkleuren.push(capitalizeFirstCharacter(user.oogkleur));
             }
 
             /* Zoek alle haarkleuren */
-            const zoekHaarkleuren = haarkleuren.filter(haarkleur => haarkleur === user.haarkleur);
+            const zoekHaarkleuren = haarkleuren.filter(haarkleur => haarkleur === capitalizeFirstCharacter(user.haarkleur));
             if (zoekHaarkleuren.length === 0) {
-                haarkleuren.push(user.haarkleur);
+                haarkleuren.push(capitalizeFirstCharacter(user.haarkleur));
             }
 
             /* Zoek alle beroepen */
-            const zoekBeroepen = beroepen.filter(beroep => beroep === user.beroep);
+            const zoekBeroepen = beroepen.filter(beroep => beroep === capitalizeFirstCharacter(user.beroep));
             if (zoekBeroepen.length === 0) {
-                beroepen.push(user.beroep);
+                beroepen.push(capitalizeFirstCharacter(user.beroep));
             }
 
             /* Zoek alle sexes */
@@ -115,6 +115,12 @@ function verwerkUsers(users) {
             }
         });
 
+    /* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
+    function capitalizeFirstCharacter(stringToConvert){
+        return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1).toLowerCase();
+    };
+
+    
     /* Functie die de leeftijd berekent */
     function calculate_leeftijd(geboorteDatum) {
         let diff_ms = Date.now() - geboorteDatum.getTime();
@@ -124,6 +130,8 @@ function verwerkUsers(users) {
     }
 
     /* Vul de comboBox met de oogkleur items/options. */
+    /* Sorteer oogkleuren */
+    oogkleuren.sort();
     oogkleuren.forEach(
         oogkleur => {
             const comboBoxItem = document.createElement("option");
@@ -135,6 +143,8 @@ function verwerkUsers(users) {
     )
 
     /* Vul de comboBox met de haarkleur items/options. */
+    /* Sorteer haarkleuren */
+    haarkleuren.sort();
     haarkleuren.forEach(
         haarkleur => {
             const comboBoxItem = document.createElement("option");
@@ -146,6 +156,8 @@ function verwerkUsers(users) {
     )
 
     /* Vul de comboBox met de beroep items/options. */
+    /* Sorteer de beroepen */
+    beroepen.sort();
     beroepen.forEach(
         beroep => {
             const comboBoxItem = document.createElement("option");
@@ -157,6 +169,7 @@ function verwerkUsers(users) {
     )
 
     /* Vul de comboBox met de sexe items/options. */
+    sexes.sort();
     sexes.forEach(
         sexe => {
             const comboBoxItem = document.createElement("option");
