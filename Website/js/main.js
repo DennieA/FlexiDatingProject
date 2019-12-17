@@ -449,6 +449,7 @@ function GebruikersGegevens(data) {
     const tableHead = tableResults.createTHead();
     tableResults.id = "tableResults";
     tableResults.style.width = "100%";
+    /* Haal de plaats op waar de tabel moet komen */
     const container = document.getElementById("matches");
     /* Table op de html pagina zetten in zijn container */
     container.appendChild(tableResults);
