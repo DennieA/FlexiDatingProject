@@ -91,6 +91,32 @@ h1 {
     color: coral;
 }
 
+#tabel2
+{
+    border-color: coral;
+    width: 70%;
+    margin: auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+#tabel2 th
+{
+    background-color: coral;
+    color: white;
+}
+#tabel2 td
+{
+    background-color: lightsalmon;
+    color: lightgoldenrodyellow;
+    text-align: center;
+    font-size: large;
+    font-style: italic;
+}
+#tabel2 #hoofdRij2
+{
+    background-color: moccasin;
+    color: coral;
+}
+
 #koopKnop {
     background-color: coral;
     border: none;
