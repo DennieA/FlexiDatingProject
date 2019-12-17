@@ -15,7 +15,7 @@
       <h1>FlexiDating</h1>
       <ul id="topMenu">
         <li><a href="mijnProfiel.html">Mijn Profiel</a></li>
-        <li><a onclick='logout()'>Afmelden</a></li>
+        <li><a class = "klikbaar" onclick='logout()'>Afmelden</a></li>
       </ul>
     </div>
     <div id="mid">
@@ -24,48 +24,48 @@
       <form id="frmPartnerKenmerken" name="frmPartnerKenmerken">
         <p>
           <label for="sexe">Zoek je een man of een vrouw?: </label>
-          <select name="sexe" id="sexe">
+          <select class = "klikbaar" name="sexe" id="sexe">
             <option value="">--- geen voorkeur ---</option>
           </select>
         </p>
         <p>
           <label for="oogkleur">Oogkleur: </label>
-          <select name="oogkleur" id="oogkleur">
+          <select class = "klikbaar" name="oogkleur" id="oogkleur">
             <option value="">--- geen voorkeur ---</option>
           </select>
         </p>
         <p>
           <label for="haarkleur">Haarkleur: </label>
-          <select name="haarkleur" id="haarkleur">
+          <select class = "klikbaar" name="haarkleur" id="haarkleur">
             <option value="">--- geen voorkeur ---</option>
           </select>
         </p>
         <p>
           <label for="beroep">Beroep: </label>
-          <select name="beroep" id="beroep">
+          <select class = "klikbaar" name="beroep" id="beroep">
             <option value="">--- geen voorkeur ---</option>
           </select>
         </p>
         <p>
             Leeftijd:
             <label for="minLeeftijd">Minimum </label>
-            <input type="number" id=minLeeftijd name="minLeeftijd" placeholder="geen voorkeur" min=18>
+            <input class = "klikbaar" type="number" id=minLeeftijd name="minLeeftijd" placeholder="geen voorkeur" min=18>
             <label for="maxLeeftijd">Maximum </label>
-            <input type="number" id=maxLeeftijd name="maxLeeftijd" placeholder="geen voorkeur" min=18>
+            <input class = "klikbaar" type="number" id=maxLeeftijd name="maxLeeftijd" placeholder="geen voorkeur" min=18>
           </p>
         <p>
           Gewicht (kg):
           <label for="minGewicht">Minimum </label>
-          <input type="number" id = minGewicht name="minGewicht" placeholder="geen voorkeur" min=0>
+          <input class = "klikbaar" type="number" id = minGewicht name="minGewicht" placeholder="geen voorkeur" min=0>
           <label for="maxGewicht">Maximum </label>
-          <input type="number" id = maxGewicht name="maxGewicht" placeholder="geen voorkeur" min=0>
+          <input class = "klikbaar" type="number" id = maxGewicht name="maxGewicht" placeholder="geen voorkeur" min=0>
         </p>
         <p>
             Lengte (cm):
             <label for="minLengte">Minimum </label>
-            <input type="number" id = minLengte name="minLengte" placeholder="geen voorkeur" min=0>
+            <input class = "klikbaar" type="number" id = minLengte name="minLengte" placeholder="geen voorkeur" min=0>
             <label for="maxLengte">Maximum </label>
-            <input type="number" id = maxLengte name="maxLengte" placeholder="geen voorkeur" min=0>
+            <input class = "klikbaar" type="number" id = maxLengte name="maxLengte" placeholder="geen voorkeur" min=0>
           </p>
         <p>
           <button type="button" id="zoeken"class="klikbaar">Zoek alle resultaten</button>
