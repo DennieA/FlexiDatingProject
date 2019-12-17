@@ -577,13 +577,13 @@ function data2table(tableBody, tableData) {
             row.querySelectorAll('td')
                 /* For each table cell ... */
                 .forEach((cell, j) => {
-                    if (String(rowData[j]).slice(0, 4) === "<img") {
+                    if ((String(rowData[j]).slice(0, 5) === "<img ") || (String(rowData[j]).slice(0, 2) === "<a ")) {
                         /* Put the appropriate array element into the cell */
-                         cell.innerHTML = rowData[j]; 
-                     } else {
-                         /* Put the appropriate array element into the cell */
-                         cell.innerText = rowData[j]; 
-                     };
+                        cell.innerHTML = rowData[j];
+                    } else {
+                        /* Put the appropriate array element into the cell */
+                        cell.innerText = rowData[j];
+                    };
                 })
             tableData.push(rowData);
         });
@@ -625,9 +625,9 @@ function getZodiacSign(date) {
     }
 }
 
-function passNickname(nickname){
+function passNickname(nickname) {
     sessionStorage.setItem("selectedNickname", nickname);
-    window.open("matchProfile.html","_self")
+    window.open("matchProfile.html", "_self")
 }
 
 /* dit gaf problemen met alfabetisch rangschikken
@@ -637,4 +637,3 @@ function passId(id){
     window.open("matchProfile.html","_self")
 }
 */
-
