@@ -316,21 +316,21 @@ function lucky() {
             /* Table head opvullen */
             const tableRowHead = tableHead.insertRow();
             let sterrenbeeldCell = tableRowHead.insertCell();
-            sterrenbeeldCell.outerHTML = '<th class = "klikbaar">Sterrenbeeld</th>';
+            sterrenbeeldCell.outerHTML = '<th>Sterrenbeeld</th>';
             let nicknameCell = tableRowHead.insertCell();
-            nicknameCell.outerHTML = '<th class = "klikbaar">Nickname</th>';
+            nicknameCell.outerHTML = '<th>Nickname</th>';
             let beroepCell = tableRowHead.insertCell();
-            beroepCell.outerHTML = '<th class = "klikbaar">Beroep</th>';
+            beroepCell.outerHTML = '<th>Beroep</th>';
             let sexeCell = tableRowHead.insertCell();
-            sexeCell.outerHTML = '<th class = "klikbaar">Sexe</th>';
+            sexeCell.outerHTML = '<th>Sexe</th>';
             let haarkleurCell = tableRowHead.insertCell();
-            haarkleurCell.outerHTML = '<th class = "klikbaar">Haarkleur</th>';
+            haarkleurCell.outerHTML = '<th>Haarkleur</th>';
             let oogkleurCell = tableRowHead.insertCell();
-            oogkleurCell.outerHTML = '<th class = "klikbaar">Oogkleur</th>';
+            oogkleurCell.outerHTML = '<th>Oogkleur</th>';
             let grootteCell = tableRowHead.insertCell();
-            grootteCell.outerHTML = '<th class = "klikbaar">Lengte (cm)</th>';
+            grootteCell.outerHTML = '<th>Lengte (cm)</th>';
             let gewichtCell = tableRowHead.insertCell();
-            gewichtCell.outerHTML = '<th class = "klikbaar">Gewicht (kg)</th>';
+            gewichtCell.outerHTML = '<th>Gewicht (kg)</th>';
 
             const tableRowBody = tableResults.insertRow();
             sterrenbeeldCell = tableRowBody.insertCell();
