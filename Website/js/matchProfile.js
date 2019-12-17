@@ -37,11 +37,11 @@ function logout() {
 function unlock() {
 
     let url = rooturl + '/ontgrendeling/ontgrendel.php';
-    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
+    //rooturl = https://scrumserver.tenobe.org/scrum/api
     let data = {
         mijnId: sessionStorage.getItem('userId'),
-        anderId: sessionStorage.getItem('selectedId')
-    }
+        anderId: gegevens[0]
+    };
 
     var request = new Request(url, {
         method: 'POST',
@@ -64,7 +64,7 @@ function unlock() {
 
 let checkunlocked = false;
 let checkfavorite = false;
-let selectedId = 505;
+let selectedNickname = 'Jetbrain'; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! sessiontorage 
 
 
 
@@ -82,51 +82,46 @@ console.log(user);
 
 
 
-/* zoek een gebruiker op id*/
-fetch(rooturl + "/profiel/read.php").then(function (resp) { return resp.json() }).then(SelectedId);
-
-function SelectedId(data) {
+/* zoek een gebruiker op nickname*/
+fetch(rooturl + "/profiel/read.php").then(function (resp) { return resp.json() }).then(readUsers);
+function readUsers(data) {
     let gegevens = [];
     let titels = [];
     for (let el of data)
-        if (el.id === selectedId) {
+        if (el.nickname === selectedNickname) {
             gegevens.push(el.id);
             titels.push("Id");
 
+            gegevens.push(el.nickname);
+            titels.push("Nickname");
 
-            if (checkunlocked = false) {
-                gegevens.push("unlock om te bekijken")
-            } else {
-                gegevens.push(el.nickname);
-
-            };
-            titels.push("Nickname")
-            if (checkunlocked = false) {
+            if (checkunlocked === false) {
                 gegevens.push("unlock om te bekijken")
             } else {
                 gegevens.push(el.foto);
             };
 
             titels.push("Foto");
-            if (checkunlocked = false) {
+
+            if (checkunlocked === false) {
                 gegevens.push("unlock om te bekijken")
             } else {
                 gegevens.push(el.voornaam);
             };
 
             titels.push("Voornaam");
-            if (checkunlocked = false) {
+
+            if (checkunlocked === false) {
                 gegevens.push("unlock om te bekijken")
             } else {
                 gegevens.push(el.familienaam);
             };
 
-
             titels.push("Familienaam");
+
+
             gegevens.push(el.geboortedatum);
             titels.push("Geboortedatum");
-            gegevens.push(el.email);
-            titels.push("Email");
             gegevens.push(el.beroep);
             titels.push("Beroep");
             gegevens.push(el.sexe);
@@ -141,16 +136,16 @@ function SelectedId(data) {
             titels.push("Gewicht");
 
         }
-
+//maakTabel
     let foto = document.createElement("img");
     foto.id = "uploadedFoto";
     foto.setAttribute('src', 'https://scrumserver.tenobe.org/scrum/img/' + gegevens[2]);
     console.log("naam van de foto: ", foto.src);
-    foto.setAttribute('alt', 'foto van ' + gegevens[3] + ' ' + gegevens[4]);
+    foto.setAttribute('alt', 'unlock om foto te bekijken');
     hoofdDiv.appendChild(foto);
 
     let nicknameVeld = document.createElement("h2");
-    nicknameVeld.innerText = "Hello " + gegevens[1];
+    nicknameVeld.innerText = "Profiel van: " + gegevens[1];
     nicknameVeld.id = "nickname";
     hoofdDiv.appendChild(nicknameVeld);
 
@@ -168,7 +163,7 @@ function SelectedId(data) {
     hoofdTh.colSpan = 3;
     hoofdRij.appendChild(hoofdTh);
 
-    for (let teller = 3; teller <= 13; teller++) {
+    for (let teller = 3; teller <= 11; teller++) {
         let rij = document.createElement("tr");
         tabel.appendChild(rij);
         let titel = document.createElement("th");
@@ -180,7 +175,7 @@ function SelectedId(data) {
     }
     if (checkunlocked === false) {
         let koopKnop = document.createElement("p");
-        koopKnop.innerHTML = "<button id=\"koopKnop\"\" onclick=\"unlock()\">Unlock profile</button>"
+        koopKnop.innerHTML = "<button id=\"koopKnop\"\" onclick=\"unlock()\">Unlock profiel</button>"
         hoofdDiv.appendChild(koopKnop);
     };
 }
