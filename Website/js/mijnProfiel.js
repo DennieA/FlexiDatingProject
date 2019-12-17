@@ -1,5 +1,29 @@
 "use strict";
 
+
+let mijnId =  "2";
+let anderId =  "6";
+
+let rooturl3 = 'https://scrumserver.tenobe.org/scrum/api/favoriet/like.php';
+let data = {
+    mijnId: mijnId,
+    anderId: anderId
+}
+
+var request = new Request(rooturl3, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: new Headers({
+        'Content-Type': 'application/json'
+    })
+});
+
+fetch(request)
+    .then( function (resp)  { return resp.json(); })
+    .then( function (data)  { console.log(data);  })
+    .catch(function (error) { console.log(error); });
+
+
 ////////Login nakijken
 // let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
 // fetch(loginUrl)
@@ -123,8 +147,69 @@ rij.appendChild(veld);
 let koopKnop = document.createElement("p");
 koopKnop.innerHTML = "<input type=\"number\" id=\"aantalLovecoins\" min=\"1\"></input><button id=\"koopKnop\" value=\"Koop Lovecoins\" onclick=\"koopLovecoins()\">Koop Lovecoins</button>"
 hoofdDiv.appendChild(koopKnop);
-
+///
+tabel2();
 }
+
+function tabel2() {
+    let rooturl2 = "https://scrumserver.tenobe.org/scrum/api";
+    fetch(rooturl2+"/favoriet/read.php?profielId=" + sessionStorage.getItem("userId")).then(function (resp){return resp.json()}).then(favorietenTonen);
+
+    function favorietenTonen(data) {
+        let ids = [];
+        let nicknames = [];
+        let teller2 = 0;
+
+        for (let el of data){
+            ids.push(el.anderId);
+            teller2++;
+        }
+
+        
+        let rooturl4 = "https://scrumserver.tenobe.org/scrum/api";
+        fetch(rooturl4+"/profiel/read.php").then(function (resp){return resp.json()}).then(nicknameOverlopen).then(toonTabel);
+        function nicknameOverlopen (data){
+            for (let j = 0; j <= ids.length; j++){
+                for (let el of data) {
+                    if (ids[j] === el.id) {
+                        nicknames.push(el.nickname);
+                    }
+                }
+            }
+        }
+        function toonTabel () {
+            if (typeof ids[0] !== "undefined") {
+            let tabel2 = document.createElement("table");
+            tabel2.id = "tabel2";
+            hoofdDiv.appendChild(tabel2);
+            let hoofdRij2 = document.createElement("tr");
+            hoofdRij2.id = "hoofdRij2";
+            tabel2.appendChild(hoofdRij2);
+            let hoofdTh2 = document.createElement("th");
+            hoofdTh2.innerText = "Favorieten";
+            hoofdTh2.id = "hoofdRij2";
+            hoofdTh2.colSpan = 3;
+            hoofdRij2.appendChild(hoofdTh2);
+
+            for (let teller3 = 0; teller3 < teller2; teller3++)
+            {
+                let rij2 = document.createElement("tr");
+                tabel2.appendChild(rij2);
+                let veld2 = document.createElement("td");
+                veld2.innerHTML =  "<a onclick=\"matchProfielLaden(\'" + nicknames[teller3] + "\')\">" + nicknames[teller3] + "</a>";
+                rij2.appendChild(veld2);
+            }
+        }
+        }
+    }
+}
+
+function matchProfielLaden (nickname) {
+    console.log(nickname);
+    sessionStorage.setItem("selectedNickname", nickname);
+    window.location.href = "matchProfile.html";
+}
+///
 
 function koopLovecoins() {
     let url = 'https://scrumserver.tenobe.org/scrum/api/profiel/lovecoinTransfer.php';
