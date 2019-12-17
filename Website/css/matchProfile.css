@@ -1,0 +1,104 @@
+h1 {
+    text-align: center;
+    color: #ffffff85;
+    font-size: 500%;
+
+}
+
+#container {
+    width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+#head {
+    height: 230px;
+    padding: 1em;
+    background-image: url("../images/test.jpg");
+    background-repeat: no-repeat;
+}
+
+#mid {
+    padding: 0 1em;
+    margin-bottom: 25px;
+}
+
+#foot {
+    bottom: 0;
+    width: 1000px;
+    background: #93bee5;
+    text-align: center;
+    color: #ffffff;
+    padding: 1em 0;
+    margin: 0 auto;
+}
+
+
+#topMenu {
+    list-style-type: none;
+    overflow: auto;
+    font-size: 100%;
+    text-align: right;
+}
+#topMenu li {
+    display: inline-block;
+    padding: 1em;
+}
+
+#topMenu li a {
+    display: inline;
+    text-decoration: none;
+    color: black;
+}
+
+#topMenu li a:hover {
+    color: white;
+}
+#submit
+{
+    background-color: #93bee5;
+    height: 6em;
+
+}
+#nickname
+{
+    text-align: center;
+    color: coral;
+}
+#tabel
+{
+    border-color: coral;
+    width: 70%;
+    margin: auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+#tabel th
+{
+    background-color: coral;
+    color: white;
+}
+#tabel td
+{
+    background-color: lightsalmon;
+    color: lightgoldenrodyellow;
+    text-align: center;
+    font-size: large;
+    font-style: italic;
+}
+#tabel #hoofdRij
+{
+    background-color: moccasin;
+    color: coral;
+}
+
+#koopKnop {
+    background-color: coral;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 20%;
+}
