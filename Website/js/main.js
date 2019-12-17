@@ -364,7 +364,7 @@ function lucky() {
 };
 
 
-function alleResultaten(){
+function alleResultaten() {
     let geslacht = document.getElementById('sexe').value;
     let oogkleur = document.getElementById('oogkleur').value;
     let haarkleur = document.getElementById('haarkleur').value;
@@ -442,12 +442,14 @@ function alleResultaten(){
 }
 
 function GebruikersGegevens(data) {
-    //table creeren
+    /* Table aanmaken */
     const tableResults = document.createElement("table");
+    /* Table head aanmaken */
     const tableHead = tableResults.createTHead();
     tableResults.id = "tableResults";
     tableResults.style.width = "100%";
     const container = document.getElementById("matches");
+    /* Table op de html pagina zetten in zijn container */
     container.appendChild(tableResults);
 
     /* Table head opvullen */
@@ -509,46 +511,54 @@ function GebruikersGegevens(data) {
     const table = document.querySelector("#tableResults");
     /* Get all the table header elements */
     table.querySelectorAll("th")
-        /* Add a click handler for each  */
+        /* Add a click handler for each header element  */
         .forEach((element, columnNo) => {
             element.addEventListener("click", event => {
                 /* Call a function which sorts the table by a given column number */
-                sortTable(table, columnNo); 
+                sortTable(table, columnNo);
             })
         })
 }
 
-
+/* Function om de tabel te sorteren */
 function sortTable(table, sortColumn) {
-    // get the data from the table cells
+    /* Get the data from the table cells */
     const tableBody = table.querySelector('tbody')
     const tableData = table2data(tableBody);
-    // sort the extracted data
+    /* Sort the extracted data */
     tableData.sort((a, b) => {
         if (a[sortColumn] > b[sortColumn]) {
             return 1;
         }
         return -1;
     })
-    // put the sorted data back into the table
+    /* Put the sorted data back into the table */
     data2table(tableBody, tableData);
 }
 
+
 function table2data(tableBody) {
-    const tableData = []; // create the array that'll hold the data rows
+    /* Create the array that'll hold the data rows */
+    const tableData = [];
     tableBody.querySelectorAll('tr')
-        .forEach(row => { // for each table row...
-            const rowData = []; // make an array for that row
-            row.querySelectorAll('td') // for each cell in that row
+        /* For each table row... */
+        .forEach(row => {
+            const rowData = [];
+            /* For each cell in that row */
+            row.querySelectorAll('td')
                 .forEach(cell => {
+                    /* Does the cell contain text or an image */
                     if (cell.innerText !== "") {
+                        /* To sort correctly string and numbers */
                         if (isNaN(cell.innerText)) {
-                            rowData.push(cell.innerText); // add string to the row data
+                            /* Add the string to the row data */
+                            rowData.push(cell.innerText);
                         } else {
-                            rowData.push(Number(cell.innerText)); // add number to the row data
+                            /* Add the number to the row data */
+                            rowData.push(Number(cell.innerText));
                         };
                     } else {
-                        rowData.push(cell.innerHTML); // add it to the row data
+                        rowData.push(cell.innerHTML);
                     };
                 })
             tableData.push(rowData); // add the full row to the table data 
@@ -556,24 +566,30 @@ function table2data(tableBody) {
     return tableData;
 }
 
+/* Functie om de lokale (gesorteerde) tabel trug te zetten */
 function data2table(tableBody, tableData) {
-    tableBody.querySelectorAll('tr') // for each table row...
+    tableBody.querySelectorAll('tr')
+        /* For each table row...  */
         .forEach((row, i) => {
-            const rowData = tableData[i]; // get the array for the row data
-            row.querySelectorAll('td') // for each table cell ...
+            /* Get the array for the row data */
+            const rowData = tableData[i];
+            row.querySelectorAll('td')
+                /* For each table cell ... */
                 .forEach((cell, j) => {
-                    if (j === 0) {
-                        cell.innerHTML = rowData[j]; // put the appropriate array element into the cell
-                    } else {
-                        cell.innerText = rowData[j]; // put the appropriate array element into the cell
-                    };
+                    if (String(rowData[j]).slice(0, 4) === "<img") {
+                        /* Put the appropriate array element into the cell */
+                         cell.innerHTML = rowData[j]; 
+                     } else {
+                         /* Put the appropriate array element into the cell */
+                         cell.innerText = rowData[j]; 
+                     };
                 })
             tableData.push(rowData);
         });
 }
 
 /* Maak de html binnen een element leeg */
-function clearBox(elementId){
+function clearBox(elementId) {
     document.getElementById(elementId).innerHTML = "";
 }
 
