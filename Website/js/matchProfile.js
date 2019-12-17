@@ -42,7 +42,7 @@ function unlock() {
     //rooturl = https://scrumserver.tenobe.org/scrum/api
     let data = {
         mijnId: sessionStorage.getItem('userId'),
-        anderId: gegevens[0]
+        anderId: sessionStorage.getItem('lastProfile')
     };
     console.log(sessionStorage.getItem('userId'))
     console.log(gegevens)
@@ -106,16 +106,10 @@ function check() {
     fetch(url)
         .then(function (resp) { return resp.json(); })
         .then(function (data) {
-            // console.log(sessionStorage.getItem('userId'))
-            // console.log("Profiel heeft toegang tot volgende profielen : ");
-            // console.log(data);
-            // console.log("gegevens" ,gegevens, "gegevens")
-            // console.log( "dubbele check data" , data)
-            console.log(gegevens[0])
-            console.log(gegevens)
-            console.log(gegevens.length, "lengte")
+            console.log(sessionStorage.getItem('lastProfile'))
+            console.log(data);           
             for (let x = 0; x < data.length; x++) {
-                if (gegevens[0] === data[x]) {
+                if (sessionStorage.getItem('lastProfile') === data[x]) {
                     checkunlocked = true;
                     console.log("check!!!!!!!!")
                 }
@@ -148,6 +142,7 @@ function readUsers(data) {
         if (el.nickname === selectedNickname) {
             gegevens.push(el.id);
             titels.push("Id");
+            sessionStorage.setItem("lastProfile", el.id);
 
             gegevens.push(el.nickname);
             titels.push("Nickname");
