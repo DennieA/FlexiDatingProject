@@ -1,0 +1,25 @@
+function lovecoinsBerenkenen ()
+{   
+    
+    fetch(rooturl+"/profiel/read_one.php?id="+user).then(function (resp){return resp.json()}).then(function (profiel)
+    {
+        mijnLovecoins = Number(profiel.lovecoins);
+        mijnLovecoins--;
+        profiel.lovecoins = mijnLovecoins.toString();
+
+    let request = new Request(urlUpdate, {
+        method: 'PUT',
+        body: JSON.stringify(profiel),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+
+    fetch(request)
+        .then(function (resp) { return resp.json(); })
+        .then(function (data) { console.log("data voor upload ",data);
+            window.alert("Profiel gewijzigd"); 
+         })
+        .catch(function (error) { console.log(error); });
+    });
+}
