@@ -45,6 +45,7 @@ function unlock() {
         anderId: sessionStorage.getItem('lastProfile')
     };
     console.log(sessionStorage.getItem('userId'))
+    console.log(sessionStorage.getItem('lastProfile'))
     console.log(gegevens)
 
     var request = new Request(url, {
@@ -86,7 +87,8 @@ function unlock() {
         window.alert("1 lovecoin betaald, profiel unlocked!");
     }
     //koopLovecoins();
-    window.location.href = "matchProfile.html"
+
+    //window.location.href = "matchProfile.html"
 }
 
 
@@ -107,11 +109,13 @@ function check() {
         .then(function (resp) { return resp.json(); })
         .then(function (data) {
             console.log(sessionStorage.getItem('lastProfile'))
-            console.log(data);           
+            console.log(data);
             for (let x = 0; x < data.length; x++) {
-                if (sessionStorage.getItem('lastProfile') === data[x]) {
-                    checkunlocked = true;
-                    console.log("check!!!!!!!!")
+                if (sessionStorage.getItem('lastprofile') !== "" && data !=="") {
+                    if (sessionStorage.getItem('lastProfile') === data[x]) {
+                        checkunlocked = true;
+                        console.log("check!!!!!!!!")
+                    }
                 }
             };
 
