@@ -1,6 +1,8 @@
 "use strict";
 
+// global variables
 let rooturl = "https://scrumserver.tenobe.org/scrum/api";
+let gegevens = [];
 
 ////////Login nakijken
 // let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
@@ -85,7 +87,7 @@ console.log(user);
 /* zoek een gebruiker op nickname*/
 fetch(rooturl + "/profiel/read.php").then(function (resp) { return resp.json() }).then(readUsers);
 function readUsers(data) {
-    let gegevens = [];
+   
     let titels = [];
     for (let el of data)
         if (el.nickname === selectedNickname) {
