@@ -47,9 +47,16 @@ let user = sessionStorage.getItem("userId");
 
 /* zoek een gebruiker op id*/
 let rooturl = "https://scrumserver.tenobe.org/scrum/api";
+let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
 fetch(rooturl+"/profiel/read_one.php?id="+user).then(function (resp){return resp.json()}).then(GebruikersGegevens);
 
 let profiel;
+let selectedfile = "";
+let naam = "";
+let afbeelding = "";
+let finalFotoNaam;
+let finalFotoUrl;
+
 
 function GebruikersGegevens (el){
     
@@ -78,18 +85,24 @@ function GebruikersGegevens (el){
         
 }
 
+initialisation();
+document.getElementById("submit").onclick = submit;
+
 function submit() {
+console.log("WIJZIG PROFIEL PAGINA:");
+
     profiel.familienaam = document.getElementById("familienaam").value;
     profiel.voornaam = document.getElementById("voornaam").value;
     profiel.nickname = document.getElementById("nickname").value;
     profiel.geboortedatum = document.getElementById("geboortedatum").value;
     profiel.email = document.getElementById("email").value;
 
-    let selectedfile = document.getElementById("foto").files;
+    selectedfile = document.getElementById("foto").files;
     if (selectedfile.length !== 0)
     {
         profiel.foto = selectedfile[0].name;
-        uploadFoto(selectedfile);                                                
+        console.log("profiel.foto: ", profiel.foto);
+        //uploadFoto();                                                
     }
 
     profiel.beroep = document.getElementById("beroep").value;
@@ -104,11 +117,12 @@ function submit() {
     profiel.oogkleur = oogkleur.options[oogkleur.selectedIndex].innerHTML;
     profiel.grootte = document.getElementById("grootte").value;
     profiel.gewicht = document.getElementById("gewicht").value;
-    profiel.lovecoins = document.getElementById("lovecoins").value;
+    //profiel.lovecoins = document.getElementById("lovecoins").value;
+    
     if (profiel.familienaam === "" || profiel.voornaam === "" || profiel.nickname === "" || profiel.geboortedatum === "" || profiel.email === "" || profiel.foto === "" || profiel.beroep === "" || profiel.lovecoins === "" ||profiel.sexe === "" || profiel.grootte === "" || profiel.gewicht === "" ) 
         window.alert(" Gelieve alle velden in te vullen! ");
             
-            let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
+            
             let request = new Request(urlUpdate, {
                 method: 'PUT',
                 body: JSON.stringify(profiel),
@@ -121,7 +135,13 @@ function submit() {
                 .then(function (resp) { return resp.json(); })
                 .then(function (data) { console.log(data);
                     window.alert("Profiel gewijzigd"); 
-                    window.location.href = "mijnProfiel.html";
+                    if (selectedfile.length !== 0)
+                    {
+                        for(let x =1; x<=100;x++){}
+                    uploadFoto();
+                    }
+                    else {
+                    window.location.href = "mijnProfiel.html";}
                  })
                 .catch(function (error) { console.log(error); });
 
@@ -129,50 +149,100 @@ function submit() {
            
 };
 
-initialisation();
 
-document.getElementById("submit").onclick = submit;
 
-function uploadFoto(selectedfile)
-{
-        let imageFile = selectedfile[0];
-        let fileReader = new FileReader();
-        fileReader.onload = function (fileLoadedEvent) {
-            let srcData = fileLoadedEvent.target.result;
-            let newImage = document.createElement('img');
-            newImage.src = srcData;
-            document.getElementById("dummy").innerHTML = newImage.outerHTML;
-            document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
-                                                        }
-        fileReader.readAsDataURL(imageFile);
-        let naam = selectedfile[0].name;
-        console.log("img name: ",naam);
-        let afbeelding = document.getElementById("txt").value;
+//genereert base64 code van de gekozen foto
+document.getElementById("foto").onchange = function base64Foto() {
+    let imageFile = this.files[0];
+    let fileReader = new FileReader();
+    fileReader.onload = function (fileLoadedEvent) {
+        let srcData = fileLoadedEvent.target.result;
+        let newImage = document.createElement('img');
+        newImage.src = srcData;
+        document.getElementById("dummy").innerHTML = newImage.outerHTML;
+        document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
+        afbeelding = document.getElementById("txt").value;
+    }
+    fileReader.readAsDataURL(imageFile);
+    naam = this.files[0].name;
+}
+//upload foto
+function uploadFoto() {
+
+    let urlFotoUpload = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
+    let responseFotoUpload;
+    let dataFoto = ({
+        naam: naam,
+        afbeelding: afbeelding
+    });
+    console.log("dataFoto: ", dataFoto);
+
+    let requestfoto = new Request(urlFotoUpload, {
+        method: 'POST',
+        body: JSON.stringify(dataFoto),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
     
-        let url = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
-    
-        let dataFoto = {
-            naam: naam,
-            afbeelding: afbeelding
-        }
-    
-        let request = new Request(url, {
-            method: 'POST',
-            body: JSON.stringify(dataFoto),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-    
-        fetch(request)
-            .then(function (resp) { return resp.json(); })
-            .then(function (data) {
-                console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
-                console.log('     • Foto inladen in IMG');
-                //document.getElementById('uploadResult').src = data.fileURL;
-                console.log('     ==> OK');
-                console.log('==> Klaar');
-            })
-            .catch(function (error) { console.log(error); })
+    fetch(requestfoto)
+        .then(function (resp) { return resp.json(); })
+        .then(Gegevens)
+        .catch(function (error) { console.log(error); });    
+            
+            
         
+
+        console.log("buiten fetch-upload bericht foto naam: ",finalFotoNaam);
+        console.log("buiten fetch-upload bericht foto url: ", finalFotoUrl);
+        //console.log(responseFotoUpload);
+    
+        //update de foto name
+    let profielMetFoto;
+    
+    function Gegevens (data) {
+        //responseFotoUpload = data;
+        console.log("data upload foto: ", data);
+        
+        finalFotoUrl = data.fileURL;
+        finalFotoNaam = data.fileName;
+
+        console.log("foto naam: ", finalFotoNaam);
+        console.log("foto url: ", finalFotoUrl);
+
+        console.log("test: ik ben in de foto upload");
+        fetch(rooturl+"/profiel/read_one.php?id="+user).then(function (resp){return resp.json()}).then(function (prof){
+
+            profielMetFoto = prof;
+            console.log("profile met verkeerde naam: ", profielMetFoto);
+            profielMetFoto.foto = finalFotoNaam;
+            console.log("foto naam van de updatefotoname functie: ", finalFotoNaam);
+            console.log("gezochte profiel met juiste naam: ", profielMetFoto);
+        
+    
+            let requestfoto = new Request(urlUpdate, {
+                method: 'PUT',
+                body: JSON.stringify(profielMetFoto),
+                headers: new Headers({
+                'Content-Type': 'application/json'
+                })
+                });
+                    
+            fetch(requestfoto)
+                .then(function (resp) { return resp.json(); })
+                .then(function (data) { console.log("profiel met juiste fotonaam: ",data);
+                        console.log("naam van foto gewijzigd naar ", finalFotoNaam);
+                        //window.alert("Profiel gewijzigd"); 
+                        //window.location.href = "mijnProfiel.html";
+                        for (let x = 1; x<=1000; x++)
+                        {}
+                        window.location.href = "mijnProfiel.html";
+                                })
+                .catch(function (error) { console.log(error); });
+                    //console.log("foto upload");
+        }); 
+    }
+
+    
+
 }
