@@ -37,11 +37,11 @@ function logout() {
 function unlock() {
 
     let url = rooturl + '/ontgrendeling/ontgrendel.php';
-    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
+    //rooturl = https://scrumserver.tenobe.org/scrum/api
     let data = {
         mijnId: sessionStorage.getItem('userId'),
-        anderId: sessionStorage.getItem('selectedId')
-    }
+        anderId: gegevens[0]
+    };
 
     var request = new Request(url, {
         method: 'POST',
@@ -64,7 +64,7 @@ function unlock() {
 
 let checkunlocked = false;
 let checkfavorite = false;
-let selectedId = '505';
+let selectedNickname = 'Jetbrain'; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! sessiontorage 
 
 
 
@@ -82,14 +82,13 @@ console.log(user);
 
 
 
-/* zoek een gebruiker op id*/
+/* zoek een gebruiker op nickname*/
 fetch(rooturl + "/profiel/read.php").then(function (resp) { return resp.json() }).then(readUsers);
-
 function readUsers(data) {
     let gegevens = [];
     let titels = [];
     for (let el of data)
-        if (el.id === selectedId) {
+        if (el.nickname === selectedNickname) {
             gegevens.push(el.id);
             titels.push("Id");
 
@@ -137,7 +136,7 @@ function readUsers(data) {
             titels.push("Gewicht");
 
         }
-
+//maakTabel
     let foto = document.createElement("img");
     foto.id = "uploadedFoto";
     foto.setAttribute('src', 'https://scrumserver.tenobe.org/scrum/img/' + gegevens[2]);
