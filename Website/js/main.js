@@ -347,7 +347,7 @@ function lucky() {
 
             const tableRowBody = tableResults.insertRow();
             sterrenbeeldCell = tableRowBody.insertCell();
-            sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(luckyResult.geboortedatum)}.png" title = ${getZodiacSign(luckyResult.geboortedatum)}>`;
+            sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(luckyResult.geboortedatum)}.png" title = ${getZodiacSign(luckyResult.geboortedatum).slice(3)}>`;
 
             nicknameCell = tableRowBody.insertCell();
             nicknameCell.innerHTML = `<a href = "#" onclick='passNickname("${luckyResult.nickname}")'>${luckyResult.nickname}</a>`;
@@ -488,7 +488,7 @@ function GebruikersGegevens(data) {
         const tableRowBody = tableBody.insertRow();
 
         const sterrenbeeldCell = tableRowBody.insertCell();
-        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
+        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum).slice(3)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
         nicknameCell.innerHTML = `<a href = "#" onclick='passNickname("${el.nickname}")'>${el.nickname}</a>`;
