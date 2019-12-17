@@ -277,20 +277,16 @@ function createDateLeeftijd(days, months, years) {
     return date;
 }
 
-// DEEL YANNIS 
-
-//function om juiste waarde op te halen
-
-/* document.getElementById('zoeken').addEventListener('click', function (e) { */
+//haal een array van resultaten op adhv de juiste zoekwaarden
 function zoekPartners() {
     let url = alleResultaten();
 
-    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
     fetch(url)
         .then(function (resp) {
             return resp.json();
         })
         .then(function (data) {
+            clearBox("matches");
             console.log(data);
             GebruikersGegevens(data)
 
@@ -301,6 +297,7 @@ function zoekPartners() {
         });
 };
 
+//haal een enkel willekeurige resultaat op adhv de juiste zoekwaarden
 function lucky() {
     let url = alleResultaten();
 
@@ -365,8 +362,6 @@ function lucky() {
             console.log(error);
         });
 };
-
-
 
 function alleResultaten(){
     let geslacht = document.getElementById('sexe').value;
@@ -446,16 +441,13 @@ function alleResultaten(){
 }
 
 function GebruikersGegevens(data) {
-
-    clearBox("matches");
-
+    //table creeren
     const tableResults = document.createElement("table");
     const tableHead = tableResults.createTHead(); /* mk */
     tableResults.id = "tableResults";
     tableResults.style.width = "100%";
     const container = document.getElementById("matches");
     container.appendChild(tableResults);
-
 
     //table opvullen
     //hoofding
@@ -464,18 +456,6 @@ function GebruikersGegevens(data) {
     sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
     const nicknameCell = tableRowHead.insertCell();
     nicknameCell.outerHTML = "<th>Nickname</th>";
-    /*const fotoCell = tableRowHead.insertCell();
-    fotoCell.outerHTML = "<th>Foto</th>";
-    const idCell = tableRowHead.insertCell();
-    idCell.outerHTML = "<th>ID</th>";
-    const voornaamCell = tableRowHead.insertCell();
-    voornaamCell.outerHTML = "<th>Voornaam</th>";
-    const familienaamCell = tableRowHead.insertCell();
-    familienaamCell.outerHTML = "<th>Familienaam</th>";
-    const geboorteCell = tableRowHead.insertCell();
-    geboorteCell.outerHTML = "<th>Geboortedatum</th>";
-    const emailCell= tableRowHead.insertCell();
-    emailCell.outerHTML = "<th>E-mail</th>";*/
     const beroepCell = tableRowHead.insertCell();
     beroepCell.outerHTML = "<th>Beroep</th>";
     const sexeCell = tableRowHead.insertCell();
@@ -488,11 +468,9 @@ function GebruikersGegevens(data) {
     grootteCell.outerHTML = "<th>Lengte (cm)</th>";
     const gewichtCell = tableRowHead.insertCell();
     gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
-    
 
     //body
     const tableBody = document.createElement("tbody"); /* mk */
-
     for (const el of data) {
         const tableRowBody = tableBody.insertRow(); /* mk */
 
@@ -501,24 +479,6 @@ function GebruikersGegevens(data) {
 
         const nicknameCell = tableRowBody.insertCell();
         nicknameCell.innerText = el.nickname;
-
-        /*const fotoCell = tableRowBody.insertCell();
-        fotoCell.innerHTML = el.foto;
-
-        const idCell = tableRowBody.insertCell();
-        idCell.innerText = el.id;
-
-        const voornaamCell = tableRowBody.insertCell();
-        voornaamCell.innerText = el.voornaam;                              
-
-        const familienaamCell = tableRowBody.insertCell();
-        familienaamCell.innerText = el.familienaam;
-
-        const geboorteCell = tableRowBody.insertCell();
-        geboorteCell.innerText = el.geboortedatum;
-
-        const emailCell = tableRowBody.insertCell();
-        emailCell.innerText = el.email;*/
 
         const beroepCell = tableRowBody.insertCell();
         beroepCell.innerText = el.beroep;
@@ -601,19 +561,15 @@ function data2table(tableBody, tableData) {
         });  
 }  */
 
-
-// EINDE DEEL YANNIS
+//maak de html binnen een element leeg
 function clearBox(elementId){
     document.getElementById(elementId).innerHTML = "";
 }
 
+//bepaal het sterrenbeeld
 function getZodiacSign(date) {
-
     const day = date.slice(8, 10);
     const month = date.slice(5, 7);
-
-    // date uitsplitsen in day en month
-
     if ((month == 1 && day <= 20) || (month == 12 && day >= 22)) {
         return "Steenbok";
     } else if ((month == 1 && day >= 21) || (month == 2 && day <= 19)) {
@@ -641,19 +597,3 @@ function getZodiacSign(date) {
     }
 }
 
-  // EINDE DEEL YANNIS
-
-
-
-
-// I feel lucky
-
-
-
-// einde i feel lucky
-
-// favorieten
-
-  let user = sessionStorage.getItem("userId");
-
-// einde favorieten
