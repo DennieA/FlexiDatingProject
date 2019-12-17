@@ -37,7 +37,7 @@ function logout() {
 /////////
 
 function unlock() {
-
+    //plaats lovecoin functie check
     let url = rooturl + '/ontgrendeling/ontgrendel.php';
     //rooturl = https://scrumserver.tenobe.org/scrum/api
     let data = {
