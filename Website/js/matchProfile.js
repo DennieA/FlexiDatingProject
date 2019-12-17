@@ -44,6 +44,7 @@ function unlock() {
         mijnId: sessionStorage.getItem('userId'),
         anderId: gegevens[0]
     };
+    console.log(sessionStorage.getItem('userId'))
     console.log(gegevens)
 
     var request = new Request(url, {
@@ -58,7 +59,7 @@ function unlock() {
         .then(function (resp) { return resp.json(); })
         .then(function (data) { console.log(data); })
         .catch(function (error) { console.log(error); });
-    ;
+    
 
 
     window.location.href = "matchProfile.html"
@@ -67,13 +68,13 @@ function unlock() {
 
 let checkunlocked = false;
 let checkfavorite = false;
-let selectedNickname = sessionStorage.getItem('selectedNickname');
+let selectedNickname ='Jetbrain' //sessionStorage.getItem('selectedNickname');
 check();
 
 
 function check() {
 
-    let url = rooturl + '/ontgrendeling/wieIsVoorMijOntgrendeld.php?profielId=' + sessionStorage.getItem('userId');
+    let url = rooturl + '/ontgrendeling/wieIsVoorMijOntgrendeld.php?profielId=' + parseInt(sessionStorage.getItem('userId'));
     //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
     fetch(url)
         .then(function (resp) { return resp.json(); })

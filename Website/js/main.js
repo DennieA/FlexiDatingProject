@@ -374,7 +374,7 @@ function lucky() {
         });
 };
 
-
+/* Functie die de zoekcriteria ophaalt en de input voor de API search call samenstelt */
 function alleResultaten() {
     let geslacht = document.getElementById('sexe').value;
     let oogkleur = document.getElementById('oogkleur').value;
@@ -452,6 +452,7 @@ function alleResultaten() {
     return url;
 }
 
+/* Functie om de resultaten tabel op te vullen */
 function GebruikersGegevens(data) {
     /* Table aanmaken */
     const tableResults = document.createElement("table");
@@ -549,7 +550,7 @@ function sortTable(table, sortColumn) {
     data2table(tableBody, tableData);
 }
 
-
+/* Functie om de HTML tabel over te zetten naar een lokale tabel */
 function table2data(tableBody) {
     /* Create the array that'll hold the data rows */
     const tableData = [];
@@ -575,7 +576,7 @@ function table2data(tableBody) {
     return tableData;
 }
 
-/* Functie om de lokale (gesorteerde) tabel trug te zetten */
+/* Functie om de lokale (gesorteerde) tabel terug te zetten */
 function data2table(tableBody, tableData) {
     tableBody.querySelectorAll('tr')
         /* For each table row...  */
@@ -585,14 +586,14 @@ function data2table(tableBody, tableData) {
             row.querySelectorAll('td')
                 /* For each table cell ... */
                 .forEach((cell, j) => {
-                   // if ((String(rowData[j]).slice(0, 5) === "<img ") || (String(rowData[j]).slice(0, 3) === "<a ")) {
-                        /* Put the appropriate array element into the cell */
-                   //     cell.innerHTML = rowData[j];
-                   // } else {
-                        /* Put the appropriate array element into the cell */
+                    // if ((String(rowData[j]).slice(0, 5) === "<img ") || (String(rowData[j]).slice(0, 3) === "<a ")) {
+                    /* Put the appropriate array element into the cell */
+                    //     cell.innerHTML = rowData[j];
+                    // } else {
+                    /* Put the appropriate array element into the cell */
                     //    cell.innerText = rowData[j];
-                   // };
-                   cell.innerHTML = rowData[j];
+                    // };
+                    cell.innerHTML = rowData[j];
                 })
             tableData.push(rowData);
         });
