@@ -449,28 +449,6 @@ function GebruikersGegevens(data) {
 
     clearBox("matches");
 
-    //table aanmaken
-    
-
-    //table opvullen
-    //hoofding
-
-    heading()
-
-    
-    //body
-
-    for (const el of data) {
-
-        tableLine(el);
-
-        
-
-    
-}
-
-function heading(){
-
     const tableResults = document.createElement("table");
     const tableHead = tableResults.createTHead(); /* mk */
     tableResults.id = "tableResults";
@@ -510,7 +488,7 @@ function heading(){
     grootteCell.outerHTML = "<th>Lengte (cm)</th>";
     const gewichtCell = tableRowHead.insertCell();
     gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
-    }
+    
 
     //body
     const tableBody = document.createElement("tbody"); /* mk */
@@ -518,7 +496,6 @@ function heading(){
     for (const el of data) {
         const tableRowBody = tableBody.insertRow(); /* mk */
 
-    function tableLine(el){
         const sterrenbeeldCell = tableRowBody.insertCell();
         sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
 
@@ -560,12 +537,11 @@ function heading(){
 
         const gewichtCell = tableRowBody.insertCell();
         gewichtCell.innerText = el.gewicht;
-        }
     }
     tableResults.appendChild(tableHead); /* mk */
     tableResults.appendChild(tableBody); /* mk */
 
- /*   const table = document.querySelector("#tableResults"); //get the table to be sorted
+  /*  const table = document.querySelector("#tableResults"); //get the table to be sorted
 
     table.querySelectorAll("th") // get all the table header elements
         .forEach((element, columnNo) => { // add a click handler for each 
@@ -664,7 +640,6 @@ function getZodiacSign(date) {
         return "Boogschutter";
     }
 }
-  }
 
   // EINDE DEEL YANNIS
 
@@ -680,8 +655,5 @@ function getZodiacSign(date) {
 // favorieten
 
   let user = sessionStorage.getItem("userId");
-console.log(user);
-
-
 
 // einde favorieten
