@@ -61,6 +61,11 @@ let selectedfile = "";
 let finalFotoNaam;
 let finalFotoUrl;
 let nickname;
+let ok = false;
+
+initialisation();
+document.getElementById("submit").onclick = submit;
+
 
 //function submit 
 function submit() {
@@ -138,7 +143,7 @@ function submit() {
                     lovecoins: lovecoins
                 });
 
-                console.log(data);
+                console.log("object gebruikersgegevens",data);
 
                 let url = rooturl + '/profiel/create.php';
                 let request = new Request(url, {
@@ -150,30 +155,26 @@ function submit() {
                 });
                 fetch(request)
                     .then(function (resp) {
-                        if (resp.ok) {
-                            //upload een foto enkel als aanmaken van profiel is gelukt
-                            uploadFoto();
-                            updateFotoName();
-                            //console.log("foto upload");
-                            resp.json()
-                                .then(function (data) {
-                                    console.log(data);
-                                    window.alert("Gebruiker aangemaakt!");
-                                    //na profiel creeren, de gebruiker moet aanmelden
-                                    window.location.href = "index.html";
-                                })
-
-                        } else {
-                            resp.json().then(function (data) { console.log("error profiel aanmaken") }).catch(function (error) { console.log(error); });
-                        }
-                    });
+                        return resp.json();})
+                    .then(function (data){
+                        console.log(data);
+                        ok = true;
+                        console.log(ok);
+                        //upload een foto enkel als aanmaken van profiel is gelukt
+                        uploadFoto();
+                        window.alert("Gebruiker aangemaakt!");
+                    })
+                        .catch(function (error){
+                            console.log("error profiel aanmaken");
+                            console.log(error);
+                        });
             }
         }
     }
 }
 
 
-initialisation();
+
 
 //genereert base64 code van de gekozen foto
 document.getElementById("foto").onchange = function base64Foto() {
@@ -186,51 +187,49 @@ document.getElementById("foto").onchange = function base64Foto() {
         document.getElementById("dummy").innerHTML = newImage.outerHTML;
         document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
         afbeelding = document.getElementById("txt").value;
-        //console.log("afbeelding in function filereader.onload", afbeelding);
     }
     fileReader.readAsDataURL(imageFile);
     naam = this.files[0].name;
-    //console.log("img name: ",naam);
 }
 
-document.getElementById("submit").onclick = submit;
 
 //upload foto
 function uploadFoto() {
 
-    let url = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
-
-    let dataFoto = {
+    let urlFotoUpload = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
+    let responseFotoUpload;
+    let dataFoto = ({
         naam: naam,
         afbeelding: afbeelding
-    }
-    //console.log("dataFoto: ", dataFoto);
-    let request = new Request(url, {
+    });
+    console.log("dataFoto: ", dataFoto);
+
+    let requestfoto = new Request(urlFotoUpload, {
         method: 'POST',
         body: JSON.stringify(dataFoto),
         headers: new Headers({
             'Content-Type': 'application/json'
         })
     });
-
-
-    fetch(request)
+    
+    fetch(requestfoto)
         .then(function (resp) { return resp.json(); })
         .then(function (data) {
-            console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
-            console.log('     • Foto inladen in IMG');
+            responseFotoUpload = data;
+            console.log("data upload foto: ", data);
+            
+            finalFotoUrl = data.fileURL;
             finalFotoNaam = data.fileName;
-            finalFotoUrl = data.fileURL
-            //document.getElementById('uploadResult').src = data.fileURL;
-            console.log('     ==> OK');
-            console.log('==> Klaar');
-        })
-        .catch(function (error) { console.log(error); })
 
-}
-//update foto name
-function updateFotoName()
-{
+            console.log("foto naam: ", finalFotoNaam);
+            console.log("foto url: ", finalFotoUrl);
+            
+        })
+        .catch(function (error) { console.log(error); });
+        console.log("buiten fetch bericht foto naam: ", finalFotoNaam);
+        console.log("buiten fetch bericht foto url: ", finalFotoUrl);
+        console.log(responseFotoUpload);
+    //update de foto name
     let profielMetFoto;
     let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
     fetch(rooturl+"/profiel/read.php").then(function (resp){return resp.json()}).then(function (data){
@@ -254,12 +253,14 @@ function updateFotoName()
                 
         fetch(requestfoto)
             .then(function (resp) { return resp.json(); })
-            .then(function (data) { console.log("profiel met juste fotonaam: ",data);
+            .then(function (data) { console.log("profiel met juiste fotonaam: ",data);
                     console.log("naam van foto gewijzigd naar ", finalFotoNaam);
                     //window.alert("Profiel gewijzigd"); 
                     //window.location.href = "mijnProfiel.html";
+                    window.location.href = "index.html";
                             })
             .catch(function (error) { console.log(error); });
                 //console.log("foto upload");
     }}}); 
+
 }
