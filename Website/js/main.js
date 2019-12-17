@@ -313,19 +313,19 @@ function lucky() {
 
             //code ingeplakt zonder functions omdat deze niet werken
 
-            
 
 
-                /* Table aanmaken */
-    const tableResults = document.createElement("table");
-    /* Table head aanmaken */
-    const tableHead = tableResults.createTHead();
-    tableResults.id = "tableResults";
-    tableResults.style.width = "100%";
-    /* Haal de plaats op waar de tabel moet komen */
-    const container = document.getElementById("matches");
-    /* Table op de html pagina zetten in zijn container */
-    container.appendChild(tableResults);
+
+            /* Table aanmaken */
+            const tableResults = document.createElement("table");
+            /* Table head aanmaken */
+            const tableHead = tableResults.createTHead();
+            tableResults.id = "tableResults";
+            tableResults.style.width = "100%";
+            /* Haal de plaats op waar de tabel moet komen */
+            const container = document.getElementById("matches");
+            /* Table op de html pagina zetten in zijn container */
+            container.appendChild(tableResults);
 
 
 
@@ -586,16 +586,9 @@ function data2table(tableBody, tableData) {
             row.querySelectorAll('td')
                 /* For each table cell ... */
                 .forEach((cell, j) => {
-                    // if ((String(rowData[j]).slice(0, 5) === "<img ") || (String(rowData[j]).slice(0, 3) === "<a ")) {
-                    /* Put the appropriate array element into the cell */
-                    //     cell.innerHTML = rowData[j];
-                    // } else {
-                    /* Put the appropriate array element into the cell */
-                    //    cell.innerText = rowData[j];
-                    // };
                     cell.innerHTML = rowData[j];
                 })
-            tableData.push(rowData);
+            /* tableData.push(rowData); */
         });
 }
 
