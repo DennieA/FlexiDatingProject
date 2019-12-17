@@ -44,6 +44,7 @@ function unlock() {
         mijnId: sessionStorage.getItem('userId'),
         anderId: gegevens[0]
     };
+    console.log(gegevens)
 
     var request = new Request(url, {
         method: 'POST',
@@ -66,11 +67,30 @@ function unlock() {
 
 let checkunlocked = false;
 let checkfavorite = false;
-let selectedNickname = 'Jetbrain'; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! sessiontorage 
+let selectedNickname = sessionStorage.getItem('selectedNickname');
+check();
 
 
+function check() {
+
+    let url = rooturl + '/ontgrendeling/wieIsVoorMijOntgrendeld.php?profielId=' + sessionStorage.getItem('userId');
+    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
+    fetch(url)
+        .then(function (resp) { return resp.json(); })
+        .then(function (data) {
+            console.log("Profiel heeft toegang tot volgende profielen : ");
+            console.log(data);
+            for (let x = 0; x < data.length; x++) {
+                if (sessionStorage.getItem('userId') === data[x]) {
+                    checkunlocked = true;
+                }
+            };
+
+        })
+        .catch(function (error) { console.log(error); });
 
 
+};
 
 
 
@@ -87,7 +107,7 @@ console.log(user);
 /* zoek een gebruiker op nickname*/
 fetch(rooturl + "/profiel/read.php").then(function (resp) { return resp.json() }).then(readUsers);
 function readUsers(data) {
-   
+
     let titels = [];
     for (let el of data)
         if (el.nickname === selectedNickname) {
@@ -138,7 +158,7 @@ function readUsers(data) {
             titels.push("Gewicht");
 
         }
-//maakTabel
+    //maakTabel
     let foto = document.createElement("img");
     foto.id = "uploadedFoto";
     foto.setAttribute('src', 'https://scrumserver.tenobe.org/scrum/img/' + gegevens[2]);
