@@ -72,6 +72,24 @@ let selectedNickname = 'Jetbrain'; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
+function check(){
+
+    let url=rooturl+'/ontgrendeling/wieIsVoorMijOntgrendeld.php?profielId='+sessionStorage.getItem('userId');
+    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
+    fetch(url)
+        .then(function (resp)   { return resp.json(); })
+        .then(function (data)   { 
+            console.log("Profiel heeft toegang tot volgende profielen : " );
+            console.log(data);  })
+        .catch(function (error) { console.log(error); });
+
+        for(let x = 0 ; x< data.length; x++){
+            if(sessionStorage.getItem('userId') === data[x] ){
+                checkunlocked = true; 
+            }
+        };
+
+};
 
 
 
