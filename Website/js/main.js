@@ -388,11 +388,11 @@ function alleResultaten() {
     };
 
     if ((document.getElementById("minLeeftijd").value !== "") && (document.getElementById("maxLeeftijd").value === "")) {
-        urlGeboortedatumSubstring = '&geboortedatumOperator=st&geboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
+        urlGeboortedatumSubstring = '&geboortedatumOperator=steq&geboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
     };
 
     if ((document.getElementById("minLeeftijd").value === "") && (document.getElementById("maxLeeftijd").value !== "")) {
-        urlGeboortedatumSubstring = '&geboortedatumOperator=gt&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
+        urlGeboortedatumSubstring = '&geboortedatumOperator=gteq&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
     };
 
     /* Supply search API met interface parameters voor gewicht */
