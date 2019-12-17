@@ -35,7 +35,6 @@
 fetch("https://scrumserver.tenobe.org/scrum/api/profiel/read.php").then(verwerkResponse);
 
 function verwerkResponse(response) {
-
     if (response.ok) {
         response.json().then(verwerkUsers);
     } else {
@@ -115,7 +114,7 @@ function verwerkUsers(users) {
             }
         });
 
-    
+
 
 
     /* Functie die de leeftijd berekent */
@@ -126,56 +125,53 @@ function verwerkUsers(users) {
         return Math.abs(age_dt.getUTCFullYear() - 1970);
     }
 
-    /* Vul de comboBox met de oogkleur items/options. */
-    /* Sorteer oogkleuren */
-    oogkleuren.sort();
-    oogkleuren.forEach(
-        oogkleur => {
-            const comboBoxItem = document.createElement("option");
-            comboBoxItem.innerText = oogkleur;
-            comboBoxItem.value = oogkleur;
-            /* Add comboBox item to the comboBox. */
-            document.getElementById("oogkleur").appendChild(comboBoxItem);
-        }
-    )
+    /* Vul de comboBox met de oogkleur items/options gesorteerd. */
+    oogkleuren.sort()
+        .forEach(
+            oogkleur => {
+                const comboBoxItem = document.createElement("option");
+                comboBoxItem.innerText = oogkleur;
+                comboBoxItem.value = oogkleur;
+                /* Add comboBox item to the comboBox. */
+                document.getElementById("oogkleur").appendChild(comboBoxItem);
+            }
+        )
 
-    /* Vul de comboBox met de haarkleur items/options. */
-    /* Sorteer haarkleuren */
-    haarkleuren.sort();
-    haarkleuren.forEach(
-        haarkleur => {
-            const comboBoxItem = document.createElement("option");
-            comboBoxItem.innerText = haarkleur;
-            comboBoxItem.value = haarkleur;
-            /* Add comboBox item to the comboBox. */
-            document.getElementById("haarkleur").appendChild(comboBoxItem);
-        }
-    )
+    /* Vul de comboBox met de haarkleur items/options gesorteerd. */
+    haarkleuren.sort()
+        .forEach(
+            haarkleur => {
+                const comboBoxItem = document.createElement("option");
+                comboBoxItem.innerText = haarkleur;
+                comboBoxItem.value = haarkleur;
+                /* Add comboBox item to the comboBox. */
+                document.getElementById("haarkleur").appendChild(comboBoxItem);
+            }
+        )
 
-    /* Vul de comboBox met de beroep items/options. */
-    /* Sorteer de beroepen */
-    beroepen.sort();
-    beroepen.forEach(
-        beroep => {
-            const comboBoxItem = document.createElement("option");
-            comboBoxItem.innerText = beroep;
-            comboBoxItem.value = beroep;
-            /* Add comboBox item to the comboBox. */
-            document.getElementById("beroep").appendChild(comboBoxItem);
-        }
-    )
+    /* Vul de comboBox met de beroep items/options gesorteerd. */
+    beroepen.sort()
+        .forEach(
+            beroep => {
+                const comboBoxItem = document.createElement("option");
+                comboBoxItem.innerText = beroep;
+                comboBoxItem.value = beroep;
+                /* Add comboBox item to the comboBox. */
+                document.getElementById("beroep").appendChild(comboBoxItem);
+            }
+        )
 
     /* Vul de comboBox met de sexe items/options. */
-    sexes.sort();
-    sexes.forEach(
-        sexe => {
-            const comboBoxItem = document.createElement("option");
-            comboBoxItem.innerText = sexe;
-            comboBoxItem.value = sexe;
-            /* Add comboBox item to the comboBox. */
-            document.getElementById("sexe").appendChild(comboBoxItem);
-        }
-    )
+    sexes.sort()
+        .forEach(
+            sexe => {
+                const comboBoxItem = document.createElement("option");
+                comboBoxItem.innerText = sexe;
+                comboBoxItem.value = sexe;
+                /* Add comboBox item to the comboBox. */
+                document.getElementById("sexe").appendChild(comboBoxItem);
+            }
+        )
 
     document.getElementById("minLengte").setAttribute('min', minLengte);
     document.getElementById("minLengte").setAttribute('max', maxLengte);
@@ -195,7 +191,7 @@ function verwerkUsers(users) {
 
 
 
-/*Event handler button "Zoeken". */
+/* Event handler button "Zoeken". */
 document.getElementById("zoeken").onclick = function () {
     if (validateInput()) {
         /* Toon ideale partners. */
@@ -203,6 +199,7 @@ document.getElementById("zoeken").onclick = function () {
     };
 };
 
+/* Event handler button "Feel lucky". */
 document.getElementById("lucky").onclick = function () {
     if (validateInput()) {
         /* Toon één ideale partner. */
@@ -274,7 +271,7 @@ function createDateLeeftijd(days, months, years) {
     return date;
 }
 
-//haal een array van resultaten op adhv de juiste zoekwaarden
+/* Haal een array van resultaten op adhv de juiste zoekwaarden */
 function zoekPartners() {
     let url = alleResultaten();
 
@@ -286,7 +283,6 @@ function zoekPartners() {
             clearBox("matches");
             /* console.log(data); */
             GebruikersGegevens(data)
-
         })
         .catch(function (error) {
             clearBox("matches");
@@ -294,7 +290,7 @@ function zoekPartners() {
         });
 };
 
-//haal een enkel willekeurige resultaat op adhv de juiste zoekwaarden
+/* Haal een enkel willekeurige resultaat op adhv de juiste zoekwaarden */
 function lucky() {
     let url = alleResultaten();
 
@@ -303,15 +299,8 @@ function lucky() {
             return resp.json();
         })
         .then(function (data) {
-            clearBox("matches");
-            /* console.log("via lucky", data); */
+            clearBox("matches")
             let luckyResult = data[Math.floor(Math.random() * data.length)];
-            //* console.log("random", luckyResult); */
-
-            //code ingeplakt zonder functions omdat deze niet werken
-
-
-
 
             /* Table aanmaken */
             const tableResults = document.createElement("table");
@@ -324,26 +313,24 @@ function lucky() {
             /* Table op de html pagina zetten in zijn container */
             container.appendChild(tableResults);
 
-
-
             /* Table head opvullen */
             const tableRowHead = tableHead.insertRow();
             let sterrenbeeldCell = tableRowHead.insertCell();
-            sterrenbeeldCell.outerHTML = '<th class = "klikbaar">Sterrenbeeld</th>';
+            sterrenbeeldCell.outerHTML = '<th>Sterrenbeeld</th>';
             let nicknameCell = tableRowHead.insertCell();
-            nicknameCell.outerHTML = '<th class = "klikbaar">Nickname</th>';
+            nicknameCell.outerHTML = '<th>Nickname</th>';
             let beroepCell = tableRowHead.insertCell();
-            beroepCell.outerHTML = '<th class = "klikbaar">Beroep</th>';
+            beroepCell.outerHTML = '<th>Beroep</th>';
             let sexeCell = tableRowHead.insertCell();
-            sexeCell.outerHTML = '<th class = "klikbaar">Sexe</th>';
+            sexeCell.outerHTML = '<th>Sexe</th>';
             let haarkleurCell = tableRowHead.insertCell();
-            haarkleurCell.outerHTML = '<th class = "klikbaar">Haarkleur</th>';
+            haarkleurCell.outerHTML = '<th>Haarkleur</th>';
             let oogkleurCell = tableRowHead.insertCell();
-            oogkleurCell.outerHTML = '<th class = "klikbaar">Oogkleur</th>';
+            oogkleurCell.outerHTML = '<th>Oogkleur</th>';
             let grootteCell = tableRowHead.insertCell();
-            grootteCell.outerHTML = '<th class = "klikbaar">Lengte (cm)</th>';
+            grootteCell.outerHTML = '<th>Lengte (cm)</th>';
             let gewichtCell = tableRowHead.insertCell();
-            gewichtCell.outerHTML = '<th class = "klikbaar">Gewicht (kg)</th>';
+            gewichtCell.outerHTML = '<th>Gewicht (kg)</th>';
 
             const tableRowBody = tableResults.insertRow();
             sterrenbeeldCell = tableRowBody.insertCell();
@@ -363,7 +350,6 @@ function lucky() {
             grootteCell.innerText = luckyResult.grootte;
             gewichtCell = tableRowBody.insertCell();
             gewichtCell.innerText = luckyResult.gewicht;
-
         })
         .catch(function (error) {
             clearBox("matches");
@@ -402,11 +388,11 @@ function alleResultaten() {
     };
 
     if ((document.getElementById("minLeeftijd").value !== "") && (document.getElementById("maxLeeftijd").value === "")) {
-        urlGeboortedatumSubstring = '&geboortedatumOperator=st&geboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
+        urlGeboortedatumSubstring = '&geboortedatumOperator=steq&geboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
     };
 
     if ((document.getElementById("minLeeftijd").value === "") && (document.getElementById("maxLeeftijd").value !== "")) {
-        urlGeboortedatumSubstring = '&geboortedatumOperator=gt&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
+        urlGeboortedatumSubstring = '&geboortedatumOperator=gteq&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
     };
 
     /* Supply search API met interface parameters voor gewicht */
@@ -519,14 +505,13 @@ function GebruikersGegevens(data) {
 
 
     /* Event handlers koppelen aan de table headers */
-    const table = document.querySelector("#tableResults");
     /* Get all the table header elements */
-    table.querySelectorAll("th")
+    tableResults.querySelectorAll("th")
         /* Add a click handler for each header element  */
         .forEach((element, columnNo) => {
             element.addEventListener("click", event => {
                 /* Call a function which sorts the table by a given column number */
-                sortTable(table, columnNo);
+                sortTable(tableResults, columnNo);
             })
         })
 }
@@ -585,7 +570,6 @@ function data2table(tableBody, tableData) {
                 .forEach((cell, j) => {
                     cell.innerHTML = rowData[j];
                 })
-            /* tableData.push(rowData); */
         });
 }
 
@@ -625,18 +609,11 @@ function getZodiacSign(date) {
     }
 }
 
+/* Functie om de nickname door te geven */
 function passNickname(nickname) {
     sessionStorage.setItem("selectedNickname", nickname);
-    window.open("matchProfile.html", "_self")
+    window.open("matchProfile.html", "_self");
 }
-
-/* dit gaf problemen met alfabetisch rangschikken
-
-function passId(id){
-    sessionStorage.setItem("selectedId", id);
-    window.open("matchProfile.html","_self")
-}
-*/
 
 /* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
 function capitalizeFirstCharacter(stringToConvert) {

@@ -45,6 +45,7 @@ function unlock() {
         anderId: sessionStorage.getItem('lastProfile')
     };
     console.log(sessionStorage.getItem('userId'))
+    console.log(sessionStorage.getItem('lastProfile'))
     console.log(gegevens)
 
     var request = new Request(url, {
@@ -53,13 +54,12 @@ function unlock() {
         headers: new Headers({
             'Content-Type': 'application/json'
         })
-    });
+    }); 
 
     fetch(request)
         .then(function (resp) { return resp.json(); })
         .then(function (data) { console.log(data); })
         .catch(function (error) { console.log(error); });
-
 
 
     function koopLovecoins() {
@@ -86,15 +86,19 @@ function unlock() {
         window.alert("1 lovecoin betaald, profiel unlocked!");
     }
     //koopLovecoins();
-    window.location.href = "matchProfile.html"
+    // for( let x = 0; x<500; x++){}
+    // window.location.href = "matchProfile.html"
 }
 
+function removelastProfile()
+    {
+        sessionStorage.removeItem('lastProfile');
+    }
 
 
 
 
 let checkunlocked = false;
-let checkfavorite = false;
 let selectedNickname = sessionStorage.getItem('selectedNickname');
 check();
 
@@ -107,11 +111,13 @@ function check() {
         .then(function (resp) { return resp.json(); })
         .then(function (data) {
             console.log(sessionStorage.getItem('lastProfile'))
-            console.log(data);           
+            console.log(data);
             for (let x = 0; x < data.length; x++) {
-                if (sessionStorage.getItem('lastProfile') === data[x]) {
-                    checkunlocked = true;
-                    console.log("check!!!!!!!!")
+                if (sessionStorage.getItem('lastProfile') !== "" && data !=="") {
+                    if (sessionStorage.getItem('lastProfile') === data[x]) {
+                        checkunlocked = true;
+                        console.log("check = true")
+                    }
                 }
             };
 
