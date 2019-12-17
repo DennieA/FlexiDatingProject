@@ -115,10 +115,7 @@ function verwerkUsers(users) {
             }
         });
 
-    /* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
-    function capitalizeFirstCharacter(stringToConvert) {
-        return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1).toLowerCase();
-    };
+    
 
 
     /* Functie die de leeftijd berekent */
@@ -277,21 +274,17 @@ function createDateLeeftijd(days, months, years) {
     return date;
 }
 
-// DEEL YANNIS 
-
-//function om juiste waarde op te halen
-
-/* document.getElementById('zoeken').addEventListener('click', function (e) { */
+//haal een array van resultaten op adhv de juiste zoekwaarden
 function zoekPartners() {
     let url = alleResultaten();
 
-    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
     fetch(url)
         .then(function (resp) {
             return resp.json();
         })
         .then(function (data) {
-            console.log(data);
+            clearBox("matches");
+            /* console.log(data); */
             GebruikersGegevens(data)
 
         })
@@ -301,6 +294,7 @@ function zoekPartners() {
         });
 };
 
+//haal een enkel willekeurige resultaat op adhv de juiste zoekwaarden
 function lucky() {
     let url = alleResultaten();
 
@@ -310,42 +304,53 @@ function lucky() {
         })
         .then(function (data) {
             clearBox("matches");
-            console.log("via lucky", data);
+            /* console.log("via lucky", data); */
             let luckyResult = data[Math.floor(Math.random() * data.length)];
-            console.log("random", luckyResult);
+            //* console.log("random", luckyResult); */
 
             //code ingeplakt zonder functions omdat deze niet werken
 
+
+
+
+            /* Table aanmaken */
             const tableResults = document.createElement("table");
+            /* Table head aanmaken */
+            const tableHead = tableResults.createTHead();
             tableResults.id = "tableResults";
             tableResults.style.width = "100%";
+            /* Haal de plaats op waar de tabel moet komen */
             const container = document.getElementById("matches");
+            /* Table op de html pagina zetten in zijn container */
             container.appendChild(tableResults);
 
-            const tableRowHead = tableResults.insertRow();
+
+
+            /* Table head opvullen */
+            const tableRowHead = tableHead.insertRow();
             let sterrenbeeldCell = tableRowHead.insertCell();
-            sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
+            sterrenbeeldCell.outerHTML = '<th class = "klikbaar">Sterrenbeeld</th>';
             let nicknameCell = tableRowHead.insertCell();
-            nicknameCell.outerHTML = "<th>Nickname</th>";
+            nicknameCell.outerHTML = '<th class = "klikbaar">Nickname</th>';
             let beroepCell = tableRowHead.insertCell();
-            beroepCell.outerHTML = "<th>Beroep</th>";
+            beroepCell.outerHTML = '<th class = "klikbaar">Beroep</th>';
             let sexeCell = tableRowHead.insertCell();
-            sexeCell.outerHTML = "<th>Sexe</th>";
+            sexeCell.outerHTML = '<th class = "klikbaar">Sexe</th>';
             let haarkleurCell = tableRowHead.insertCell();
-            haarkleurCell.outerHTML = "<th>Haarkleur</th>";
+            haarkleurCell.outerHTML = '<th class = "klikbaar">Haarkleur</th>';
             let oogkleurCell = tableRowHead.insertCell();
-            oogkleurCell.outerHTML = "<th>Oogkleur</th>";
+            oogkleurCell.outerHTML = '<th class = "klikbaar">Oogkleur</th>';
             let grootteCell = tableRowHead.insertCell();
-            grootteCell.outerHTML = "<th>Lengte (cm)</th>";
+            grootteCell.outerHTML = '<th class = "klikbaar">Lengte (cm)</th>';
             let gewichtCell = tableRowHead.insertCell();
-            gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
+            gewichtCell.outerHTML = '<th class = "klikbaar">Gewicht (kg)</th>';
 
             const tableRowBody = tableResults.insertRow();
             sterrenbeeldCell = tableRowBody.insertCell();
-            sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(luckyResult.geboortedatum)}.png" title = ${getZodiacSign(luckyResult.geboortedatum)}>`;
+            sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(luckyResult.geboortedatum)}.png" title = ${getZodiacSign(luckyResult.geboortedatum).slice(3)}>`;
 
             nicknameCell = tableRowBody.insertCell();
-            nicknameCell.innerText = luckyResult.nickname;
+            nicknameCell.innerHTML = `<a href = "#" onclick='passNickname("${luckyResult.nickname}")'>${luckyResult.nickname}</a>`;
             beroepCell = tableRowBody.insertCell();
             beroepCell.innerText = luckyResult.beroep;
             sexeCell = tableRowBody.insertCell();
@@ -366,9 +371,8 @@ function lucky() {
         });
 };
 
-
-
-function alleResultaten(){
+/* Functie die de zoekcriteria ophaalt en de input voor de API search call samenstelt */
+function alleResultaten() {
     let geslacht = document.getElementById('sexe').value;
     let oogkleur = document.getElementById('oogkleur').value;
     let haarkleur = document.getElementById('haarkleur').value;
@@ -445,92 +449,62 @@ function alleResultaten(){
     return url;
 }
 
+/* Functie om de resultaten tabel op te vullen */
 function GebruikersGegevens(data) {
-
-    clearBox("matches");
-
+    /* Table aanmaken */
     const tableResults = document.createElement("table");
-    const tableHead = tableResults.createTHead(); /* mk */
+    /* Table head aanmaken */
+    const tableHead = tableResults.createTHead();
     tableResults.id = "tableResults";
     tableResults.style.width = "100%";
+    /* Haal de plaats op waar de tabel moet komen */
     const container = document.getElementById("matches");
+    /* Table op de html pagina zetten in zijn container */
     container.appendChild(tableResults);
 
-
-    //table opvullen
-    //hoofding
-    const tableRowHead = tableHead.insertRow(); /* mk */
+    /* Table head opvullen */
+    const tableRowHead = tableHead.insertRow();
     const sterrenbeeldCell = tableRowHead.insertCell();
-    sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
+    sterrenbeeldCell.outerHTML = '<th class = "klikbaar">Sterrenbeeld</th>';
     const nicknameCell = tableRowHead.insertCell();
-    nicknameCell.outerHTML = "<th>Nickname</th>";
-    /*const fotoCell = tableRowHead.insertCell();
-    fotoCell.outerHTML = "<th>Foto</th>";
-    const idCell = tableRowHead.insertCell();
-    idCell.outerHTML = "<th>ID</th>";
-    const voornaamCell = tableRowHead.insertCell();
-    voornaamCell.outerHTML = "<th>Voornaam</th>";
-    const familienaamCell = tableRowHead.insertCell();
-    familienaamCell.outerHTML = "<th>Familienaam</th>";
-    const geboorteCell = tableRowHead.insertCell();
-    geboorteCell.outerHTML = "<th>Geboortedatum</th>";
-    const emailCell= tableRowHead.insertCell();
-    emailCell.outerHTML = "<th>E-mail</th>";*/
+    nicknameCell.outerHTML = '<th class = "klikbaar">Nickname</th>';
     const beroepCell = tableRowHead.insertCell();
-    beroepCell.outerHTML = "<th>Beroep</th>";
+    beroepCell.outerHTML = '<th class = "klikbaar">Beroep</th>';
     const sexeCell = tableRowHead.insertCell();
-    sexeCell.outerHTML = "<th>Sexe</th>";
+    sexeCell.outerHTML = '<th class = "klikbaar">Sexe</th>';
     const haarkleurCell = tableRowHead.insertCell();
-    haarkleurCell.outerHTML = "<th>Haarkleur</th>";
+    haarkleurCell.outerHTML = '<th class = "klikbaar">Haarkleur</th>';
     const oogkleurCell = tableRowHead.insertCell();
-    oogkleurCell.outerHTML = "<th>Oogkleur</th>";
+    oogkleurCell.outerHTML = '<th class = "klikbaar">Oogkleur</th>';
     const grootteCell = tableRowHead.insertCell();
-    grootteCell.outerHTML = "<th>Lengte (cm)</th>";
+    grootteCell.outerHTML = '<th class = "klikbaar">Lengte (cm)</th>';
     const gewichtCell = tableRowHead.insertCell();
-    gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
-    
+    gewichtCell.outerHTML = '<th class = "klikbaar">Gewicht (kg)</th>';
 
-    //body
-    const tableBody = document.createElement("tbody"); /* mk */
+    /* Table body opvullen */
+    const tableBody = document.createElement("tbody");
 
     for (const el of data) {
-        const tableRowBody = tableBody.insertRow(); /* mk */
+        const tableRowBody = tableBody.insertRow();
 
         const sterrenbeeldCell = tableRowBody.insertCell();
-        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
+        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum).slice(3)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
-        nicknameCell.innerText = el.nickname;
-
-        /*const fotoCell = tableRowBody.insertCell();
-        fotoCell.innerHTML = el.foto;
-
-        const idCell = tableRowBody.insertCell();
-        idCell.innerText = el.id;
-
-        const voornaamCell = tableRowBody.insertCell();
-        voornaamCell.innerText = el.voornaam;                              
-
-        const familienaamCell = tableRowBody.insertCell();
-        familienaamCell.innerText = el.familienaam;
-
-        const geboorteCell = tableRowBody.insertCell();
-        geboorteCell.innerText = el.geboortedatum;
-
-        const emailCell = tableRowBody.insertCell();
-        emailCell.innerText = el.email;*/
+        nicknameCell.innerHTML = `<a href = "#" onclick='passNickname("${el.nickname}")'>${el.nickname}</a>`;
+        nicknameCell.id = el.id;
 
         const beroepCell = tableRowBody.insertCell();
-        beroepCell.innerText = el.beroep;
+        beroepCell.innerText = capitalizeFirstCharacter(el.beroep);
 
         const sexeCell = tableRowBody.insertCell();
         sexeCell.innerText = el.sexe;
 
         const haarkleurCell = tableRowBody.insertCell();
-        haarkleurCell.innerText = el.haarkleur;
+        haarkleurCell.innerText = capitalizeFirstCharacter(el.haarkleur);
 
         const oogkleurCell = tableRowBody.insertCell();
-        oogkleurCell.innerText = el.oogkleur;
+        oogkleurCell.innerText = capitalizeFirstCharacter(el.oogkleur);
 
         const grootteCell = tableRowBody.insertCell();
         grootteCell.innerText = el.grootte;
@@ -538,122 +512,133 @@ function GebruikersGegevens(data) {
         const gewichtCell = tableRowBody.insertCell();
         gewichtCell.innerText = el.gewicht;
     }
-    tableResults.appendChild(tableHead); /* mk */
-    tableResults.appendChild(tableBody); /* mk */
 
-  /*  const table = document.querySelector("#tableResults"); //get the table to be sorted
+    /* Table head en table body in de eigenlijke tabel zetetn */
+    tableResults.appendChild(tableHead);
+    tableResults.appendChild(tableBody);
 
-    table.querySelectorAll("th") // get all the table header elements
-        .forEach((element, columnNo) => { // add a click handler for each 
+
+    /* Event handlers koppelen aan de table headers */
+    const table = document.querySelector("#tableResults");
+    /* Get all the table header elements */
+    table.querySelectorAll("th")
+        /* Add a click handler for each header element  */
+        .forEach((element, columnNo) => {
             element.addEventListener("click", event => {
-                sortTable(table, columnNo); //call a function which sorts the table by a given column number
+                /* Call a function which sorts the table by a given column number */
+                sortTable(table, columnNo);
             })
-        })  */
+        })
 }
 
-
-/* function sortTable(table, sortColumn) {
-    // get the data from the table cells
+/* Function om de tabel te sorteren */
+function sortTable(table, sortColumn) {
+    /* Get the data from the table cells */
     const tableBody = table.querySelector('tbody')
     const tableData = table2data(tableBody);
-    // sort the extracted data
+    /* Sort the extracted data */
     tableData.sort((a, b) => {
         if (a[sortColumn] > b[sortColumn]) {
             return 1;
         }
         return -1;
     })
-    // put the sorted data back into the table
+    /* Put the sorted data back into the table */
     data2table(tableBody, tableData);
 }
 
+/* Functie om de HTML tabel over te zetten naar een lokale tabel */
 function table2data(tableBody) {
-    const tableData = []; // create the array that'll hold the data rows
+    /* Create the array that'll hold the data rows */
+    const tableData = [];
     tableBody.querySelectorAll('tr')
-        .forEach(row => { // for each table row...
-            const rowData = []; // make an array for that row
-            row.querySelectorAll('td') // for each cell in that row
+        /* For each table row... */
+        .forEach(row => {
+            const rowData = [];
+            /* For each cell in that row */
+            row.querySelectorAll('td')
                 .forEach(cell => {
-                    if (cell.innerText !== "") {
-                        rowData.push(cell.innerText); // add it to the row data
+                    /* In order to sort correctly string and numbers */
+                    if (isNaN(cell.innerHTML)) {
+                        /* Copy clear text */
+                        rowData.push(cell.innerHTML);
                     } else {
-                        rowData.push(cell.innerHTML); // add it to the row data
+                        /* Convert string into number */
+                        rowData.push(Number(cell.innerHTML));
                     };
                 })
-            tableData.push(rowData); // add the full row to the table data 
+            /* Add the full row to the table data  */
+            tableData.push(rowData);
         });
     return tableData;
 }
 
+/* Functie om de lokale (gesorteerde) tabel terug te zetten */
 function data2table(tableBody, tableData) {
-    tableBody.querySelectorAll('tr') // for each table row...
+    tableBody.querySelectorAll('tr')
+        /* For each table row...  */
         .forEach((row, i) => {
-            const rowData = tableData[i]; // get the array for the row data
-            row.querySelectorAll('td') // for each table cell ...
+            /* Get the array for the row data */
+            const rowData = tableData[i];
+            row.querySelectorAll('td')
+                /* For each table cell ... */
                 .forEach((cell, j) => {
-                    if (j === 0) {
-                        cell.innerHTML = rowData[j]; // put the appropriate array element into the cell
-                    } else {
-                        cell.innerText = rowData[j]; // put the appropriate array element into the cell
-                    };
+                    cell.innerHTML = rowData[j];
                 })
-            tableData.push(rowData);
-        });  
-}  */
+            /* tableData.push(rowData); */
+        });
+}
 
-
-// EINDE DEEL YANNIS
-function clearBox(elementId){
+/* Maak de html binnen een element leeg */
+function clearBox(elementId) {
     document.getElementById(elementId).innerHTML = "";
 }
 
+/* bepaal het sterrenbeeld */
 function getZodiacSign(date) {
-
     const day = date.slice(8, 10);
     const month = date.slice(5, 7);
-
-    // date uitsplitsen in day en month
-
     if ((month == 1 && day <= 20) || (month == 12 && day >= 22)) {
-        return "Steenbok";
+        return "01_Steenbok";
     } else if ((month == 1 && day >= 21) || (month == 2 && day <= 19)) {
-        return "Waterman";
+        return "02_Waterman";
     } else if ((month == 2 && day >= 20) || (month == 3 && day <= 20)) {
-        return "Vis";
+        return "03_Vis";
     } else if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
-        return "Ram";
+        return "04_Ram";
     } else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
-        return "Stier";
+        return "05_Stier";
     } else if ((month == 5 && day >= 21) || (month == 6 && day <= 21)) {
-        return "Tweeling";
+        return "06_Tweeling";
     } else if ((month == 6 && day >= 22) || (month == 7 && day <= 23)) {
-        return "Kreeft";
+        return "07_Kreeft";
     } else if ((month == 7 && day >= 24) || (month == 8 && day <= 23)) {
-        return "Leeuw";
+        return "08_Leeuw";
     } else if ((month == 8 && day >= 24) || (month == 9 && day <= 22)) {
-        return "Maagd";
+        return "09_Maagd";
     } else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
-        return "Weegschaal";
+        return "10_Weegschaal";
     } else if ((month == 10 && day >= 23) || (month == 11 && day <= 22)) {
-        return "Schorpioen";
+        return "11_Schorpioen";
     } else if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
-        return "Boogschutter";
+        return "12_Boogschutter";
     }
 }
 
-  // EINDE DEEL YANNIS
+function passNickname(nickname) {
+    sessionStorage.setItem("selectedNickname", nickname);
+    window.open("matchProfile.html", "_self")
+}
 
+/* dit gaf problemen met alfabetisch rangschikken
 
+function passId(id){
+    sessionStorage.setItem("selectedId", id);
+    window.open("matchProfile.html","_self")
+}
+*/
 
-
-// I feel lucky
-
-
-
-// einde i feel lucky
-
-// favorieten
-
-  let user = sessionStorage.getItem("userId");
-
-// einde favorieten
+/* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
+function capitalizeFirstCharacter(stringToConvert) {
+    return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1).toLowerCase();
+};
