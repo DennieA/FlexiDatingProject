@@ -69,7 +69,7 @@ let checkunlocked = false;
 let checkfavorite = false;
 let selectedNickname = 'Jetbrain'; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! sessiontorage 
 
-
+check(); 
 
 
 function check(){
