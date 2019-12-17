@@ -35,7 +35,6 @@
 fetch("https://scrumserver.tenobe.org/scrum/api/profiel/read.php").then(verwerkResponse);
 
 function verwerkResponse(response) {
-
     if (response.ok) {
         response.json().then(verwerkUsers);
     } else {
@@ -115,10 +114,7 @@ function verwerkUsers(users) {
             }
         });
 
-    /* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
-    function capitalizeFirstCharacter(stringToConvert) {
-        return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1).toLowerCase();
-    };
+
 
 
     /* Functie die de leeftijd berekent */
@@ -129,56 +125,53 @@ function verwerkUsers(users) {
         return Math.abs(age_dt.getUTCFullYear() - 1970);
     }
 
-    /* Vul de comboBox met de oogkleur items/options. */
-    /* Sorteer oogkleuren */
-    oogkleuren.sort();
-    oogkleuren.forEach(
-        oogkleur => {
-            const comboBoxItem = document.createElement("option");
-            comboBoxItem.innerText = oogkleur;
-            comboBoxItem.value = oogkleur;
-            /* Add comboBox item to the comboBox. */
-            document.getElementById("oogkleur").appendChild(comboBoxItem);
-        }
-    )
+    /* Vul de comboBox met de oogkleur items/options gesorteerd. */
+    oogkleuren.sort()
+        .forEach(
+            oogkleur => {
+                const comboBoxItem = document.createElement("option");
+                comboBoxItem.innerText = oogkleur;
+                comboBoxItem.value = oogkleur;
+                /* Add comboBox item to the comboBox. */
+                document.getElementById("oogkleur").appendChild(comboBoxItem);
+            }
+        )
 
-    /* Vul de comboBox met de haarkleur items/options. */
-    /* Sorteer haarkleuren */
-    haarkleuren.sort();
-    haarkleuren.forEach(
-        haarkleur => {
-            const comboBoxItem = document.createElement("option");
-            comboBoxItem.innerText = haarkleur;
-            comboBoxItem.value = haarkleur;
-            /* Add comboBox item to the comboBox. */
-            document.getElementById("haarkleur").appendChild(comboBoxItem);
-        }
-    )
+    /* Vul de comboBox met de haarkleur items/options gesorteerd. */
+    haarkleuren.sort()
+        .forEach(
+            haarkleur => {
+                const comboBoxItem = document.createElement("option");
+                comboBoxItem.innerText = haarkleur;
+                comboBoxItem.value = haarkleur;
+                /* Add comboBox item to the comboBox. */
+                document.getElementById("haarkleur").appendChild(comboBoxItem);
+            }
+        )
 
-    /* Vul de comboBox met de beroep items/options. */
-    /* Sorteer de beroepen */
-    beroepen.sort();
-    beroepen.forEach(
-        beroep => {
-            const comboBoxItem = document.createElement("option");
-            comboBoxItem.innerText = beroep;
-            comboBoxItem.value = beroep;
-            /* Add comboBox item to the comboBox. */
-            document.getElementById("beroep").appendChild(comboBoxItem);
-        }
-    )
+    /* Vul de comboBox met de beroep items/options gesorteerd. */
+    beroepen.sort()
+        .forEach(
+            beroep => {
+                const comboBoxItem = document.createElement("option");
+                comboBoxItem.innerText = beroep;
+                comboBoxItem.value = beroep;
+                /* Add comboBox item to the comboBox. */
+                document.getElementById("beroep").appendChild(comboBoxItem);
+            }
+        )
 
     /* Vul de comboBox met de sexe items/options. */
-    sexes.sort();
-    sexes.forEach(
-        sexe => {
-            const comboBoxItem = document.createElement("option");
-            comboBoxItem.innerText = sexe;
-            comboBoxItem.value = sexe;
-            /* Add comboBox item to the comboBox. */
-            document.getElementById("sexe").appendChild(comboBoxItem);
-        }
-    )
+    sexes.sort()
+        .forEach(
+            sexe => {
+                const comboBoxItem = document.createElement("option");
+                comboBoxItem.innerText = sexe;
+                comboBoxItem.value = sexe;
+                /* Add comboBox item to the comboBox. */
+                document.getElementById("sexe").appendChild(comboBoxItem);
+            }
+        )
 
     document.getElementById("minLengte").setAttribute('min', minLengte);
     document.getElementById("minLengte").setAttribute('max', maxLengte);
@@ -198,7 +191,7 @@ function verwerkUsers(users) {
 
 
 
-/*Event handler button "Zoeken". */
+/* Event handler button "Zoeken". */
 document.getElementById("zoeken").onclick = function () {
     if (validateInput()) {
         /* Toon ideale partners. */
@@ -206,6 +199,7 @@ document.getElementById("zoeken").onclick = function () {
     };
 };
 
+/* Event handler button "Feel lucky". */
 document.getElementById("lucky").onclick = function () {
     if (validateInput()) {
         /* Toon één ideale partner. */
@@ -277,7 +271,7 @@ function createDateLeeftijd(days, months, years) {
     return date;
 }
 
-//haal een array van resultaten op adhv de juiste zoekwaarden
+/* Haal een array van resultaten op adhv de juiste zoekwaarden */
 function zoekPartners() {
     let url = alleResultaten();
 
@@ -289,7 +283,6 @@ function zoekPartners() {
             clearBox("matches");
             /* console.log(data); */
             GebruikersGegevens(data)
-
         })
         .catch(function (error) {
             clearBox("matches");
@@ -297,7 +290,7 @@ function zoekPartners() {
         });
 };
 
-//haal een enkel willekeurige resultaat op adhv de juiste zoekwaarden
+/* Haal een enkel willekeurige resultaat op adhv de juiste zoekwaarden */
 function lucky() {
     let url = alleResultaten();
 
@@ -306,28 +299,19 @@ function lucky() {
             return resp.json();
         })
         .then(function (data) {
-            clearBox("matches");
-            /* console.log("via lucky", data); */
+            clearBox("matches")
             let luckyResult = data[Math.floor(Math.random() * data.length)];
-            //* console.log("random", luckyResult); */
 
-            //code ingeplakt zonder functions omdat deze niet werken
-
-            
-
-
-                /* Table aanmaken */
-    const tableResults = document.createElement("table");
-    /* Table head aanmaken */
-    const tableHead = tableResults.createTHead();
-    tableResults.id = "tableResults";
-    tableResults.style.width = "100%";
-    /* Haal de plaats op waar de tabel moet komen */
-    const container = document.getElementById("matches");
-    /* Table op de html pagina zetten in zijn container */
-    container.appendChild(tableResults);
-
-
+            /* Table aanmaken */
+            const tableResults = document.createElement("table");
+            /* Table head aanmaken */
+            const tableHead = tableResults.createTHead();
+            tableResults.id = "tableResults";
+            tableResults.style.width = "100%";
+            /* Haal de plaats op waar de tabel moet komen */
+            const container = document.getElementById("matches");
+            /* Table op de html pagina zetten in zijn container */
+            container.appendChild(tableResults);
 
             /* Table head opvullen */
             const tableRowHead = tableHead.insertRow();
@@ -350,7 +334,7 @@ function lucky() {
 
             const tableRowBody = tableResults.insertRow();
             sterrenbeeldCell = tableRowBody.insertCell();
-            sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(luckyResult.geboortedatum)}.png" title = ${(getZodiacSign(luckyResult.geboortedatum))}>`;
+            sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(luckyResult.geboortedatum)}.png" title = ${getZodiacSign(luckyResult.geboortedatum).slice(3)}>`;
 
             nicknameCell = tableRowBody.insertCell();
             nicknameCell.innerHTML = `<a href = "#" onclick='passNickname("${luckyResult.nickname}")'>${luckyResult.nickname}</a>`;
@@ -366,7 +350,6 @@ function lucky() {
             grootteCell.innerText = luckyResult.grootte;
             gewichtCell = tableRowBody.insertCell();
             gewichtCell.innerText = luckyResult.gewicht;
-
         })
         .catch(function (error) {
             clearBox("matches");
@@ -491,23 +474,23 @@ function GebruikersGegevens(data) {
         const tableRowBody = tableBody.insertRow();
 
         const sterrenbeeldCell = tableRowBody.insertCell();
-        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
+        sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum).slice(3)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
         nicknameCell.innerHTML = `<a href = "#" onclick='passNickname("${el.nickname}")'>${el.nickname}</a>`;
         nicknameCell.id = el.id;
 
         const beroepCell = tableRowBody.insertCell();
-        beroepCell.innerText = el.beroep;
+        beroepCell.innerText = capitalizeFirstCharacter(el.beroep);
 
         const sexeCell = tableRowBody.insertCell();
         sexeCell.innerText = el.sexe;
 
         const haarkleurCell = tableRowBody.insertCell();
-        haarkleurCell.innerText = el.haarkleur;
+        haarkleurCell.innerText = capitalizeFirstCharacter(el.haarkleur);
 
         const oogkleurCell = tableRowBody.insertCell();
-        oogkleurCell.innerText = el.oogkleur;
+        oogkleurCell.innerText = capitalizeFirstCharacter(el.oogkleur);
 
         const grootteCell = tableRowBody.insertCell();
         grootteCell.innerText = el.grootte;
@@ -586,16 +569,9 @@ function data2table(tableBody, tableData) {
             row.querySelectorAll('td')
                 /* For each table cell ... */
                 .forEach((cell, j) => {
-                    // if ((String(rowData[j]).slice(0, 5) === "<img ") || (String(rowData[j]).slice(0, 3) === "<a ")) {
-                    /* Put the appropriate array element into the cell */
-                    //     cell.innerHTML = rowData[j];
-                    // } else {
-                    /* Put the appropriate array element into the cell */
-                    //    cell.innerText = rowData[j];
-                    // };
                     cell.innerHTML = rowData[j];
                 })
-            tableData.push(rowData);
+            /* tableData.push(rowData); */
         });
 }
 
@@ -635,15 +611,13 @@ function getZodiacSign(date) {
     }
 }
 
+/* Functie om de nickname door te geven */
 function passNickname(nickname) {
     sessionStorage.setItem("selectedNickname", nickname);
-    window.open("matchProfile.html", "_self")
+    window.open("matchProfile.html", "_self");
 }
 
-/* dit gaf problemen met alfabetisch rangschikken
-
-function passId(id){
-    sessionStorage.setItem("selectedId", id);
-    window.open("matchProfile.html","_self")
-}
-*/
+/* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
+function capitalizeFirstCharacter(stringToConvert) {
+    return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1).toLowerCase();
+};

@@ -42,7 +42,7 @@ function unlock() {
     //rooturl = https://scrumserver.tenobe.org/scrum/api
     let data = {
         mijnId: sessionStorage.getItem('userId'),
-        anderId: gegevens[0]
+        anderId: sessionStorage.getItem('lastProfile')
     };
     console.log(sessionStorage.getItem('userId'))
     console.log(gegevens)
@@ -59,16 +59,43 @@ function unlock() {
         .then(function (resp) { return resp.json(); })
         .then(function (data) { console.log(data); })
         .catch(function (error) { console.log(error); });
-    
 
 
+
+    function koopLovecoins() {
+        let aantalLovecoins = "-1"
+
+        let data = {
+            "profielID": sessionStorage.getItem("userId"),
+            "bedrag": aantalLovecoins.toString()
+        }
+
+        var request = new Request(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+
+        fetch(request)
+            .then(function (response) { return response.json(); })
+            .then(function (data) { console.log(data); })
+            .catch(function (error) { console.log(error); });
+
+        window.alert("1 lovecoin betaald, profiel unlocked!");
+    }
+    //koopLovecoins();
     window.location.href = "matchProfile.html"
-};
+}
+
+
+
 
 
 let checkunlocked = false;
 let checkfavorite = false;
-let selectedNickname ='Jetbrain' //sessionStorage.getItem('selectedNickname');
+let selectedNickname = sessionStorage.getItem('selectedNickname');
 check();
 
 
@@ -79,11 +106,12 @@ function check() {
     fetch(url)
         .then(function (resp) { return resp.json(); })
         .then(function (data) {
-            console.log("Profiel heeft toegang tot volgende profielen : ");
-            console.log(data);
+            console.log(sessionStorage.getItem('lastProfile'))
+            console.log(data);           
             for (let x = 0; x < data.length; x++) {
-                if (sessionStorage.getItem('userId') === data[x]) {
+                if (sessionStorage.getItem('lastProfile') === data[x]) {
                     checkunlocked = true;
+                    console.log("check!!!!!!!!")
                 }
             };
 
@@ -114,6 +142,7 @@ function readUsers(data) {
         if (el.nickname === selectedNickname) {
             gegevens.push(el.id);
             titels.push("Id");
+            sessionStorage.setItem("lastProfile", el.id);
 
             gegevens.push(el.nickname);
             titels.push("Nickname");
