@@ -599,29 +599,29 @@ function getZodiacSign(date) {
     const day = date.slice(8, 10);
     const month = date.slice(5, 7);
     if ((month == 1 && day <= 20) || (month == 12 && day >= 22)) {
-        return "Steenbok";
+        return "01_Steenbok";
     } else if ((month == 1 && day >= 21) || (month == 2 && day <= 19)) {
-        return "Waterman";
+        return "02_Waterman";
     } else if ((month == 2 && day >= 20) || (month == 3 && day <= 20)) {
-        return "Vis";
+        return "03_Vis";
     } else if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
-        return "Ram";
+        return "04_Ram";
     } else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
-        return "Stier";
+        return "05_Stier";
     } else if ((month == 5 && day >= 21) || (month == 6 && day <= 21)) {
-        return "Tweeling";
+        return "06_Tweeling";
     } else if ((month == 6 && day >= 22) || (month == 7 && day <= 23)) {
-        return "Kreeft";
+        return "07_Kreeft";
     } else if ((month == 7 && day >= 24) || (month == 8 && day <= 23)) {
-        return "Leeuw";
+        return "08_Leeuw";
     } else if ((month == 8 && day >= 24) || (month == 9 && day <= 22)) {
-        return "Maagd";
+        return "09_Maagd";
     } else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
-        return "Weegschaal";
+        return "10_Weegschaal";
     } else if ((month == 10 && day >= 23) || (month == 11 && day <= 22)) {
-        return "Schorpioen";
+        return "11_Schorpioen";
     } else if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
-        return "Boogschutter";
+        return "12_Boogschutter";
     }
 }
 
