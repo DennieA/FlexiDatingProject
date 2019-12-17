@@ -478,7 +478,8 @@ function GebruikersGegevens(data) {
         sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
-        nicknameCell.innerText = el.nickname;
+        nicknameCell.innerHTML = `<a onclick='passNickname(${el.nickname})'>${el.nickname}</a>`;
+        nicknameCell.id = el.id;
 
         const beroepCell = tableRowBody.insertCell();
         beroepCell.innerText = el.beroep;
@@ -597,3 +598,15 @@ function getZodiacSign(date) {
     }
 }
 
+function passNickname(nickname){
+    sessionStorage.setItem("selectedNickname", nickname);
+    window.open("matchProfile.html","_self")
+}
+
+/* dit gaf problemen met alfabetisch rangschikken
+
+function passId(id){
+    sessionStorage.setItem("selectedId", id);
+    window.open("matchProfile.html","_self")
+}
+*/
