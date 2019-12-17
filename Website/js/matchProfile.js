@@ -44,6 +44,7 @@ function unlock() {
         mijnId: sessionStorage.getItem('userId'),
         anderId: gegevens[0]
     };
+    console.log(gegevens)
 
     var request = new Request(url, {
         method: 'POST',
