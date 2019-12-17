@@ -319,30 +319,31 @@ function lucky() {
             const container = document.getElementById("matches");
             container.appendChild(tableResults);
 
-            const tableRowHead = tableResults.insertRow();
-            let sterrenbeeldCell = tableRowHead.insertCell();
-            sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
-            let nicknameCell = tableRowHead.insertCell();
-            nicknameCell.outerHTML = "<th>Nickname</th>";
-            let beroepCell = tableRowHead.insertCell();
-            beroepCell.outerHTML = "<th>Beroep</th>";
-            let sexeCell = tableRowHead.insertCell();
-            sexeCell.outerHTML = "<th>Sexe</th>";
-            let haarkleurCell = tableRowHead.insertCell();
-            haarkleurCell.outerHTML = "<th>Haarkleur</th>";
-            let oogkleurCell = tableRowHead.insertCell();
-            oogkleurCell.outerHTML = "<th>Oogkleur</th>";
-            let grootteCell = tableRowHead.insertCell();
-            grootteCell.outerHTML = "<th>Lengte (cm)</th>";
-            let gewichtCell = tableRowHead.insertCell();
-            gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
+            /* Table head opvullen */
+            const tableRowHead = tableHead.insertRow();
+            const sterrenbeeldCell = tableRowHead.insertCell();
+            sterrenbeeldCell.outerHTML = '<th class = "klikbaar">Sterrenbeeld</th>';
+            const nicknameCell = tableRowHead.insertCell();
+            nicknameCell.outerHTML = '<th class = "klikbaar">Nickname</th>';
+            const beroepCell = tableRowHead.insertCell();
+            beroepCell.outerHTML = '<th class = "klikbaar">Beroep</th>';
+            const sexeCell = tableRowHead.insertCell();
+            sexeCell.outerHTML = '<th class = "klikbaar">Sexe</th>';
+            const haarkleurCell = tableRowHead.insertCell();
+            haarkleurCell.outerHTML = '<th class = "klikbaar">Haarkleur</th>';
+            const oogkleurCell = tableRowHead.insertCell();
+            oogkleurCell.outerHTML = '<th class = "klikbaar">Oogkleur</th>';
+            const grootteCell = tableRowHead.insertCell();
+            grootteCell.outerHTML = '<th class = "klikbaar">Lengte (cm)</th>';
+            const gewichtCell = tableRowHead.insertCell();
+            gewichtCell.outerHTML = '<th class = "klikbaar">Gewicht (kg)</th>';
 
             const tableRowBody = tableResults.insertRow();
             sterrenbeeldCell = tableRowBody.insertCell();
             sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(luckyResult.geboortedatum)}.png" title = ${getZodiacSign(luckyResult.geboortedatum)}>`;
 
             nicknameCell = tableRowBody.insertCell();
-            nicknameCell.innerText = luckyResult.nickname;
+            nicknameCell.innerHTML = `<a href = "#" onclick='passNickname("${luckyResult.nickname}")'>${luckyResult.nickname}</a>`;
             beroepCell = tableRowBody.insertCell();
             beroepCell.innerText = luckyResult.beroep;
             sexeCell = tableRowBody.insertCell();
@@ -455,23 +456,21 @@ function GebruikersGegevens(data) {
     /* Table head opvullen */
     const tableRowHead = tableHead.insertRow();
     const sterrenbeeldCell = tableRowHead.insertCell();
-    sterrenbeeldCell.outerHTML = '<th><a href = "">Sterrenbeeld<a></th>';
-    sterrenbeeldCell.className = "otherclass";
-    sterrenbeeldCell.classList.add("klikbaar");
+    sterrenbeeldCell.outerHTML = '<th class = "klikbaar">Sterrenbeeld</th>';
     const nicknameCell = tableRowHead.insertCell();
-    nicknameCell.outerHTML = "<th>Nickname</th>";
+    nicknameCell.outerHTML = '<th class = "klikbaar">Nickname</th>';
     const beroepCell = tableRowHead.insertCell();
-    beroepCell.outerHTML = "<th>Beroep</th>";
+    beroepCell.outerHTML = '<th class = "klikbaar">Beroep</th>';
     const sexeCell = tableRowHead.insertCell();
-    sexeCell.outerHTML = "<th>Sexe</th>";
+    sexeCell.outerHTML = '<th class = "klikbaar">Sexe</th>';
     const haarkleurCell = tableRowHead.insertCell();
-    haarkleurCell.outerHTML = "<th>Haarkleur</th>";
+    haarkleurCell.outerHTML = '<th class = "klikbaar">Haarkleur</th>';
     const oogkleurCell = tableRowHead.insertCell();
-    oogkleurCell.outerHTML = "<th>Oogkleur</th>";
+    oogkleurCell.outerHTML = '<th class = "klikbaar">Oogkleur</th>';
     const grootteCell = tableRowHead.insertCell();
-    grootteCell.outerHTML = "<th>Lengte (cm)</th>";
+    grootteCell.outerHTML = '<th class = "klikbaar">Lengte (cm)</th>';
     const gewichtCell = tableRowHead.insertCell();
-    gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
+    gewichtCell.outerHTML = '<th class = "klikbaar">Gewicht (kg)</th>';
 
     /* Table body opvullen */
     const tableBody = document.createElement("tbody");
@@ -483,7 +482,7 @@ function GebruikersGegevens(data) {
         sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
-        nicknameCell.innerHTML = `<a href = "" onclick='passNickname("${el.nickname}")'>${el.nickname}</a>`;
+        nicknameCell.innerHTML = `<a href = "#" onclick='passNickname("${el.nickname}")'>${el.nickname}</a>`;
         nicknameCell.id = el.id;
 
         const beroepCell = tableRowBody.insertCell();
