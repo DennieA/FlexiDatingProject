@@ -388,11 +388,11 @@ function alleResultaten() {
     };
 
     if ((document.getElementById("minLeeftijd").value !== "") && (document.getElementById("maxLeeftijd").value === "")) {
-        urlGeboortedatumSubstring = '&geboortedatumOperator=st&geboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
+        urlGeboortedatumSubstring = '&geboortedatumOperator=steq&geboortedatum=' + rangeMaxGeboortedatumYYYYMMDD;
     };
 
     if ((document.getElementById("minLeeftijd").value === "") && (document.getElementById("maxLeeftijd").value !== "")) {
-        urlGeboortedatumSubstring = '&geboortedatumOperator=gt&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
+        urlGeboortedatumSubstring = '&geboortedatumOperator=gteq&geboortedatum=' + rangeMinGeboortedatumYYYYMMDD;
     };
 
     /* Supply search API met interface parameters voor gewicht */
@@ -505,14 +505,13 @@ function GebruikersGegevens(data) {
 
 
     /* Event handlers koppelen aan de table headers */
-    const table = document.querySelector("#tableResults");
     /* Get all the table header elements */
-    table.querySelectorAll("th")
+    tableResults.querySelectorAll("th")
         /* Add a click handler for each header element  */
         .forEach((element, columnNo) => {
             element.addEventListener("click", event => {
                 /* Call a function which sorts the table by a given column number */
-                sortTable(table, columnNo);
+                sortTable(tableResults, columnNo);
             })
         })
 }
@@ -571,7 +570,6 @@ function data2table(tableBody, tableData) {
                 .forEach((cell, j) => {
                     cell.innerHTML = rowData[j];
                 })
-            /* tableData.push(rowData); */
         });
 }
 
