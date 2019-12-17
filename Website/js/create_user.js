@@ -184,6 +184,7 @@ document.getElementById("foto").onchange = function base64Foto() {
         let srcData = fileLoadedEvent.target.result;
         let newImage = document.createElement('img');
         newImage.src = srcData;
+        document.getElementById("uploadedFoto").setAttribute('src', srcData);
         document.getElementById("dummy").innerHTML = newImage.outerHTML;
         document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
         afbeelding = document.getElementById("txt").value;
