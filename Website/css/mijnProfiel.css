@@ -102,3 +102,8 @@ h1 {
     cursor: pointer;
     width: 20%;
 }
+#uploadedFoto
+{
+    display: block;
+    margin: auto;
+}
