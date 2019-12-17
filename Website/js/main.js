@@ -115,10 +115,7 @@ function verwerkUsers(users) {
             }
         });
 
-    /* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
-    function capitalizeFirstCharacter(stringToConvert) {
-        return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1).toLowerCase();
-    };
+    
 
 
     /* Functie die de leeftijd berekent */
@@ -498,16 +495,16 @@ function GebruikersGegevens(data) {
         nicknameCell.id = el.id;
 
         const beroepCell = tableRowBody.insertCell();
-        beroepCell.innerText = el.beroep;
+        beroepCell.innerText = capitalizeFirstCharacter(el.beroep);
 
         const sexeCell = tableRowBody.insertCell();
         sexeCell.innerText = el.sexe;
 
         const haarkleurCell = tableRowBody.insertCell();
-        haarkleurCell.innerText = el.haarkleur;
+        haarkleurCell.innerText = capitalizeFirstCharacter(el.haarkleur);
 
         const oogkleurCell = tableRowBody.insertCell();
-        oogkleurCell.innerText = el.oogkleur;
+        oogkleurCell.innerText = capitalizeFirstCharacter(el.oogkleur);
 
         const grootteCell = tableRowBody.insertCell();
         grootteCell.innerText = el.grootte;
@@ -640,3 +637,8 @@ function passId(id){
     window.open("matchProfile.html","_self")
 }
 */
+
+/* Functie die strings omvormt naar lowercase met eerste character een hoofdletter. */
+function capitalizeFirstCharacter(stringToConvert) {
+    return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1).toLowerCase();
+};
