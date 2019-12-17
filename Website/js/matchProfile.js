@@ -64,7 +64,7 @@ function unlock() {
 
 let checkunlocked = false;
 let checkfavorite = false;
-let selectedId = sessionStorage.getItem('selectedId');
+let selectedId = 505;
 
 
 
