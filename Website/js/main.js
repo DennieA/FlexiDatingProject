@@ -368,7 +368,7 @@ function lucky() {
 
 
 
-function alleResultaten(){
+function alleResultaten() {
     let geslacht = document.getElementById('sexe').value;
     let oogkleur = document.getElementById('oogkleur').value;
     let haarkleur = document.getElementById('haarkleur').value;
@@ -450,32 +450,19 @@ function GebruikersGegevens(data) {
     clearBox("matches");
 
     const tableResults = document.createElement("table");
-    const tableHead = tableResults.createTHead(); /* mk */
+    const tableHead = tableResults.createTHead();
     tableResults.id = "tableResults";
     tableResults.style.width = "100%";
     const container = document.getElementById("matches");
     container.appendChild(tableResults);
 
 
-    //table opvullen
-    //hoofding
-    const tableRowHead = tableHead.insertRow(); /* mk */
+    /* table head opvullen */
+    const tableRowHead = tableHead.insertRow();
     const sterrenbeeldCell = tableRowHead.insertCell();
     sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
     const nicknameCell = tableRowHead.insertCell();
     nicknameCell.outerHTML = "<th>Nickname</th>";
-    /*const fotoCell = tableRowHead.insertCell();
-    fotoCell.outerHTML = "<th>Foto</th>";
-    const idCell = tableRowHead.insertCell();
-    idCell.outerHTML = "<th>ID</th>";
-    const voornaamCell = tableRowHead.insertCell();
-    voornaamCell.outerHTML = "<th>Voornaam</th>";
-    const familienaamCell = tableRowHead.insertCell();
-    familienaamCell.outerHTML = "<th>Familienaam</th>";
-    const geboorteCell = tableRowHead.insertCell();
-    geboorteCell.outerHTML = "<th>Geboortedatum</th>";
-    const emailCell= tableRowHead.insertCell();
-    emailCell.outerHTML = "<th>E-mail</th>";*/
     const beroepCell = tableRowHead.insertCell();
     beroepCell.outerHTML = "<th>Beroep</th>";
     const sexeCell = tableRowHead.insertCell();
@@ -488,37 +475,19 @@ function GebruikersGegevens(data) {
     grootteCell.outerHTML = "<th>Lengte (cm)</th>";
     const gewichtCell = tableRowHead.insertCell();
     gewichtCell.outerHTML = "<th>Gewicht (kg)</th>";
-    
 
-    //body
-    const tableBody = document.createElement("tbody"); /* mk */
+
+    /* Table body opvullen */
+    const tableBody = document.createElement("tbody");
 
     for (const el of data) {
-        const tableRowBody = tableBody.insertRow(); /* mk */
+        const tableRowBody = tableBody.insertRow();
 
         const sterrenbeeldCell = tableRowBody.insertCell();
         sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
         nicknameCell.innerText = el.nickname;
-
-        /*const fotoCell = tableRowBody.insertCell();
-        fotoCell.innerHTML = el.foto;
-
-        const idCell = tableRowBody.insertCell();
-        idCell.innerText = el.id;
-
-        const voornaamCell = tableRowBody.insertCell();
-        voornaamCell.innerText = el.voornaam;                              
-
-        const familienaamCell = tableRowBody.insertCell();
-        familienaamCell.innerText = el.familienaam;
-
-        const geboorteCell = tableRowBody.insertCell();
-        geboorteCell.innerText = el.geboortedatum;
-
-        const emailCell = tableRowBody.insertCell();
-        emailCell.innerText = el.email;*/
 
         const beroepCell = tableRowBody.insertCell();
         beroepCell.innerText = el.beroep;
@@ -538,21 +507,27 @@ function GebruikersGegevens(data) {
         const gewichtCell = tableRowBody.insertCell();
         gewichtCell.innerText = el.gewicht;
     }
-    tableResults.appendChild(tableHead); /* mk */
-    tableResults.appendChild(tableBody); /* mk */
 
-  /*  const table = document.querySelector("#tableResults"); //get the table to be sorted
+    /* Table head en table body in de eigenlijke tabel zetetn */
+    tableResults.appendChild(tableHead);
+    tableResults.appendChild(tableBody);
 
-    table.querySelectorAll("th") // get all the table header elements
-        .forEach((element, columnNo) => { // add a click handler for each 
+
+    /* Event handlers koppelen aan de table headers */
+    const table = document.querySelector("#tableResults");
+    /* Get all the table header elements */
+    table.querySelectorAll("th")
+        /* Add a click handler for each  */
+        .forEach((element, columnNo) => {
             element.addEventListener("click", event => {
-                sortTable(table, columnNo); //call a function which sorts the table by a given column number
+                /* Call a function which sorts the table by a given column number */
+                sortTable(table, columnNo); 
             })
-        })  */
+        })
 }
 
 
-/* function sortTable(table, sortColumn) {
+function sortTable(table, sortColumn) {
     // get the data from the table cells
     const tableBody = table.querySelector('tbody')
     const tableData = table2data(tableBody);
@@ -575,7 +550,11 @@ function table2data(tableBody) {
             row.querySelectorAll('td') // for each cell in that row
                 .forEach(cell => {
                     if (cell.innerText !== "") {
-                        rowData.push(cell.innerText); // add it to the row data
+                        if (isNaN(cell.innerText)) {
+                            rowData.push(cell.innerText); // add string to the row data
+                        } else {
+                            rowData.push(Number(cell.innerText)); // add number to the row data
+                        };
                     } else {
                         rowData.push(cell.innerHTML); // add it to the row data
                     };
@@ -598,12 +577,12 @@ function data2table(tableBody, tableData) {
                     };
                 })
             tableData.push(rowData);
-        });  
-}  */
+        });
+}
 
 
 // EINDE DEEL YANNIS
-function clearBox(elementId){
+function clearBox(elementId) {
     document.getElementById(elementId).innerHTML = "";
 }
 
@@ -641,7 +620,7 @@ function getZodiacSign(date) {
     }
 }
 
-  // EINDE DEEL YANNIS
+// EINDE DEEL YANNIS
 
 
 
@@ -654,6 +633,4 @@ function getZodiacSign(date) {
 
 // favorieten
 
-  let user = sessionStorage.getItem("userId");
-
-// einde favorieten
+let user = sessionStorage.getItem("userId");
