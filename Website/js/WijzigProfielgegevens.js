@@ -102,7 +102,7 @@ console.log("WIJZIG PROFIEL PAGINA:");
     {
         profiel.foto = selectedfile[0].name;
         console.log("profiel.foto: ", profiel.foto);
-        //uploadFoto();                                                
+                                                       
     }
 
     profiel.beroep = document.getElementById("beroep").value;
@@ -159,12 +159,15 @@ document.getElementById("foto").onchange = function base64Foto() {
         let srcData = fileLoadedEvent.target.result;
         let newImage = document.createElement('img');
         newImage.src = srcData;
+        document.getElementById("uploadedFoto").setAttribute('src', srcData);
         document.getElementById("dummy").innerHTML = newImage.outerHTML;
         document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
         afbeelding = document.getElementById("txt").value;
     }
     fileReader.readAsDataURL(imageFile);
     naam = this.files[0].name;
+    
+    document.getElementById('uploadedFoto').setAttribute('alt', 'foto van ' + document.getElementById("voornaam").value + ' ' + document.getElementById("familienaam").value);
 }
 //upload foto
 function uploadFoto() {
