@@ -59,16 +59,43 @@ function unlock() {
         .then(function (resp) { return resp.json(); })
         .then(function (data) { console.log(data); })
         .catch(function (error) { console.log(error); });
-    
 
 
+
+    function koopLovecoins() {
+        let aantalLovecoins = "-1"
+
+        let data = {
+            "profielID": sessionStorage.getItem("userId"),
+            "bedrag": aantalLovecoins.toString()
+        }
+
+        var request = new Request(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+
+        fetch(request)
+            .then(function (response) { return response.json(); })
+            .then(function (data) { console.log(data); })
+            .catch(function (error) { console.log(error); });
+
+        window.alert("1 lovecoin betaald, profiel unlocked!");
+    }
+    //koopLovecoins();
     window.location.href = "matchProfile.html"
-};
+}
+
+
+
 
 
 let checkunlocked = false;
 let checkfavorite = false;
-let selectedNickname ='Jetbrain' //sessionStorage.getItem('selectedNickname');
+let selectedNickname = sessionStorage.getItem('selectedNickname');
 check();
 
 
@@ -79,11 +106,18 @@ function check() {
     fetch(url)
         .then(function (resp) { return resp.json(); })
         .then(function (data) {
-            console.log("Profiel heeft toegang tot volgende profielen : ");
-            console.log(data);
+            // console.log(sessionStorage.getItem('userId'))
+            // console.log("Profiel heeft toegang tot volgende profielen : ");
+            // console.log(data);
+            // console.log("gegevens" ,gegevens, "gegevens")
+            // console.log( "dubbele check data" , data)
+            console.log(gegevens[0])
+            console.log(gegevens)
+            console.log(gegevens.length, "lengte")
             for (let x = 0; x < data.length; x++) {
-                if (sessionStorage.getItem('userId') === data[x]) {
+                if (gegevens[0] === data[x]) {
                     checkunlocked = true;
+                    console.log("check!!!!!!!!")
                 }
             };
 
