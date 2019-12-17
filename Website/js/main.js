@@ -287,7 +287,7 @@ function zoekPartners() {
         })
         .then(function (data) {
             clearBox("matches");
-            console.log(data);
+            /* console.log(data); */
             GebruikersGegevens(data)
 
         })
@@ -307,9 +307,9 @@ function lucky() {
         })
         .then(function (data) {
             clearBox("matches");
-            console.log("via lucky", data);
+            /* console.log("via lucky", data); */
             let luckyResult = data[Math.floor(Math.random() * data.length)];
-            console.log("random", luckyResult);
+            //* console.log("random", luckyResult); */
 
             //code ingeplakt zonder functions omdat deze niet werken
 
@@ -550,21 +550,17 @@ function table2data(tableBody) {
             /* For each cell in that row */
             row.querySelectorAll('td')
                 .forEach(cell => {
-                    /* Does the cell contain text or an image */
-                    if (cell.innerText !== "") {
-                        /* To sort correctly string and numbers */
-                        if (isNaN(cell.innerText)) {
-                            /* Add the string to the row data */
-                            rowData.push(cell.innerText);
-                        } else {
-                            /* Add the number to the row data */
-                            rowData.push(Number(cell.innerText));
-                        };
-                    } else {
+                    /* In order to sort correctly string and numbers */
+                    if (isNaN(cell.innerHTML)) {
+                        /* Copy clear text */
                         rowData.push(cell.innerHTML);
+                    } else {
+                        /* Convert string into number */
+                        rowData.push(Number(cell.innerHTML));
                     };
                 })
-            tableData.push(rowData); // add the full row to the table data 
+            /* Add the full row to the table data  */
+            tableData.push(rowData);
         });
     return tableData;
 }
@@ -579,13 +575,14 @@ function data2table(tableBody, tableData) {
             row.querySelectorAll('td')
                 /* For each table cell ... */
                 .forEach((cell, j) => {
-                    if (String(rowData[j]).slice(0, 4) === "<img") {
+                   // if ((String(rowData[j]).slice(0, 5) === "<img ") || (String(rowData[j]).slice(0, 3) === "<a ")) {
                         /* Put the appropriate array element into the cell */
-                         cell.innerHTML = rowData[j]; 
-                     } else {
-                         /* Put the appropriate array element into the cell */
-                         cell.innerText = rowData[j]; 
-                     };
+                   //     cell.innerHTML = rowData[j];
+                   // } else {
+                        /* Put the appropriate array element into the cell */
+                    //    cell.innerText = rowData[j];
+                   // };
+                   cell.innerHTML = rowData[j];
                 })
             tableData.push(rowData);
         });
@@ -627,10 +624,9 @@ function getZodiacSign(date) {
     }
 }
 
-function passNickname(nickname){
-    console.log(nickname);
+function passNickname(nickname) {
     sessionStorage.setItem("selectedNickname", nickname);
-    window.open("matchProfile.html","_self")
+    window.open("matchProfile.html", "_self")
 }
 
 /* dit gaf problemen met alfabetisch rangschikken
@@ -640,4 +636,3 @@ function passId(id){
     window.open("matchProfile.html","_self")
 }
 */
-
