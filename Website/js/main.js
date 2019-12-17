@@ -313,29 +313,39 @@ function lucky() {
 
             //code ingeplakt zonder functions omdat deze niet werken
 
-            const tableResults = document.createElement("table");
-            tableResults.id = "tableResults";
-            tableResults.style.width = "100%";
-            const container = document.getElementById("matches");
-            container.appendChild(tableResults);
+            
+
+
+                /* Table aanmaken */
+    const tableResults = document.createElement("table");
+    /* Table head aanmaken */
+    const tableHead = tableResults.createTHead();
+    tableResults.id = "tableResults";
+    tableResults.style.width = "100%";
+    /* Haal de plaats op waar de tabel moet komen */
+    const container = document.getElementById("matches");
+    /* Table op de html pagina zetten in zijn container */
+    container.appendChild(tableResults);
+
+
 
             /* Table head opvullen */
             const tableRowHead = tableHead.insertRow();
-            const sterrenbeeldCell = tableRowHead.insertCell();
+            let sterrenbeeldCell = tableRowHead.insertCell();
             sterrenbeeldCell.outerHTML = '<th class = "klikbaar">Sterrenbeeld</th>';
-            const nicknameCell = tableRowHead.insertCell();
+            let nicknameCell = tableRowHead.insertCell();
             nicknameCell.outerHTML = '<th class = "klikbaar">Nickname</th>';
-            const beroepCell = tableRowHead.insertCell();
+            let beroepCell = tableRowHead.insertCell();
             beroepCell.outerHTML = '<th class = "klikbaar">Beroep</th>';
-            const sexeCell = tableRowHead.insertCell();
+            let sexeCell = tableRowHead.insertCell();
             sexeCell.outerHTML = '<th class = "klikbaar">Sexe</th>';
-            const haarkleurCell = tableRowHead.insertCell();
+            let haarkleurCell = tableRowHead.insertCell();
             haarkleurCell.outerHTML = '<th class = "klikbaar">Haarkleur</th>';
-            const oogkleurCell = tableRowHead.insertCell();
+            let oogkleurCell = tableRowHead.insertCell();
             oogkleurCell.outerHTML = '<th class = "klikbaar">Oogkleur</th>';
-            const grootteCell = tableRowHead.insertCell();
+            let grootteCell = tableRowHead.insertCell();
             grootteCell.outerHTML = '<th class = "klikbaar">Lengte (cm)</th>';
-            const gewichtCell = tableRowHead.insertCell();
+            let gewichtCell = tableRowHead.insertCell();
             gewichtCell.outerHTML = '<th class = "klikbaar">Gewicht (kg)</th>';
 
             const tableRowBody = tableResults.insertRow();
