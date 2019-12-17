@@ -481,7 +481,7 @@ function GebruikersGegevens(data) {
         sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
-        nicknameCell.innerHTML = `<a onclick='passNickname(${el.nickname})'>${el.nickname}</a>`;
+        nicknameCell.innerHTML = `<a onclick='passNickname("${el.nickname}")'>${el.nickname}</a>`;
         nicknameCell.id = el.id;
 
         const beroepCell = tableRowBody.insertCell();
@@ -625,7 +625,7 @@ function getZodiacSign(date) {
     }
 }
 
-function passNickname(nickname) {
+function passNickname(nickname){
     sessionStorage.setItem("selectedNickname", nickname);
     window.open("matchProfile.html", "_self")
 }
