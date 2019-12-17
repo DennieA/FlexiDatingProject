@@ -115,3 +115,7 @@ table#tableResults {
     padding: 2px 8px;
     border-radius: 5px;
   }
+
+  .klikbaar{
+    cursor:pointer;
+  }

@@ -455,7 +455,9 @@ function GebruikersGegevens(data) {
     /* Table head opvullen */
     const tableRowHead = tableHead.insertRow();
     const sterrenbeeldCell = tableRowHead.insertCell();
-    sterrenbeeldCell.outerHTML = "<th>Sterrenbeeld</th>";
+    sterrenbeeldCell.outerHTML = '<th><a href = "">Sterrenbeeld<a></th>';
+    sterrenbeeldCell.className = "otherclass";
+    sterrenbeeldCell.classList.add("klikbaar");
     const nicknameCell = tableRowHead.insertCell();
     nicknameCell.outerHTML = "<th>Nickname</th>";
     const beroepCell = tableRowHead.insertCell();
@@ -481,7 +483,7 @@ function GebruikersGegevens(data) {
         sterrenbeeldCell.innerHTML = `<img src="images/icons/${getZodiacSign(el.geboortedatum)}.png" title = ${getZodiacSign(el.geboortedatum)}>`;
 
         const nicknameCell = tableRowBody.insertCell();
-        nicknameCell.innerHTML = `<a onclick='passNickname("${el.nickname}")'>${el.nickname}</a>`;
+        nicknameCell.innerHTML = `<a href = "" onclick='passNickname("${el.nickname}")'>${el.nickname}</a>`;
         nicknameCell.id = el.id;
 
         const beroepCell = tableRowBody.insertCell();
