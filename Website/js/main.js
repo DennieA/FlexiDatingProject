@@ -577,7 +577,7 @@ function data2table(tableBody, tableData) {
             row.querySelectorAll('td')
                 /* For each table cell ... */
                 .forEach((cell, j) => {
-                    if ((String(rowData[j]).slice(0, 5) === "<img ") || (String(rowData[j]).slice(0, 2) === "<a ")) {
+                    if ((String(rowData[j]).slice(0, 5) === "<img ") || (String(rowData[j]).slice(0, 3) === "<a ")) {
                         /* Put the appropriate array element into the cell */
                         cell.innerHTML = rowData[j];
                     } else {
