@@ -237,9 +237,10 @@ function uploadFoto() {
                         console.log("naam van foto gewijzigd naar ", finalFotoNaam);
                         //window.alert("Profiel gewijzigd"); 
                         //window.location.href = "mijnProfiel.html";
-                        for (let x = 1; x<=1000; x++)
-                        {}
-                        window.location.href = "mijnProfiel.html";
+                        //for (let x = 1; x<=1000; x++)
+                        //{}
+                        //window.location.href = "mijnProfiel.html";
+                        setTimeout(function(){window.location.href = "mijnProfiel.html";},500);
                                 })
                 .catch(function (error) { console.log(error); });
                     //console.log("foto upload");

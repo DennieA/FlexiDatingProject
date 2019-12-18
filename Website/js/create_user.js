@@ -59,10 +59,62 @@ let naam = "";
 let afbeelding = "";
 let selectedfile = "";
 let finalFotoNaam;
+let naamWeb;
+let finalWebcamFotoNaam;
 let finalFotoUrl;
 let nickname;
-let ok = false;
+let f = false;
+let w = false;
 
+for (const typefoto of document.getElementsByName("fotos"))
+{ 
+    typefoto.onchange = function ()
+{
+if (this.value === "file")
+{   f = true;
+    w = false;
+    console.log("file is checked");
+    document.getElementById("lokaalFoto").style.display = "block";
+    document.getElementById("webcamFoto").style.display = "none";   
+} else {
+    if (this.value === "cam")
+    {   w = true;
+        f = false;
+        console.log("webcam is checked");
+        document.getElementById("webcamFoto").style.display = "block";
+        document.getElementById("lokaalFoto").style.display = "none";  
+        
+        //video en webcam
+    console.log('Maak verbinding met de webcam');
+    let video = document.getElementById('video');
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                video.srcObject = stream;
+                video.play();
+            });
+    }
+    console.log('==> OK');
+
+
+    console.log('Zet alles klaar om een foto te kunnen nemen');
+    // Elements for taking the snapshot
+    let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+    video = document.getElementById('video');
+    console.log('==> OK');
+
+
+document.getElementById("snap").addEventListener("click", function () {
+        console.log('Er werd een foto genomen.');
+        context.drawImage(video, 0, 0, 500, 375);
+        let kwaliteit = document.getElementById('kwaliteit').value / 100;            
+        console.log('     • Kwaliteit staat ingesteld op ' + kwaliteit * 100 + "%");
+        uploadPicture(canvas.toDataURL('image/jpeg', kwaliteit));
+    });
+    }}
+}}
 initialisation();
 document.getElementById("submit").onclick = submit;
 
@@ -91,10 +143,16 @@ function submit() {
 
 
     let email = document.getElementById("email").value;
-    if (document.getElementById("foto").files.length > 0) {
+    
+    if (f)
+        if (document.getElementById("foto").files.length > 0) {
         selectedfile = document.getElementById("foto").files;
         fotonaam = selectedfile[0].name;
-    }
+        } 
+    if (w)
+        if (finalWebcamFotoNaam !== "")
+        fotonaam = finalWebcamFotoNaam;
+    console.log("bestand naam: ", fotonaam);
     let beroep = document.getElementById("beroep").value;
 
     for (const f of document.getElementsByName("geslacht")) {
@@ -158,10 +216,12 @@ function submit() {
                         return resp.json();})
                     .then(function (data){
                         console.log(data);
-                        ok = true;
-                        console.log(ok);
                         //upload een foto enkel als aanmaken van profiel is gelukt
-                        uploadFoto();
+                        if (f)
+                            uploadFoto();
+                        else
+                            if (w)
+                            fotoWebcamUpdate();
                         window.alert("Gebruiker aangemaakt!");
                     })
                         .catch(function (error){
@@ -174,6 +234,76 @@ function submit() {
 }
 
 
+
+function uploadPicture(base64String) {
+            console.log('     • Foto wordt doorgestuurd naar de API.');
+            naamWeb = nickname + '.jpg';
+            let afbeelding = base64String;
+
+            let url = 'https://scrumserver.tenobe.org/scrum/api/image/upload.php';
+
+            let data = {
+                naam: naamWeb,
+                afbeelding: afbeelding
+            }
+
+            let request = new Request(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            });
+
+            fetch(request)
+                .then(function (resp) {                     return resp.json(); })
+                .then(function (data) {
+                    console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
+                    console.log('     • Foto inladen in IMG');
+                    document.getElementById('uploadResult').src = data.fileURL;
+                    console.log('     ==> OK');
+                    console.log('==> Klaar');
+                    finalWebcamFotoNaam = data.fileName;
+                })
+                .catch(function (error) { console.log(error); });
+        }
+
+function fotoWebcamUpdate ()
+    {
+        //update de foto name
+    let profielMetFoto;
+    let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
+    fetch(rooturl+"/profiel/read.php").then(function (resp){return resp.json()}).then(function (data){
+    for (let profiel of data)
+    {
+        if (profiel.nickname === nickname)
+        {
+        profielMetFoto = profiel;
+        profielMetFoto.foto = finalWebcamFotoNaam;
+        console.log("fotoweb naam van de updatefotoname functie: ", finalWebcamFotoNaam);
+        //console.log("gezochte profiel web: ", profielMetFoto);
+    
+
+        let requestfoto = new Request(urlUpdate, {
+            method: 'PUT',
+            body: JSON.stringify(profielMetFoto),
+            headers: new Headers({
+            'Content-Type': 'application/json'
+            })
+            });
+                
+        fetch(requestfoto)
+            .then(function (resp) { return resp.json(); })
+            .then(function (data) { console.log("profiel met juiste fotonaam: ",data);
+                    console.log("naam van fotoweb gewijzigd naar ", finalWebcamFotoNaam);
+                    //window.alert("Profiel gewijzigd"); 
+                    //window.location.href = "mijnProfiel.html";
+                    setTimeout(function(){ window.location.href = "index.html";},500);
+                            })
+            .catch(function (error) { console.log(error); });
+                //console.log("foto upload");
+    }}}); 
+}
 
 
 //genereert base64 code van de gekozen foto
@@ -216,6 +346,7 @@ function uploadFoto() {
     fetch(requestfoto)
         .then(function (resp) { return resp.json(); })
         .then(function (data) {
+            setTimeout(function(){window.location.href = "index.html";},500);
             responseFotoUpload = data;
             console.log("data upload foto: ", data);
             
@@ -258,7 +389,8 @@ function uploadFoto() {
                     console.log("naam van foto gewijzigd naar ", finalFotoNaam);
                     //window.alert("Profiel gewijzigd"); 
                     //window.location.href = "mijnProfiel.html";
-                    window.location.href = "index.html";
+                    setTimeout(function (){window.location.href = "index.html";},500);
+                    
                             })
             .catch(function (error) { console.log(error); });
                 //console.log("foto upload");

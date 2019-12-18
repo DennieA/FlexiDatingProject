@@ -128,8 +128,9 @@ h1 {
     cursor: pointer;
     width: 20%;
 }
-#uploadedFoto
+#mid img
 {
     display: block;
     margin: auto;
+    width: 50%;
 }

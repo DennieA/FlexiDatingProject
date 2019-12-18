@@ -32,6 +32,14 @@
                         <input type="email" id="email"><br>
                         <!--<input type="text" id="email"><br>-->
                     </label><br>
+
+                    <label id="sortFoto">Foto:<br>
+                        <input type="radio" name="fotos" id="file" value="file">Bestand van de computer
+                        <input type="radio" name="fotos" id="cam" value="cam">Webcam
+                        <br>
+                    </label>
+
+                    <div id="lokaalFoto" class="verborgen">
                     <img id="uploadedFoto"><br>
                     <label>Foto:<br>
                         <input type="file" id="foto" name = "1" ><br>
@@ -41,7 +49,29 @@
                         <textarea style="width:100%;height:500px;" id="txt" class="verborgen" >
                         </textarea>
                         </div>
-                    </label><br>
+                    </label>
+                    </div><br>
+
+                    <div id="webcamFoto" class="verborgen">
+                        <div class="a">
+                            <div class="c">
+                                <video id="video" width="300" height="175" autoplay></video>
+                                <input type="range" id="kwaliteit" min="10" max="100" value="75">
+                            </div>
+                            <div class="c e">
+                                <button id="snap" type="button">Snap Photo</button>
+                            </div>
+                            <div class="c d">
+                                <img id="uploadResult" width="300" height="175" alt="resulaat na upload" src="images/bg4.jpg">
+                                <canvas id="canvas" width="300" height="175" style="display: none"></canvas>
+                            </div>
+                            <div>
+                                <textarea style="width:100%;height:500px;" id="txtWebcam" class="verborgen" >
+                                </textarea>
+                                </div>
+                        </div>
+                    </div><br>
+
                     <label>Beroep:<br>
                         <input type="text" id="beroep"><br>
                     </label><br>
