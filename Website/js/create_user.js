@@ -5,8 +5,7 @@ let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id
 fetch(loginUrl)
     .then(function (response){return response.json();})
     .then(loginCheck)
-    .catch(function (error){//console.log(error);
-    });
+    .catch(function (error){console.log(error);});
 
 function loginCheck (data){
     let wachtwoord = data.wachtwoord;
@@ -70,19 +69,19 @@ for (const typefoto of document.getElementsByName("fotos"))
 if (this.value === "file")
 {   f = true;
     w = false;
-    //console.log("file is checked");
+    console.log("file is checked");
     document.getElementById("lokaalFoto").style.display = "block";
     document.getElementById("webcamFoto").style.display = "none";   
 } else {
     if (this.value === "cam")
     {   w = true;
         f = false;
-        //console.log("webcam is checked");
+        console.log("webcam is checked");
         document.getElementById("webcamFoto").style.display = "block";
         document.getElementById("lokaalFoto").style.display = "none";  
         
         //video en webcam
-    //console.log('Maak verbinding met de webcam');
+    console.log('Maak verbinding met de webcam');
     let video = document.getElementById('video');
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -92,22 +91,22 @@ if (this.value === "file")
                 video.play();
             });
     }
-    //console.log('==> OK');
+    console.log('==> OK');
 
 
-    //console.log('Zet alles klaar om een foto te kunnen nemen');
+    console.log('Zet alles klaar om een foto te kunnen nemen');
     // Elements for taking the snapshot
     let canvas = document.getElementById('canvas');
     let context = canvas.getContext('2d');
     video = document.getElementById('video');
-    //console.log('==> OK');
+    console.log('==> OK');
 
 
 document.getElementById("snap").addEventListener("click", function () {
-        //console.log('Er werd een foto genomen.');
+        console.log('Er werd een foto genomen.');
         context.drawImage(video, 0, 0, 500, 375);
         let kwaliteit = document.getElementById('kwaliteit').value / 100;            
-        //console.log('     • Kwaliteit staat ingesteld op ' + kwaliteit * 100 + "%");
+        console.log('     • Kwaliteit staat ingesteld op ' + kwaliteit * 100 + "%");
         uploadPicture(canvas.toDataURL('image/jpeg', kwaliteit));
     });
     }}
@@ -136,7 +135,7 @@ function submit() {
         return Math.abs(age_dt.getUTCFullYear() - 1970);
     }
 
-    //console.log(leeftijd);
+    console.log(leeftijd);
 
 
     let email = document.getElementById("email").value;
@@ -149,7 +148,7 @@ function submit() {
     if (w)
         if (finalWebcamFotoNaam !== "")
         fotonaam = finalWebcamFotoNaam;
-    //console.log("bestand naam: ", fotonaam);
+    console.log("bestand naam: ", fotonaam);
     let beroep = document.getElementById("beroep").value;
 
     for (const f of document.getElementsByName("geslacht")) {
@@ -198,7 +197,7 @@ function submit() {
                     lovecoins: lovecoins
                 });
 
-                //console.log("object gebruikersgegevens",data);
+                console.log("object gebruikersgegevens",data);
 
                 let url = rooturl + '/profiel/create.php';
                 let request = new Request(url, {
@@ -212,7 +211,7 @@ function submit() {
                     .then(function (resp) {
                         return resp.json();})
                     .then(function (data){
-                        //console.log(data);
+                        console.log(data);
                         //upload een foto enkel als aanmaken van profiel is gelukt
                         if (f)
                             uploadFoto();
@@ -222,8 +221,8 @@ function submit() {
                         window.alert("Gebruiker aangemaakt!");
                     })
                         .catch(function (error){
-                            //console.log("error profiel aanmaken");
-                            //console.log(error);
+                            console.log("error profiel aanmaken");
+                            console.log(error);
                         });
             }
         }
@@ -233,7 +232,7 @@ function submit() {
 
 
 function uploadPicture(base64String) {
-            //console.log('     • Foto wordt doorgestuurd naar de API.');
+            console.log('     • Foto wordt doorgestuurd naar de API.');
             naamWeb = nickname + '.jpg';
             let afbeelding = base64String;
 
@@ -255,15 +254,14 @@ function uploadPicture(base64String) {
             fetch(request)
                 .then(function (resp) {                     return resp.json(); })
                 .then(function (data) {
-                    //console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
-                    //console.log('     • Foto inladen in IMG');
+                    console.log('     ==> OK (Foto te vinden op url = ' + data.fileURL + ')');
+                    console.log('     • Foto inladen in IMG');
                     document.getElementById('uploadResult').src = data.fileURL;
-                    //console.log('     ==> OK');
-                    //console.log('==> Klaar');
+                    console.log('     ==> OK');
+                    console.log('==> Klaar');
                     finalWebcamFotoNaam = data.fileName;
                 })
-                .catch(function (error) { //console.log(error); 
-                });
+                .catch(function (error) { console.log(error); });
         }
 
 function fotoWebcamUpdate ()
@@ -278,7 +276,7 @@ function fotoWebcamUpdate ()
         {
         profielMetFoto = profiel;
         profielMetFoto.foto = finalWebcamFotoNaam;
-        //console.log("fotoweb naam van de updatefotoname functie: ", finalWebcamFotoNaam);
+        console.log("fotoweb naam van de updatefotoname functie: ", finalWebcamFotoNaam);
         //console.log("gezochte profiel web: ", profielMetFoto);
     
 
@@ -292,14 +290,13 @@ function fotoWebcamUpdate ()
                 
         fetch(requestfoto)
             .then(function (resp) { return resp.json(); })
-            .then(function (data) { //console.log("profiel met juiste fotonaam: ",data);
-                    //console.log("naam van fotoweb gewijzigd naar ", finalWebcamFotoNaam);
+            .then(function (data) { console.log("profiel met juiste fotonaam: ",data);
+                    console.log("naam van fotoweb gewijzigd naar ", finalWebcamFotoNaam);
                     //window.alert("Profiel gewijzigd"); 
                     //window.location.href = "mijnProfiel.html";
                     setTimeout(function(){ window.location.href = "index.html";},500);
                             })
-            .catch(function (error) { //console.log(error); 
-            });
+            .catch(function (error) { console.log(error); });
                 //console.log("foto upload");
     }}}); 
 }
@@ -332,7 +329,7 @@ function uploadFoto() {
         naam: naam,
         afbeelding: afbeelding
     });
-    //console.log("dataFoto: ", dataFoto);
+    console.log("dataFoto: ", dataFoto);
 
     let requestfoto = new Request(urlFotoUpload, {
         method: 'POST',
@@ -347,19 +344,19 @@ function uploadFoto() {
         .then(function (data) {
             setTimeout(function(){window.location.href = "index.html";},500);
             responseFotoUpload = data;
-            //console.log("data upload foto: ", data);
+            console.log("data upload foto: ", data);
             
             finalFotoUrl = data.fileURL;
             finalFotoNaam = data.fileName;
 
-            //console.log("foto naam: ", finalFotoNaam);
-            //console.log("foto url: ", finalFotoUrl);
+            console.log("foto naam: ", finalFotoNaam);
+            console.log("foto url: ", finalFotoUrl);
             
         })
         .catch(function (error) { console.log(error); });
-        //console.log("buiten fetch bericht foto naam: ", finalFotoNaam);
-        //console.log("buiten fetch bericht foto url: ", finalFotoUrl);
-        //console.log(responseFotoUpload);
+        console.log("buiten fetch bericht foto naam: ", finalFotoNaam);
+        console.log("buiten fetch bericht foto url: ", finalFotoUrl);
+        console.log(responseFotoUpload);
     //update de foto name
     let profielMetFoto;
     let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
@@ -370,8 +367,8 @@ function uploadFoto() {
         {
         profielMetFoto = profiel;
         profielMetFoto.foto = finalFotoNaam;
-        //console.log("foto naam van de updatefotoname functie: ", finalFotoNaam);
-        //console.log("gezochte profiel: ", profielMetFoto);
+        console.log("foto naam van de updatefotoname functie: ", finalFotoNaam);
+        console.log("gezochte profiel: ", profielMetFoto);
     
 
         let requestfoto = new Request(urlUpdate, {
@@ -384,15 +381,14 @@ function uploadFoto() {
                 
         fetch(requestfoto)
             .then(function (resp) { return resp.json(); })
-            .then(function (data) { //console.log("profiel met juiste fotonaam: ",data);
-                    //console.log("naam van foto gewijzigd naar ", finalFotoNaam);
+            .then(function (data) { console.log("profiel met juiste fotonaam: ",data);
+                    console.log("naam van foto gewijzigd naar ", finalFotoNaam);
                     //window.alert("Profiel gewijzigd"); 
                     //window.location.href = "mijnProfiel.html";
                     setTimeout(function (){window.location.href = "index.html";},500);
                     
                             })
-            .catch(function (error) { //console.log(error); 
-            });
+            .catch(function (error) { console.log(error); });
                 //console.log("foto upload");
     }}}); 
 

@@ -5,8 +5,7 @@ let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id
 fetch(loginUrl)
     .then(function (response){return response.json();})
     .then(loginCheck)
-    .catch(function (error){//console.log(error);
-    });
+    .catch(function (error){console.log(error);});
 
 function loginCheck (data){
     let wachtwoord = data.wachtwoord;
@@ -88,7 +87,7 @@ let finalFotoUrl;
 
 function GebruikersGegevens (el){
     
-        //console.log(el);
+        console.log(el);
         profiel = el;
         document.getElementById("hoofd").innerText = 'Gegevens van ' + el.voornaam + ' ' + el.familienaam;
         document.getElementById("familienaam").value = el.familienaam;
@@ -117,7 +116,7 @@ initialisation();
 document.getElementById("submit").onclick = submit;
 
 function submit() {
-//console.log("WIJZIG PROFIEL PAGINA:");
+console.log("WIJZIG PROFIEL PAGINA:");
 
     profiel.familienaam = document.getElementById("familienaam").value;
     profiel.voornaam = document.getElementById("voornaam").value;
@@ -129,7 +128,7 @@ function submit() {
     if (selectedfile.length !== 0)
     {
         profiel.foto = selectedfile[0].name;
-        //console.log("profiel.foto: ", profiel.foto);
+        console.log("profiel.foto: ", profiel.foto);
                                                        
     }
 
@@ -161,7 +160,7 @@ function submit() {
 
             fetch(request)
                 .then(function (resp) { return resp.json(); })
-                .then(function (data) { //console.log(data);
+                .then(function (data) { console.log(data);
                     window.alert("Profiel gewijzigd"); 
                     if (selectedfile.length !== 0)
                     {
@@ -171,7 +170,7 @@ function submit() {
                     else {
                     window.location.href = "mijnProfiel.html";}
                  })
-                .catch(function (error) { //console.log(error); });
+                .catch(function (error) { console.log(error); });
 
     
            
@@ -206,7 +205,7 @@ function uploadFoto() {
         naam: naam,
         afbeelding: afbeelding
     });
-    //console.log("dataFoto: ", dataFoto);
+    console.log("dataFoto: ", dataFoto);
 
     let requestfoto = new Request(urlFotoUpload, {
         method: 'POST',
@@ -219,13 +218,13 @@ function uploadFoto() {
     fetch(requestfoto)
         .then(function (resp) { return resp.json(); })
         .then(Gegevens)
-        .catch(function (error) { //console.log(error); });    
+        .catch(function (error) { console.log(error); });    
             
             
         
 
-        //console.log("buiten fetch-upload bericht foto naam: ",finalFotoNaam);
-        //console.log("buiten fetch-upload bericht foto url: ", finalFotoUrl);
+        console.log("buiten fetch-upload bericht foto naam: ",finalFotoNaam);
+        console.log("buiten fetch-upload bericht foto url: ", finalFotoUrl);
         //console.log(responseFotoUpload);
     
         //update de foto name
@@ -233,22 +232,22 @@ function uploadFoto() {
     
     function Gegevens (data) {
         //responseFotoUpload = data;
-        //console.log("data upload foto: ", data);
+        console.log("data upload foto: ", data);
         
         finalFotoUrl = data.fileURL;
         finalFotoNaam = data.fileName;
 
-        //console.log("foto naam: ", finalFotoNaam);
-        //console.log("foto url: ", finalFotoUrl);
+        console.log("foto naam: ", finalFotoNaam);
+        console.log("foto url: ", finalFotoUrl);
 
-        //console.log("test: ik ben in de foto upload");
+        console.log("test: ik ben in de foto upload");
         fetch(rooturl+"/profiel/read_one.php?id="+user).then(function (resp){return resp.json()}).then(function (prof){
 
             profielMetFoto = prof;
-            //console.log("profile met verkeerde naam: ", profielMetFoto);
+            console.log("profile met verkeerde naam: ", profielMetFoto);
             profielMetFoto.foto = finalFotoNaam;
-            //console.log("foto naam van de updatefotoname functie: ", finalFotoNaam);
-            //console.log("gezochte profiel met juiste naam: ", profielMetFoto);
+            console.log("foto naam van de updatefotoname functie: ", finalFotoNaam);
+            console.log("gezochte profiel met juiste naam: ", profielMetFoto);
         
     
             let requestfoto = new Request(urlUpdate, {
@@ -261,8 +260,8 @@ function uploadFoto() {
                     
             fetch(requestfoto)
                 .then(function (resp) { return resp.json(); })
-                .then(function (data) { //console.log("profiel met juiste fotonaam: ",data);
-                        //console.log("naam van foto gewijzigd naar ", finalFotoNaam);
+                .then(function (data) { console.log("profiel met juiste fotonaam: ",data);
+                        console.log("naam van foto gewijzigd naar ", finalFotoNaam);
                         //window.alert("Profiel gewijzigd"); 
                         //window.location.href = "mijnProfiel.html";
                         //for (let x = 1; x<=1000; x++)
@@ -270,8 +269,7 @@ function uploadFoto() {
                         //window.location.href = "mijnProfiel.html";
                         setTimeout(function(){window.location.href = "mijnProfiel.html";},500);
                                 })
-                .catch(function (error) { //console.log(error); 
-                });
+                .catch(function (error) { console.log(error); });
                     //console.log("foto upload");
         }); 
     }
