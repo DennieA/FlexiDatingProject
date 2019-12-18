@@ -139,3 +139,14 @@ h1 {
 .klikbaar{
     cursor:pointer;
   }
+
+.link {
+    cursor:pointer;
+    color:white;
+    text-decoration:underline;
+}
+
+.link:hover {
+    text-decoration:none;
+    text-shadow: 1px 1px 1px rgb(245, 61, 61);
+}
