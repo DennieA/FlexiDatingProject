@@ -1,6 +1,8 @@
 "use strict";
 
 let lovecoins = "";
+// global variables
+let urlUpdate = 'https://scrumserver.tenobe.org/scrum/api/profiel/update.php';
 
 ////////Login nakijken
 let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id=' + parseInt(sessionStorage.getItem("userId"));
@@ -31,34 +33,38 @@ function logout() {
 }
 /////////
 
-// global variables
-let rooturl = "https://scrumserver.tenobe.org/scrum/api";
-let gegevens = [];
-
 function unlock() {
-    if (lovecoins === "0"){
-        window.alert("Je hebt geen Lovecoins meer!")
-    }
-    else
-    {
-        let url5 = 'https://scrumserver.tenobe.org/scrum/api/profiel/lovecoinTransfer.php';
-        let data2 = {
-            "profielID": sessionStorage.getItem("userId"),
-            "bedrag": "-1"
-        }
+    //plaats lovecoin functie check
+    let url = rooturl + '/ontgrendeling/ontgrendel.php';
+    //rooturl = https://scrumserver.tenobe.org/scrum/api
+    let data = {
+        mijnId: sessionStorage.getItem('userId'),
+        anderId: sessionStorage.getItem('lastProfile')
+    };
+    console.log(sessionStorage.getItem('userId'))
+    console.log(sessionStorage.getItem('lastProfile'))
+    console.log(gegevens)
 
-        var request = new Request(url5, {
-            method: 'PUT',
-            body: JSON.stringify(data2),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
+    var request = new Request(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }); 
 
-        fetch(request)
-        .then(function (response){return response.json();})
-        .then(function (data){console.log(data);})
-        .catch(function (error){console.log(error);});
+    fetch(request)
+        .then(function (resp) { return resp.json(); })
+        .then(function (data) {
+            setTimeout(function(){window.location.reload();},500);
+            console.log(data); })
+        .catch(function (error) { console.log(error); });
+
+        lovecoinsBerekenen();
+
+/*
+    function koopLovecoins() {
+        let aantalLovecoins = "-1"
 
         let url = rooturl + '/ontgrendeling/ontgrendel.php';
         //rooturl = https://scrumserver.tenobe.org/scrum/api
@@ -93,6 +99,52 @@ function unlock() {
         // window.location.href = "matchProfile.html"
     }
     
+            .then(function (response) { return response.json(); })
+            .then(function (data) {console.log(data); })
+            .catch(function (error) { console.log(error); });
+
+        window.alert("1 lovecoin betaald, profiel unlocked!");
+    }*/
+    
+    //koopLovecoins();
+    // for( let x = 0; x<500; x++){}
+    // window.location.href = "matchProfile.html"
+}
+function lovecoinsBerekenen ()
+{   
+    
+    fetch(rooturl+"/profiel/read_one.php?id="+sessionStorage.getItem("userId")).then(function (resp){return resp.json()}).then(function (profiel)
+    {
+        console.log("profiel", profiel);
+        let mijnLovecoins = Number(profiel.lovecoins);
+        console.log("mijnlovecoins: ", mijnLovecoins);
+        if (mijnLovecoins === 0)
+        {
+            window.alert("Niet genoeg lovecoins. Koop meer op uw profiel pagina: ");
+            window.location.href = "mijnProfiel.html";
+        } else {
+            mijnLovecoins--;
+            window.alert("1 lovecoin betald voor ontgrendeling. \n U hebt nog " + mijnLovecoins + " lovecoins.");
+        }
+        console.log("mijnlovecoins: ", mijnLovecoins);
+        profiel.lovecoins = mijnLovecoins.toString();
+        console.log("profiel.lovecoins: ", profiel.lovecoins);
+
+    let request = new Request(urlUpdate, {
+        method: 'PUT',
+        body: JSON.stringify(profiel),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+
+    fetch(request)
+        .then(function (resp) { return resp.json(); })
+        .then(function (data) { console.log("data voor upload ",data);
+           })
+        .catch(function (error) { console.log(error); });
+    });
+}
 
 function removelastProfile()
     {

@@ -114,3 +114,10 @@ h1 {
     cursor: pointer;
     width: 20%;
 }
+
+#mid #uploadedFoto
+{
+    display: block;
+    margin: auto;
+    width: 50%;
+}

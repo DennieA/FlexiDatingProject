@@ -64,3 +64,31 @@ h1 {
 {
     display: none;
 }
+
+/*  Webcam classes */
+.a {
+    width: 500px;
+    margin: 0 auto;
+    /*border: 1px solid red;*/
+    position: relative;
+    display: table;
+  }
+  
+  .c {
+    display: table-cell;
+    width:33%;  
+    text-align: center;
+  }
+  
+  .d {
+    text-align: right;
+    vertical-align: top;
+  }
+  
+  .e {
+    position: absolute;
+    left: 50%;
+    display: inline;
+    width: auto;
+    transform: translateX(-50%);
+  }
