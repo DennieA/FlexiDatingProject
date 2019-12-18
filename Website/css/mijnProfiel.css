@@ -139,9 +139,3 @@ h1 {
 .klikbaar{
     cursor:pointer;
   }
-
-.link {
-    cursor:pointer;
-    color:white;
-    text-decoration:underline;
-}
