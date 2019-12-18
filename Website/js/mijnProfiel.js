@@ -169,7 +169,7 @@ function tabel2() {
                 let rij2 = document.createElement("tr");
                 tabel2.appendChild(rij2);
                 let veld2 = document.createElement("td");
-                veld2.innerHTML =  "<a onclick=\"matchProfielLaden(\'" + nicknames[teller3] + "\')\">" + nicknames[teller3] + "</a>";
+                veld2.innerHTML =  "<a class = 'link' onclick=\"matchProfielLaden(\'" + nicknames[teller3] + "\')\">" + nicknames[teller3] + "</a>";
                 rij2.appendChild(veld2);
             }
         }
