@@ -8,7 +8,8 @@ h1 {
 #container {
     width: 1000px;
     margin: 0 auto;
-    background-color: white;
+    background-image: url("../images/bg3.jpg");
+    /*background-color: white;*/
 }
 
 #head {
@@ -134,3 +135,7 @@ h1 {
     margin: auto;
     width: 50%;
 }
+
+.klikbaar{
+    cursor:pointer;
+  }
