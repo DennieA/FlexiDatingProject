@@ -11,7 +11,8 @@ let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id
 fetch(loginUrl)
     .then(function (response) { return response.json(); })
     .then(loginCheck)
-    .catch(function (error) { console.log(error); });
+    .catch(function (error) { //console.log(error); 
+    });
 
 function loginCheck(data) {
     let wachtwoord = data.wachtwoord;
@@ -57,17 +58,19 @@ function unlock() {
 
         fetch(request)
         .then(function (response){return response.json();})
-        .then(function (data){console.log(data);})
-        .catch(function (error){console.log(error);});
+        .then(function (data){//console.log(data);
+        })
+        .catch(function (error){//console.log(error);
+        });
         let url = rooturl + '/ontgrendeling/ontgrendel.php';
         //rooturl = https://scrumserver.tenobe.org/scrum/api
         let data = {
             mijnId: sessionStorage.getItem('userId'),
             anderId: sessionStorage.getItem('lastProfile')
         };
-        console.log(sessionStorage.getItem('userId'))
-        console.log(sessionStorage.getItem('lastProfile'))
-        console.log(gegevens)
+        //console.log(sessionStorage.getItem('userId'))
+        //console.log(sessionStorage.getItem('lastProfile'))
+        //console.log(gegevens)
 
         var request = new Request(url, {
             method: 'POST',
@@ -84,7 +87,8 @@ function unlock() {
                 //console.log(data); 
             })
             .then(finishUnlock)
-            .catch(function (error) { console.log(error); });
+            .catch(function (error) { //console.log(error); 
+            });
         function finishUnlock() {
             window.alert("1 lovecoin betaald, profiel unlocked!");
             window.location.href = "matchProfile.html";
@@ -195,19 +199,20 @@ function check() {
     fetch(url)
         .then(function (resp) { return resp.json(); })
         .then(function (data) {
-            console.log(sessionStorage.getItem('lastProfile'))
-            console.log(data);
+            //console.log(sessionStorage.getItem('lastProfile'))
+            //console.log(data);
             for (let x = 0; x < data.length; x++) {
                 if (sessionStorage.getItem('lastProfile') !== "" && data !== "") {
                     if (sessionStorage.getItem('lastProfile') === data[x]) {
                         checkunlocked = true;
-                        console.log("check = true");
+                        //console.log("check = true");
                     }
                 }
             };
 
         })
-        .catch(function (error) { console.log(error); });
+        .catch(function (error) { //console.log(error); 
+        });
 
 
 };
@@ -230,7 +235,8 @@ function checkfavourites() {
             };
 
         })
-        .catch(function (error) { console.log(error); });
+        .catch(function (error) { //console.log(error); 
+        });
 }
 
 function favoriet() {
@@ -253,9 +259,11 @@ function favoriet() {
 
     fetch(request)
         .then(function (resp) { return resp.json(); })
-        .then(function (data) { console.log(data); })
+        .then(function (data) { //console.log(data); 
+        })
         .then(finishFavourite)
-        .catch(function (error) { console.log(error); });
+        .catch(function (error) { //console.log(error); 
+        });
 
     function finishFavourite() {
         window.alert("Favoriet toegevoegd!");
@@ -269,7 +277,7 @@ document.onload = function () {
     hoofdDiv.innerHTML = "";
 }
 let user = sessionStorage.getItem("userId");
-console.log(user);
+//console.log(user);
 
 
 
@@ -332,7 +340,7 @@ function readUsers(data) {
     let foto = document.createElement("img");
     foto.id = "uploadedFoto";
     foto.setAttribute('src', 'https://scrumserver.tenobe.org/scrum/img/' + gegevens[2]);
-    console.log("naam van de foto: ", foto.src);
+    //console.log("naam van de foto: ", foto.src);
     foto.setAttribute('alt', 'unlock om foto te bekijken');
     hoofdDiv.appendChild(foto);
 

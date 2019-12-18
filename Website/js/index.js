@@ -5,7 +5,8 @@ let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id
 fetch(loginUrl)
     .then(function (response){return response.json();})
     .then(loginCheck)
-    .catch(function (error){console.log(error);});
+    .catch(function (error){//console.log(error);
+    });
 
 function loginCheck (data){
     let wachtwoord = data.wachtwoord;
@@ -55,5 +56,6 @@ function login() {
                 alert("Verkeerde gegevens!")
             }
         })
-        .catch (function (error) { console.log(error); });
+        .catch (function (error) { //console.log(error); 
+        });
 };

@@ -5,7 +5,8 @@ let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id
 fetch(loginUrl)
     .then(function (response){return response.json();})
     .then(loginCheck)
-    .catch(function (error){console.log(error);});
+    .catch(function (error){//console.log(error);
+    });
 
 function loginCheck (data){
     let wachtwoord = data.wachtwoord;
@@ -35,7 +36,7 @@ document.onload = function ()
     hoofdDiv.innerHTML = "";
 }
 let user = sessionStorage.getItem("userId");
-console.log(user);
+//console.log(user);
 
  
 
@@ -82,7 +83,7 @@ function GebruikersGegevens (data){
 let foto = document.createElement("img");
 foto.id = "uploadedFoto";
 foto.setAttribute('src', 'https://scrumserver.tenobe.org/scrum/img/' + gegevens[2]);
-console.log("naam van de foto: ", foto.src);
+//console.log("naam van de foto: ", foto.src);
 foto.setAttribute('alt', 'foto van ' + gegevens[3] + ' ' + gegevens[4]);
 hoofdDiv.appendChild(foto);
 
@@ -178,7 +179,7 @@ function tabel2() {
 }
 
 function matchProfielLaden (nickname) {
-    console.log(nickname);
+    //console.log(nickname);
     sessionStorage.setItem("selectedNickname", nickname);
     window.location.href = "matchProfile.html";
 }
@@ -212,8 +213,10 @@ function koopLovecoins() {
 
         fetch(request)
         .then(function (response){return response.json();})
-        .then(function (data){console.log(data);})
-        .catch(function (error){console.log(error);});
+        .then(function (data){//console.log(data);
+        })
+        .catch(function (error){//console.log(error);
+        });
 
         window.alert("Lovecoins zijn toegevoegd!");
         window.location.href = "mijnProfiel.html";
@@ -240,9 +243,10 @@ function uitschrijven()
     
     fetch(request)
         .then( function (resp)  { return resp.json(); })
-        .then( function (data)  { console.log(data); window.location.href = "index.html";
+        .then( function (data)  { //console.log(data); window.location.href = "index.html";
     })
-        .catch(function (error) { console.log(error); });
+        .catch(function (error) { //console.log(error); 
+        });
 }
 }
 
