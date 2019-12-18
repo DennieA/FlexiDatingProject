@@ -1,60 +1,33 @@
 "use strict";
 
+////////Login nakijken
+let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id=' + parseInt(sessionStorage.getItem("userId"));
+fetch(loginUrl)
+    .then(function (response){return response.json();})
+    .then(loginCheck)
+    .catch(function (error){console.log(error);});
 
-let mijnId =  "2";
-let anderId =  "6";
-
-let rooturl3 = 'https://scrumserver.tenobe.org/scrum/api/favoriet/like.php';
-let data = {
-    mijnId: mijnId,
-    anderId: anderId
+function loginCheck (data){
+    let wachtwoord = data.wachtwoord;
+    let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
+    if (sessionStorage.getItem("wachtwoord") !== encryptedWachtwoord) {
+        window.location.href = "../Website/index.html";
+    }
 }
 
-var request = new Request(rooturl3, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: new Headers({
-        'Content-Type': 'application/json'
-    })
-});
-
-fetch(request)
-    .then( function (resp)  { return resp.json(); })
-    .then( function (data)  { console.log(data);  })
-    .catch(function (error) { console.log(error); });
-
-
-////////Login nakijken
-// let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
-// fetch(loginUrl)
-//     .then(function (response){return response.json();})
-//     .then(loginCheck)
-//     .catch(function (error){console.log(error);});
-
-// function loginCheck (data){
-//     for (let el of data) {
-//         if (sessionStorage.getItem("userId") === el.id) {
-//             let wachtwoord = el.wachtwoord;
-//             let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
-//             if (sessionStorage.getItem("wachtwoord") !== encryptedWachtwoord) {
-//                 window.location.href = "index.html";
-//             }
-//         }
-//     }
-// }
-
-// if (!sessionStorage.getItem("userId") || !sessionStorage.getItem("wachtwoord")){
-//     window.location.href = "index.html";
-// }
+if (!sessionStorage.getItem("userId") || !sessionStorage.getItem("wachtwoord")){
+    window.location.href = "../Website/index.html";
+}
 /////////
 
 ////////Logout
 function logout() {
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("wachtwoord");
-    window.location.href = "index.html";
+    window.location.href = "../Website/index.html";
 }
 /////////
+
 
 let hoofdDiv = document.getElementById("mid");
 document.onload = function ()
@@ -178,7 +151,6 @@ function tabel2() {
             }
         }
         function toonTabel () {
-            if (typeof ids[0] !== "undefined") {
             let tabel2 = document.createElement("table");
             tabel2.id = "tabel2";
             hoofdDiv.appendChild(tabel2);
@@ -190,6 +162,7 @@ function tabel2() {
             hoofdTh2.id = "hoofdRij2";
             hoofdTh2.colSpan = 3;
             hoofdRij2.appendChild(hoofdTh2);
+            if (typeof ids[0] !== "undefined") {
 
             for (let teller3 = 0; teller3 < teller2; teller3++)
             {
@@ -218,7 +191,11 @@ function koopLovecoins() {
     {
         window.alert(" Gelieve dit veld in te vullen! ");
     }
-    else 
+    else if (aantalLovecoins <= 0) 
+    {
+        window.alert(" Deze waarde moet positief zijn! ")
+    }
+    else
     {
         let data = {
             "profielID": sessionStorage.getItem("userId"),

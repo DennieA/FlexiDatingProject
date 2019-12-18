@@ -1,94 +1,98 @@
 "use strict";
 
-// global variables
-let rooturl = "https://scrumserver.tenobe.org/scrum/api";
-let gegevens = [];
+let lovecoins = "";
 
 ////////Login nakijken
-// let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
-// fetch(loginUrl)
-//     .then(function (response){return response.json();})
-//     .then(loginCheck)
-//     .catch(function (error){console.log(error);});
+let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id=' + parseInt(sessionStorage.getItem("userId"));
+fetch(loginUrl)
+    .then(function (response){return response.json();})
+    .then(loginCheck)
+    .catch(function (error){console.log(error);});
 
-// function loginCheck (data){
-//     for (let el of data) {
-//         if (sessionStorage.getItem("userId") === el.id) {
-//             let wachtwoord = el.wachtwoord;
-//             let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
-//             if (sessionStorage.getItem("wachtwoord") !== encryptedWachtwoord) {
-//                 window.location.href = "../Website/index.html";
-//             }
-//         }
-//     }
-// }
+function loginCheck (data){
+    let wachtwoord = data.wachtwoord;
+    lovecoins = data.lovecoins;
+    let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
+    if (sessionStorage.getItem("wachtwoord") !== encryptedWachtwoord) {
+        window.location.href = "../Website/index.html";
+    }
+}
 
-// if (!sessionStorage.getItem("userId") || !sessionStorage.getItem("wachtwoord")){
-//     window.location.href = "../Website/index.html";
-// }
+if (!sessionStorage.getItem("userId") || !sessionStorage.getItem("wachtwoord")){
+    window.location.href = "../Website/index.html";
+}
 /////////
 
 ////////Logout
 function logout() {
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("wachtwoord");
-    window.location.href = "index.html";
+    window.location.href = "../Website/index.html";
 }
 /////////
 
+// global variables
+let rooturl = "https://scrumserver.tenobe.org/scrum/api";
+let gegevens = [];
+
 function unlock() {
-
-    let url = rooturl + '/ontgrendeling/ontgrendel.php';
-    //rooturl = https://scrumserver.tenobe.org/scrum/api
-    let data = {
-        mijnId: sessionStorage.getItem('userId'),
-        anderId: sessionStorage.getItem('lastProfile')
-    };
-    console.log(sessionStorage.getItem('userId'))
-    console.log(sessionStorage.getItem('lastProfile'))
-    console.log(gegevens)
-
-    var request = new Request(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        })
-    }); 
-
-    fetch(request)
-        .then(function (resp) { return resp.json(); })
-        .then(function (data) { console.log(data); })
-        .catch(function (error) { console.log(error); });
-
-
-    function koopLovecoins() {
-        let aantalLovecoins = "-1"
-
-        let data = {
+    if (lovecoins === "0"){
+        window.alert("Je hebt geen Lovecoins meer!")
+    }
+    else
+    {
+        let url5 = 'https://scrumserver.tenobe.org/scrum/api/profiel/lovecoinTransfer.php';
+        let data2 = {
             "profielID": sessionStorage.getItem("userId"),
-            "bedrag": aantalLovecoins.toString()
+            "bedrag": "-1"
         }
 
-        var request = new Request(url, {
+        var request = new Request(url5, {
             method: 'PUT',
-            body: JSON.stringify(data),
+            body: JSON.stringify(data2),
             headers: new Headers({
                 'Content-Type': 'application/json'
             })
         });
 
         fetch(request)
-            .then(function (response) { return response.json(); })
-            .then(function (data) { console.log(data); })
-            .catch(function (error) { console.log(error); });
+        .then(function (response){return response.json();})
+        .then(function (data){console.log(data);})
+        .catch(function (error){console.log(error);});
 
-        window.alert("1 lovecoin betaald, profiel unlocked!");
+        let url = rooturl + '/ontgrendeling/ontgrendel.php';
+        //rooturl = https://scrumserver.tenobe.org/scrum/api
+        let data = {
+            mijnId: sessionStorage.getItem('userId'),
+            anderId: sessionStorage.getItem('lastProfile')
+        };
+        console.log(sessionStorage.getItem('userId'))
+        console.log(sessionStorage.getItem('lastProfile'))
+        console.log(gegevens)
+
+        var request = new Request(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }); 
+
+        fetch(request)
+            .then(function (resp) { return resp.json(); })
+            .then(function (data) { console.log(data); })
+            .then(finishUnlock)
+            .catch(function (error) { console.log(error); });
+        function finishUnlock () {
+            window.alert("1 lovecoin betaald, profiel unlocked!");
+            window.location.href = "matchProfile.html";
+        }
+        }
+        //koopLovecoins();
+        // for( let x = 0; x<500; x++){}
+        // window.location.href = "matchProfile.html"
     }
-    //koopLovecoins();
-    // for( let x = 0; x<500; x++){}
-    // window.location.href = "matchProfile.html"
-}
+    
 
 function removelastProfile()
     {
@@ -99,8 +103,10 @@ function removelastProfile()
 
 
 let checkunlocked = false;
+let checkfavourited = false;
 let selectedNickname = sessionStorage.getItem('selectedNickname');
 check();
+checkfavourites();
 
 
 function check() {
@@ -116,7 +122,7 @@ function check() {
                 if (sessionStorage.getItem('lastProfile') !== "" && data !=="") {
                     if (sessionStorage.getItem('lastProfile') === data[x]) {
                         checkunlocked = true;
-                        console.log("check = true")
+                        console.log("check = true");
                     }
                 }
             };
@@ -127,7 +133,56 @@ function check() {
 
 };
 
+function checkfavourites() {
+    let checkId = "";
+    let url = rooturl + "/favoriet/read.php?profielId=" + sessionStorage.getItem("userId");
+    //LET OP : rooturl = https://scrumserver.tenobe.org/scrum/api
+    fetch(url)
+        .then(function (resp) { return resp.json(); })
+        .then(function (data) {
+            for (let x = 0; x < data.length; x++) {
+                checkId = data[x];
+                checkId = checkId.anderId;
+                if (sessionStorage.getItem('lastProfile') !== "" && checkId !=="") {
+                    if (sessionStorage.getItem('lastProfile') === checkId) {
+                        checkfavourited = true;
+                    }
+                }
+            };
 
+        })
+        .catch(function (error) { console.log(error); });
+}
+
+function favoriet() {
+    let mijnId =  sessionStorage.getItem("userId");
+    let anderId =  sessionStorage.getItem("lastProfile");
+
+    let rooturl3 = 'https://scrumserver.tenobe.org/scrum/api/favoriet/like.php';
+    let data = {
+        mijnId: mijnId,
+        anderId: anderId
+    }
+
+    var request = new Request(rooturl3, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+
+    fetch(request)
+        .then( function (resp)  { return resp.json(); })
+        .then( function (data)  { console.log(data);  })
+        .then(finishFavourite)
+        .catch(function (error) { console.log(error); });
+
+    function finishFavourite () {
+        window.alert("Favoriet toegevoegd!");
+        document.getElementById("favorietKnop").style.visibility = "hidden"; 
+    }
+}
 
 
 let hoofdDiv = document.getElementById("mid");
@@ -233,9 +288,14 @@ function readUsers(data) {
     }
     if (checkunlocked === false) {
         let koopKnop = document.createElement("p");
-        koopKnop.innerHTML = "<button id=\"koopKnop\"\" onclick=\"unlock()\">Unlock profiel</button>"
+        koopKnop.innerHTML = "<button id=\"koopKnop\"\" onclick=\"unlock()\">Unlock profiel = 1 Lovecoin</button>"
         hoofdDiv.appendChild(koopKnop);
     };
+    if (checkfavourited === false) {
+        let favorietKnop = document.createElement("p");
+        favorietKnop.innerHTML = "<button id=\"favorietKnop\"\" onclick=\"favoriet()\">Toevoegen aan favorieten</button>"
+        hoofdDiv.appendChild(favorietKnop);
+    }
 }
 
 

@@ -1,5 +1,32 @@
 "use strict"
 
+////////Login nakijken
+let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id=' + parseInt(sessionStorage.getItem("userId"));
+fetch(loginUrl)
+    .then(function (response){return response.json();})
+    .then(loginCheck)
+    .catch(function (error){console.log(error);});
+
+function loginCheck (data){
+    let wachtwoord = data.wachtwoord;
+    let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
+    if (sessionStorage.getItem("wachtwoord") !== encryptedWachtwoord) {
+        window.location.href = "../Website/index.html";
+    }
+}
+
+if (!sessionStorage.getItem("userId") || !sessionStorage.getItem("wachtwoord")){
+    window.location.href = "../Website/index.html";
+}
+/////////
+
+////////Logout
+function logout() {
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("wachtwoord");
+    window.location.href = "../Website/index.html";
+}
+/////////
 
 function logout() {
     sessionStorage.removeItem("userId");
@@ -62,7 +89,7 @@ function GebruikersGegevens (el){
     
         console.log(el);
         profiel = el;
-        document.getElementById("hoofd").innerText = 'Gegevans van ' + el.voornaam + ' ' + el.familienaam;
+        document.getElementById("hoofd").innerText = 'Gegevens van ' + el.voornaam + ' ' + el.familienaam;
         document.getElementById("familienaam").value = el.familienaam;
         document.getElementById("voornaam").value = el.voornaam;
         document.getElementById("nickname").value = el.nickname;

@@ -1,24 +1,20 @@
 "use strict"
 
-// //////Login nakijken
-// let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read.php?';
-// fetch(loginUrl)
-//     .then(function (response){return response.json();})
-//     .then(loginCheck)
-//     .catch(function (error){console.log(error);});
+////////Login nakijken
+let loginUrl = 'https://scrumserver.tenobe.org/scrum/api/profiel/read_one.php?id=' + parseInt(sessionStorage.getItem("userId"));
+fetch(loginUrl)
+    .then(function (response){return response.json();})
+    .then(loginCheck)
+    .catch(function (error){console.log(error);});
 
-// function loginCheck (data){
-//     for (let el of data) {
-//         if (sessionStorage.getItem("userId") === el.id) {
-//             let wachtwoord = el.wachtwoord;
-//             let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
-//             if (sessionStorage.getItem("wachtwoord") === encryptedWachtwoord) {
-//                 window.location.href = "main.html";
-//             }
-//         }
-//     }
-// }
-// ///////
+function loginCheck (data){
+    let wachtwoord = data.wachtwoord;
+    let encryptedWachtwoord = CryptoJS.SHA256(wachtwoord).toString();
+    if (sessionStorage.getItem("wachtwoord") === encryptedWachtwoord) {
+        window.location.href = "../Website/main.html";
+    }
+}
+/////////
 
 //global variables 
 let haarkleuren = [
